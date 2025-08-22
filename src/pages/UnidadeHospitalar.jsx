@@ -63,7 +63,24 @@ const UnidadeHospitalar = () => {
       link: '/avaliacao-uti'
     },
     {
-      id: 5,
+      id: 2,
+      title: 'Exames Complementares em Unidades Hospitalares',
+      icon: <Activity className="w-6 h-6" />,
+      color: 'from-purple-500 to-purple-600',
+      topics: [
+        'Hemograma e interpretação clínica',
+        'Gasometria arterial e equilíbrio ácido-base',
+        'Exames de imagem: RX, TC, Angiografia',
+        'Eletrocardiograma e análise de ritmo'
+      ],
+      duration: '6 semanas',
+      level: 'Intermediário',
+      departments: ['Laboratório', 'Radiologia', 'Cardiologia', 'UTI'],
+      hasDetailedContent: true,
+      link: '/exames-complementares'
+    },
+    {
+      id: 3,
       title: 'Fisioterapia em UTI',
       icon: <Heart className="w-6 h-6" />,
       color: 'from-teal-500 to-teal-600',
@@ -78,7 +95,7 @@ const UnidadeHospitalar = () => {
       departments: ['UTI Geral', 'UTI Cardiológica', 'UTI Neurológica', 'UTI Pediátrica']
     },
     {
-      id: 2,
+      id: 4,
       title: 'Cardiologia Hospitalar',
       icon: <Activity className="w-6 h-6" />,
       color: 'from-cyan-500 to-cyan-600',
@@ -93,7 +110,7 @@ const UnidadeHospitalar = () => {
       departments: ['Cardiologia', 'Cirurgia Cardíaca', 'Hemodinâmica', 'Marcapasso']
     },
     {
-      id: 3,
+      id: 5,
       title: 'Pneumologia e Respiratória',
       icon: <Stethoscope className="w-6 h-6" />,
       color: 'from-blue-500 to-blue-600',
@@ -108,7 +125,7 @@ const UnidadeHospitalar = () => {
       departments: ['Pneumologia', 'Cirurgia Torácica', 'Emergência', 'Oncologia']
     },
     {
-      id: 4,
+      id: 6,
       title: 'Ortopedia Hospitalar',
       icon: <Building2 className="w-6 h-6" />,
       color: 'from-indigo-500 to-indigo-600',
@@ -127,42 +144,48 @@ const UnidadeHospitalar = () => {
   const materials = [
     {
       id: 1,
-      title: 'Manual de Fisioterapia Hospitalar',
-      description: 'Protocolos e diretrizes completas para atuação fisioterapêutica no ambiente hospitalar, incluindo normas de segurança e controle de infecção.',
-      type: 'PDF',
+      title: 'Consenso ASSOBRAFIR 2012',
+      description: 'Consenso Brasileiro de Fisioterapia Respiratória em Pacientes Críticos Adultos. Documento oficial da ASSOBRAFIR com diretrizes baseadas em evidências.',
+      type: 'PDF Científico',
       icon: <FileText className="w-6 h-6" />,
-      size: '35.2 MB',
-      pages: '420',
-      downloads: '4.2k',
-      rating: 4.9,
-      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      category: 'Protocolos Hospitalares'
+      size: '2.1 MB',
+      pages: '45',
+      downloads: 'Oficial',
+      rating: 'Referência',
+      image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      category: 'Documento Oficial',
+      link: 'https://www.assobrafir.com.br',
+      buttonColor: '#0d9488'
     },
     {
       id: 2,
-      title: 'Técnicas Avançadas de UTI',
-      description: 'Demonstrações práticas de técnicas especializadas em unidade de terapia intensiva, incluindo ventilação mecânica e mobilização precoce.',
-      type: 'Vídeo',
+      title: 'Canal Fisioterapia Respiratória',
+      description: 'Vídeos educacionais sobre técnicas de fisioterapia respiratória, ventilação mecânica e cuidados em UTI. Conteúdo didático em português.',
+      type: 'YouTube',
       icon: <Video className="w-6 h-6" />,
-      duration: '5h 30min',
-      quality: '4K',
-      downloads: '3.8k',
-      rating: 4.9,
+      duration: '200+ vídeos',
+      quality: 'Conteúdo atualizado',
+      downloads: 'Gratuito',
+      rating: '4.8',
       image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      category: 'Técnicas Especializadas'
+      category: 'Vídeos Educacionais',
+      link: 'https://www.youtube.com/results?search_query=fisioterapia+respiratoria+uti',
+      buttonColor: '#dc2626'
     },
     {
       id: 3,
-      title: 'Sistema de Protocolos Integrados',
-      description: 'Plataforma interativa com protocolos padronizados para diferentes setores hospitalares, com fluxogramas e tomada de decisão clínica.',
-      type: 'Interativo',
-      icon: <ExternalLink className="w-6 h-6" />,
-      protocols: '80+',
-      departments: '15',
-      downloads: '5.1k',
-      rating: 4.8,
+      title: 'Artigos SciELO Brasil',
+      description: 'Base de dados científica com artigos revisados por pares sobre fisioterapia hospitalar, UTI e cuidados respiratórios em português e inglês.',
+      type: 'Base Científica',
+      icon: <BookOpen className="w-6 h-6" />,
+      protocols: '500+ artigos',
+      departments: 'Busca avançada',
+      downloads: 'Acesso livre',
+      rating: 'Científico',
       image: 'https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
-      category: 'Sistema Integrado'
+      category: 'Artigos Peer-Reviewed',
+      link: 'https://www.scielo.br/search.php?q=fisioterapia+hospitalar',
+      buttonColor: '#3b82f6'
     }
   ];
 
@@ -442,121 +465,131 @@ const UnidadeHospitalar = () => {
         `}</style>
         </section>
 
-      {/* Quick Stats */}
-      <section style={{ padding: '3rem 0', background: 'white', borderBottom: '1px solid var(--neutral-200)' }}>
+
+
+      {/* Fisioterapia Hospitalar Overview */}
+      <section style={{ padding: '3rem 0', background: 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%)', borderBottom: '1px solid var(--teal-200)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
-            {quickStats.map((stat, index) => (
+          <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{ 
+              fontSize: '2.5rem', 
+              fontWeight: '800', 
+              color: 'var(--teal-800)', 
+              marginBottom: '1rem' 
+            }}>
+              🏥 Fisioterapia na Unidade Hospitalar
+            </h2>
+            <p style={{ 
+              fontSize: '1.2rem', 
+              color: 'var(--teal-700)', 
+              lineHeight: '1.6', 
+              marginBottom: '2rem' 
+            }}>
+              A fisioterapia hospitalar atua na prevenção, tratamento e reabilitação de pacientes internados, 
+              promovendo funcionalidade, qualidade de vida e redução do tempo de permanência hospitalar.
+            </p>
+          </div>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+            {[
+              {
+                icon: '🫁',
+                title: 'Fisioterapia Respiratória',
+                description: 'Prevenção e tratamento de complicações pulmonares, higiene brônquica e desmame ventilatório',
+                techniques: ['Ventilação não invasiva', 'Aspiração de vias aéreas', 'Cinesioterapia respiratória']
+              },
+              {
+                icon: '🏃‍♂️',
+                title: 'Mobilização Precoce',
+                description: 'Prevenção do descondicionamento físico e complicações do imobilismo prolongado',
+                techniques: ['Exercícios no leito', 'Transferências', 'Deambulação assistida']
+              },
+              {
+                icon: '❤️',
+                title: 'Reabilitação Cardíaca',
+                description: 'Melhora da capacidade funcional e redução de riscos cardiovasculares',
+                techniques: ['Exercícios graduados', 'Monitorização cardíaca', 'Educação em saúde']
+              },
+              {
+                icon: '🧠',
+                title: 'Neuroreabilitação',
+                description: 'Recuperação funcional de pacientes com alterações neurológicas agudas',
+                techniques: ['Treino de marcha', 'Reeducação motora', 'Estimulação sensorial']
+              }
+            ].map((area, index) => (
               <div 
                 key={index}
                 style={{
-                  textAlign: 'center',
-                  padding: '1.5rem',
+                  background: 'white',
+                  padding: '2rem',
                   borderRadius: '1rem',
-                  background: 'linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%)',
-                  border: '1px solid var(--neutral-200)',
-                  transition: 'all 0.3s ease'
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+                  border: '1px solid var(--teal-200)',
+                  transition: 'all 0.3s ease',
+                  textAlign: 'left'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
+                  e.currentTarget.style.boxShadow = '0 12px 24px rgba(0, 0, 0, 0.1)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05)';
                 }}
               >
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-                <div style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--teal-600)', marginBottom: '0.25rem' }}>
-                  {stat.value}
-                </div>
-                <div style={{ color: 'var(--neutral-600)', fontSize: '0.9rem' }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Critical Care Overview */}
-      <section style={{ padding: '2rem 0', background: 'var(--teal-50)', borderBottom: '1px solid var(--teal-200)' }}>
-        <div className="container">
-          <div style={{ marginBottom: '2rem' }}>
-            <h3 style={{ textAlign: 'center', marginBottom: '0.5rem', color: 'var(--teal-800)' }}>
-              Principais Intervenções em Ambiente Hospitalar
-            </h3>
-            <p style={{ textAlign: 'center', color: 'var(--teal-600)', fontSize: '0.9rem' }}>
-              Prevalência e complexidade das principais técnicas utilizadas
-            </p>
-              </div>
-              
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-            {criticalCare.map((care) => (
-              <div
-                key={care.condition}
-                style={{
-                  background: 'white',
-                  padding: '1.5rem',
-                  borderRadius: '0.75rem',
-                  textAlign: 'center',
-                  border: '1px solid var(--teal-200)',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>{care.icon}</div>
-                <div style={{ fontSize: '0.9rem', fontWeight: '600', marginBottom: '0.25rem' }}>
-                  {care.condition}
-                </div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--teal-600)', marginBottom: '0.25rem' }}>
-                  {care.prevalence}
-                </div>
-                <div style={{ 
-                  fontSize: '0.7rem', 
-                  padding: '0.25rem 0.5rem',
-                  borderRadius: '0.5rem',
-                  background: care.complexity === 'Alta' ? 'var(--red-100)' : 'var(--yellow-100)',
-                  color: care.complexity === 'Alta' ? 'var(--red-700)' : 'var(--yellow-700)'
+                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{area.icon}</div>
+                <h3 style={{ 
+                  fontSize: '1.3rem', 
+                  fontWeight: '700', 
+                  color: 'var(--teal-800)', 
+                  marginBottom: '0.75rem' 
                 }}>
-                  {care.complexity}
+                  {area.title}
+                </h3>
+                <p style={{ 
+                  color: 'var(--teal-600)', 
+                  lineHeight: '1.6', 
+                  marginBottom: '1rem',
+                  fontSize: '0.95rem'
+                }}>
+                  {area.description}
+                </p>
+                <div>
+                  <h4 style={{ 
+                    fontSize: '0.9rem', 
+                    fontWeight: '600', 
+                    color: 'var(--teal-700)', 
+                    marginBottom: '0.5rem' 
+                  }}>
+                    Principais Técnicas:
+                  </h4>
+                  <ul style={{ 
+                    listStyle: 'none', 
+                    padding: 0, 
+                    margin: 0 
+                  }}>
+                    {area.techniques.map((technique, idx) => (
+                      <li key={idx} style={{ 
+                        padding: '0.25rem 0',
+                        color: 'var(--teal-600)',
+                        fontSize: '0.85rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}>
+                        <span style={{ 
+                          width: '4px', 
+                          height: '4px', 
+                          background: 'var(--teal-500)', 
+                          borderRadius: '50%' 
+                        }}></span>
+                        {technique}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}
-              </div>
-              
-          {/* Equipment Usage */}
-          <div>
-            <h4 style={{ textAlign: 'center', marginBottom: '1rem', color: 'var(--teal-800)' }}>
-              Equipamentos Mais Utilizados
-            </h4>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>
-              {equipments.map((equipment) => (
-                <div
-                  key={equipment.name}
-                  style={{
-                    background: 'white',
-                    padding: '1rem',
-                    borderRadius: '0.5rem',
-                    textAlign: 'center',
-                    border: '1px solid var(--teal-200)'
-                  }}
-                >
-                  <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{equipment.icon}</div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.25rem' }}>
-                    {equipment.name}
-                  </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--teal-600)' }}>
-                    {equipment.usage}
-                  </div>
-                </div>
-              ))}
-            </div>
               </div>
             </div>
           </section>
@@ -675,7 +708,7 @@ const UnidadeHospitalar = () => {
                     style={{
                       width: '100%',
                       padding: '0.75rem',
-                      background: `linear-gradient(135deg, ${module.color.split(' ')[1]} 0%, ${module.color.split(' ')[3]} 100%)`,
+                      background: 'var(--teal-600)',
                       color: 'white',
                       border: 'none',
                       borderRadius: '0.75rem',
@@ -686,10 +719,17 @@ const UnidadeHospitalar = () => {
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '0.5rem',
-                      textDecoration: 'none'
+                      textDecoration: 'none',
+                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
                     }}
-                    onMouseEnter={(e) => e.target.style.opacity = '0.9'}
-                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = 'var(--teal-700)';
+                      e.target.style.transform = 'translateY(-1px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = 'var(--teal-600)';
+                      e.target.style.transform = 'translateY(0)';
+                    }}
                   >
                     <BookOpen className="w-4 h-4" />
                     Ver Conteúdo Completo
@@ -699,18 +739,21 @@ const UnidadeHospitalar = () => {
                   style={{
                     width: '100%',
                     padding: '0.75rem',
-                    background: `linear-gradient(135deg, ${module.color.split(' ')[1]} 0%, ${module.color.split(' ')[3]} 100%)`,
-                    color: 'white',
+                    background: 'var(--gray-300)',
+                    color: 'var(--gray-600)',
                     border: 'none',
                     borderRadius: '0.75rem',
                     fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
+                    cursor: 'not-allowed',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.5rem'
                   }}
-                  onMouseEnter={(e) => e.target.style.opacity = '0.9'}
-                  onMouseLeave={(e) => e.target.style.opacity = '1'}
                 >
-                  Acessar Módulo
+                  <FileText className="w-4 h-4" />
+                  Em Desenvolvimento
                 </button>
                 )}
               </div>
@@ -723,9 +766,9 @@ const UnidadeHospitalar = () => {
       {/* Materials Section */}
       <section style={{ padding: '4rem 0', background: 'white' }}>
         <div className="container">
-          <h2 className="section-title">Recursos Hospitalares</h2>
+          <h2 className="section-title">Recursos Educacionais</h2>
           <p className="section-subtitle">
-            Materiais especializados para atuação segura e eficaz no ambiente hospitalar
+            Materiais didáticos e recursos científicos reais para aprofundamento em fisioterapia hospitalar
           </p>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
@@ -834,10 +877,38 @@ const UnidadeHospitalar = () => {
                     </div>
               </div>
               
-                  <button className="btn btn-primary" style={{ width: '100%', background: 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)' }}>
-                    <Download className="w-4 h-4" />
-                    {material.type === 'PDF' ? 'Download' : material.type === 'Vídeo' ? 'Assistir' : 'Acessar'}
-                </button>
+                  <button 
+                    className="btn btn-primary" 
+                    style={{ 
+                      width: '100%', 
+                      background: material.buttonColor || 'linear-gradient(135deg, #0d9488 0%, #0f766e 100%)',
+                      border: 'none',
+                      color: 'white',
+                      padding: '0.75rem',
+                      borderRadius: '0.75rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.5rem'
+                    }}
+                    onClick={() => material.link && window.open(material.link, '_blank')}
+                    onMouseEnter={(e) => {
+                      e.target.style.opacity = '0.9';
+                      e.target.style.transform = 'translateY(-1px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.opacity = '1';
+                      e.target.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    {material.type === 'PDF Científico' ? 'Acessar Site' : 
+                     material.type === 'YouTube' ? 'Buscar Vídeos' : 
+                     material.type === 'Base Científica' ? 'Pesquisar Artigos' : 'Acessar'}
+                  </button>
                 </div>
               </div>
             ))}

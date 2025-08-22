@@ -12,6 +12,7 @@ import SearchResults from './pages/SearchResults';
 import ArticleViewer from './pages/ArticleViewer';
 import NormasBiosseguranca1 from './pages/NormasBiosseguranca1';
 import AvaliacaoUTI from './pages/AvaliacaoUTI';
+import ExamesComplementares from './pages/ExamesComplementares';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -122,6 +123,7 @@ function App() {
           {/* Páginas de conteúdo educacional */}
           <Route path="/normas-biosseguranca-1" element={<Layout><NormasBiosseguranca1 /></Layout>} />
           <Route path="/avaliacao-uti" element={<Layout><AvaliacaoUTI /></Layout>} />
+          <Route path="/exames-complementares" element={<Layout><ExamesComplementares /></Layout>} />
         </Routes>
       </div>
     </Router>

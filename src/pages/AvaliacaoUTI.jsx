@@ -1,15 +1,67 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, Heart, Thermometer, Activity, Wind, Eye, Brain, Stethoscope, Monitor, Gauge } from 'lucide-react';
+import { ArrowLeft, Heart, Thermometer, Activity, Wind, Eye, Brain, Stethoscope, Monitor, Gauge, ChevronDown, ChevronRight, Info, AlertTriangle, CheckCircle, X, RotateCcw } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AvaliacaoUTI = () => {
   const [animateVitals, setAnimateVitals] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({});
+  const [currentFlashcard, setCurrentFlashcard] = useState(0);
+  const [showFlashcardAnswer, setShowFlashcardAnswer] = useState(false);
+  const [flashcardStats, setFlashcardStats] = useState({ correct: 0, incorrect: 0 });
 
   useEffect(() => {
     window.scrollTo(0, 0);
     // Trigger animation after component mounts
     setTimeout(() => setAnimateVitals(true), 1000);
   }, []);
+
+  const toggleSection = (sectionId) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
+
+  const nextFlashcard = () => {
+    setShowFlashcardAnswer(false);
+    setCurrentFlashcard(prev => (prev + 1) % flashcards.length);
+  };
+
+  const markFlashcard = (isCorrect) => {
+    setFlashcardStats(prev => ({
+      ...prev,
+      [isCorrect ? 'correct' : 'incorrect']: prev[isCorrect ? 'correct' : 'incorrect'] + 1
+    }));
+    setTimeout(nextFlashcard, 1000);
+  };
+
+  const flashcards = [
+    {
+      question: "Quais são os principais danos celulares causados pela hipertermia?",
+      answer: "Desnaturação proteica, disfunção mitocondrial, peroxidação lipídica, ativação de cascatas inflamatórias, e comprometimento da síntese de ATP. Temperaturas >42°C causam morte celular irreversível.",
+      category: "Fisiopatologia"
+    },
+    {
+      question: "Como o fisioterapeuta pode intervir em pacientes hipertérmicos?",
+      answer: "Técnicas de resfriamento: compressas frias, ventilação, hidratação; Exercícios passivos para manter circulação; Posicionamento para favorecer perda de calor; Monitoramento contínuo de sinais vitais.",
+      category: "Intervenção"
+    },
+    {
+      question: "O que caracteriza o tórax em tonel e sua fisiopatologia?",
+      answer: "Aumento do diâmetro anteroposterior por hiperinsuflação pulmonar crônica (DPOC). Causa: aprisionamento aéreo, perda de elasticidade, aumento do volume residual. Resulta em uso excessivo de músculos acessórios.",
+      category: "Anatomia Patológica"
+    },
+    {
+      question: "Qual a diferença entre roncos e sibilos na ausculta?",
+      answer: "Roncos: sons graves e contínuos, indicam obstrução de vias aéreas superiores por secreções. Sibilos: sons agudos, indicam broncoconstrição (expiratório) ou obstrução periférica (inspiratório).",
+      category: "Semiologia"
+    },
+    {
+      question: "Como interpretar a respiração paradoxal?",
+      answer: "Movimento assincrônico entre tórax e abdômen. Durante inspiração: tórax se retrai e abdômen se expande. Indica fadiga muscular respiratória, trauma torácico ou obstrução grave das vias aéreas.",
+      category: "Emergência"
+    }
+  ];
 
   const vitalsData = {
     temperatura: { value: 36.8, unit: '°C', range: '36.1° - 37.2°', color: '#ef4444' },
@@ -163,6 +215,199 @@ const AvaliacaoUTI = () => {
               <Monitor className="w-4 h-4" />
               Monitorização Contínua
             </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Flashcards Interativos */}
+      <section style={{ padding: '2rem 0', background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
+        <div className="container">
+          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+            <h2 style={{ 
+              fontSize: '1.8rem', 
+              fontWeight: '700', 
+              color: 'var(--slate-800)', 
+              marginBottom: '1rem'
+            }}>
+              📚 Teste seus conhecimentos
+            </h2>
+            <p style={{ color: 'var(--slate-600)', marginBottom: '2rem' }}>
+              Flashcards interativos para fixar conceitos importantes
+            </p>
+
+            {/* Flashcard */}
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              padding: '2rem',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+              marginBottom: '1.5rem',
+              border: '1px solid var(--slate-200)',
+              minHeight: '250px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              position: 'relative',
+              cursor: 'pointer',
+              transition: 'transform 0.3s ease',
+              transform: showFlashcardAnswer ? 'rotateY(180deg)' : 'rotateY(0deg)',
+              transformStyle: 'preserve-3d'
+            }}
+            onClick={() => setShowFlashcardAnswer(!showFlashcardAnswer)}
+            onMouseEnter={(e) => e.currentTarget.style.transform = showFlashcardAnswer ? 'rotateY(180deg) scale(1.02)' : 'rotateY(0deg) scale(1.02)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = showFlashcardAnswer ? 'rotateY(180deg)' : 'rotateY(0deg)'}
+            >
+              {/* Frente do card */}
+              <div style={{
+                backfaceVisibility: 'hidden',
+                display: showFlashcardAnswer ? 'none' : 'block'
+              }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #3b82f6, #1e40af)',
+                  color: 'white',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '1rem',
+                  fontSize: '0.8rem',
+                  fontWeight: '600',
+                  marginBottom: '1.5rem'
+                }}>
+                  {flashcards[currentFlashcard]?.category}
+                </div>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: '600',
+                  color: 'var(--slate-800)',
+                  lineHeight: '1.5',
+                  margin: 0
+                }}>
+                  {flashcards[currentFlashcard]?.question}
+                </h3>
+                <p style={{ color: 'var(--slate-500)', fontSize: '0.9rem', marginTop: '1rem' }}>
+                  Clique para ver a resposta
+                </p>
+              </div>
+
+              {/* Verso do card */}
+              <div style={{
+                backfaceVisibility: 'hidden',
+                transform: 'rotateY(180deg)',
+                display: showFlashcardAnswer ? 'block' : 'none',
+                position: 'absolute',
+                top: '2rem',
+                left: '2rem',
+                right: '2rem',
+                bottom: '2rem'
+              }}>
+                <div style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(135deg, #10b981, #047857)',
+                  color: 'white',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '1rem',
+                  fontSize: '0.8rem',
+                  fontWeight: '600',
+                  marginBottom: '1.5rem'
+                }}>
+                  Resposta
+                </div>
+                <p style={{
+                  fontSize: '1.1rem',
+                  color: 'var(--slate-700)',
+                  lineHeight: '1.6',
+                  margin: 0,
+                  textAlign: 'left'
+                }}>
+                  {flashcards[currentFlashcard]?.answer}
+                </p>
+              </div>
+            </div>
+
+            {/* Controles do Flashcard */}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+              {showFlashcardAnswer && (
+                <>
+                  <button
+                    onClick={() => markFlashcard(false)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.75rem 1.5rem',
+                      background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '0.5rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                  >
+                    <X className="w-4 h-4" />
+                    Difícil
+                  </button>
+                  <button
+                    onClick={() => markFlashcard(true)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.75rem 1.5rem',
+                      background: 'linear-gradient(135deg, #10b981, #059669)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '0.5rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                  >
+                    <CheckCircle className="w-4 h-4" />
+                    Fácil
+                  </button>
+                </>
+              )}
+              <button
+                onClick={nextFlashcard}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.75rem 1.5rem',
+                  background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '0.5rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+              >
+                <RotateCcw className="w-4 h-4" />
+                Próximo
+              </button>
+            </div>
+
+            {/* Estatísticas */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', fontSize: '0.9rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--green-600)' }}>
+                <CheckCircle className="w-4 h-4" />
+                <span>Fáceis: {flashcardStats.correct}</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--red-600)' }}>
+                <X className="w-4 h-4" />
+                <span>Difíceis: {flashcardStats.incorrect}</span>
+              </div>
+              <div style={{ color: 'var(--slate-600)' }}>
+                Card {currentFlashcard + 1} de {flashcards.length}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -703,56 +948,64 @@ const AvaliacaoUTI = () => {
                 marginBottom: '2rem',
                 textAlign: 'center'
               }}>
-                Pontos importantes a serem observados no ambiente hospitalar:
+                A inspeção é o primeiro e mais importante método de avaliação. Deve ser sistemática, detalhada e abranger todos os aspectos visuais do paciente.
               </p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
-                {[
-                  'Está em respiração espontânea ou necessita de suporte ventilatório?',
-                  'Se faz uso de suporte ventilatório, é invasivo ou não invasivo?',
-                  'Utiliza recurso de administração de oxigênio?',
-                  'Faz uso de cateter central, periférico, sonda nasogástrica, vesical?',
-                  'Está corado?',
-                  'Como está sua expressão facial?',
-                  'Tem alguma incisão cirúrgica recente?',
-                  'Apresenta sinais de desconforto respiratório?',
-                  'Está orientado no tempo e no espaço?'
-                ].map((item, index) => (
-                  <div key={index} style={{ 
-                    background: 'linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%)',
-                    padding: '1.5rem',
-                    borderRadius: '0.75rem',
-                    border: '1px solid var(--slate-200)',
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '1rem'
-                  }}>
-                    <div style={{ 
-                      width: '1.5rem', 
-                      height: '1.5rem', 
-                      background: 'var(--blue-500)', 
-                      borderRadius: '50%', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      color: 'white',
-                      fontSize: '0.8rem',
-                      fontWeight: '600',
-                      flexShrink: 0,
-                      marginTop: '0.1rem'
-                    }}>
-                      {index + 1}
+              {/* Resumo dos Pontos-Chave */}
+              <div style={{
+                background: 'linear-gradient(145deg, #f0f9ff, #e0f2fe)',
+                borderRadius: '1rem',
+                padding: '2rem',
+                marginBottom: '3rem',
+                border: '1px solid var(--sky-200)'
+              }}>
+                <h3 style={{ 
+                  fontSize: '1.3rem', 
+                  fontWeight: '600', 
+                  color: 'var(--sky-800)', 
+                  marginBottom: '1.5rem',
+                  textAlign: 'center'
+                }}>
+                  🔍 Checklist Rápido de Inspeção
+                </h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+                  {[
+                    { icon: '🫁', question: 'Modo ventilatório?', detail: 'Espontâneo, VNI ou invasivo' },
+                    { icon: '💨', question: 'Oxigenoterapia?', detail: 'Tipo de dispositivo e FiO₂' },
+                    { icon: '🩸', question: 'Acessos vasculares?', detail: 'Periférico, central, condições' },
+                    { icon: '🔧', question: 'Sondas e drenos?', detail: 'Tipos, fixação, funcionamento' },
+                    { icon: '🎨', question: 'Coloração da pele?', detail: 'Cianose, palidez, icterícia' },
+                    { icon: '😊', question: 'Expressão facial?', detail: 'Dor, ansiedade, consciência' },
+                    { icon: '🔪', question: 'Incisões cirúrgicas?', detail: 'Localização, cicatrização' },
+                    { icon: '😮‍💨', question: 'Desconforto respiratório?', detail: 'Tiragem, uso de acessórios' },
+                    { icon: '🧠', question: 'Orientação?', detail: 'Tempo, espaço, pessoa' }
+                  ].map((item, index) => (
+                    <div key={index} style={{ 
+                      background: 'white',
+                      padding: '1rem',
+                      borderRadius: '0.75rem',
+                      border: '1px solid var(--sky-200)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      transition: 'transform 0.2s ease',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0px)'}
+                    >
+                      <div style={{ fontSize: '1.5rem' }}>{item.icon}</div>
+                      <div>
+                        <div style={{ fontWeight: '600', color: 'var(--sky-800)', fontSize: '0.95rem' }}>
+                          {item.question}
+                        </div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--sky-600)' }}>
+                          {item.detail}
+                        </div>
+                      </div>
                     </div>
-                    <p style={{ 
-                      color: 'var(--slate-700)', 
-                      fontSize: '1rem', 
-                      lineHeight: '1.6',
-                      margin: 0
-                    }}>
-                      {item}
-                    </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -802,17 +1055,175 @@ const AvaliacaoUTI = () => {
                       <h3 style={{ fontSize: '1.4rem', fontWeight: '700', color: 'var(--red-800)', marginBottom: '1rem' }}>
                         Temperatura
                       </h3>
-                      <p style={{ color: 'var(--red-700)', fontSize: '1rem', lineHeight: '1.7', marginBottom: '1rem' }}>
-                        A oscilação da temperatura corporal pode gerar danos celulares e metabólicos. 
+                      <p style={{ color: 'var(--red-700)', fontSize: '1rem', lineHeight: '1.7', marginBottom: '1.5rem' }}>
+                        A oscilação da temperatura corporal pode gerar danos celulares e metabólicos críticos. 
                       </p>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minMax(200px, 1fr))', gap: '1rem' }}>
-                        <div style={{ background: 'var(--red-50)', padding: '1rem', borderRadius: '0.5rem' }}>
-                          <strong style={{ color: 'var(--red-800)' }}>Hipertermia:</strong>
-                          <span style={{ color: 'var(--red-700)' }}> &gt;37,8°C</span>
+
+                      {/* Classificação de Temperatura */}
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+                        <div style={{ background: 'linear-gradient(145deg, #dbeafe, #bfdbfe)', padding: '1.5rem', borderRadius: '0.75rem', border: '2px solid var(--blue-300)' }}>
+                          <strong style={{ color: 'var(--blue-800)', fontSize: '1.1rem' }}>Hipotermia Severa</strong>
+                          <div style={{ color: 'var(--blue-700)', marginTop: '0.5rem' }}>&lt;32°C</div>
+                          <p style={{ fontSize: '0.9rem', color: 'var(--blue-600)', marginTop: '0.5rem', margin: 0 }}>
+                            Risco de arritmias ventriculares
+                          </p>
                         </div>
-                        <div style={{ background: 'var(--blue-50)', padding: '1rem', borderRadius: '0.5rem' }}>
-                          <strong style={{ color: 'var(--blue-800)' }}>Hipotermia:</strong>
-                          <span style={{ color: 'var(--blue-700)' }}> &lt;35°C</span>
+                        <div style={{ background: 'linear-gradient(145deg, #e0f2fe, #b3e5fc)', padding: '1.5rem', borderRadius: '0.75rem', border: '2px solid var(--cyan-300)' }}>
+                          <strong style={{ color: 'var(--cyan-800)', fontSize: '1.1rem' }}>Hipotermia Moderada</strong>
+                          <div style={{ color: 'var(--cyan-700)', marginTop: '0.5rem' }}>32-35°C</div>
+                          <p style={{ fontSize: '0.9rem', color: 'var(--cyan-600)', marginTop: '0.5rem', margin: 0 }}>
+                            Depressão do SNC e bradicardia
+                          </p>
+                        </div>
+                        <div style={{ background: 'linear-gradient(145deg, #f0fdf4, #dcfce7)', padding: '1.5rem', borderRadius: '0.75rem', border: '2px solid var(--green-300)' }}>
+                          <strong style={{ color: 'var(--green-800)', fontSize: '1.1rem' }}>Normal</strong>
+                          <div style={{ color: 'var(--green-700)', marginTop: '0.5rem' }}>36.1-37.2°C</div>
+                          <p style={{ fontSize: '0.9rem', color: 'var(--green-600)', marginTop: '0.5rem', margin: 0 }}>
+                            Homeostase térmica adequada
+                          </p>
+                        </div>
+                        <div style={{ background: 'linear-gradient(145deg, #fef3c7, #fde68a)', padding: '1.5rem', borderRadius: '0.75rem', border: '2px solid var(--amber-300)' }}>
+                          <strong style={{ color: 'var(--amber-800)', fontSize: '1.1rem' }}>Febre Moderada</strong>
+                          <div style={{ color: 'var(--amber-700)', marginTop: '0.5rem' }}>37.8-39°C</div>
+                          <p style={{ fontSize: '0.9rem', color: 'var(--amber-600)', marginTop: '0.5rem', margin: 0 }}>
+                            Resposta inflamatória ativa
+                          </p>
+                        </div>
+                        <div style={{ background: 'linear-gradient(145deg, #fef2f2, #fecaca)', padding: '1.5rem', borderRadius: '0.75rem', border: '2px solid var(--red-300)' }}>
+                          <strong style={{ color: 'var(--red-800)', fontSize: '1.1rem' }}>Hipertermia Severa</strong>
+                          <div style={{ color: 'var(--red-700)', marginTop: '0.5rem' }}>&gt;40°C</div>
+                          <p style={{ fontSize: '0.9rem', color: 'var(--red-600)', marginTop: '0.5rem', margin: 0 }}>
+                            Emergência médica - danos irreversíveis
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Danos Celulares Detalhados */}
+                      <div style={{
+                        background: 'white',
+                        padding: '2rem',
+                        borderRadius: '1rem',
+                        border: '1px solid var(--red-200)',
+                        marginBottom: '2rem'
+                      }}>
+                        <h4 style={{ 
+                          fontSize: '1.2rem', 
+                          fontWeight: '600', 
+                          color: 'var(--red-800)', 
+                          marginBottom: '1.5rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}>
+                          <AlertTriangle className="w-5 h-5" />
+                          Mecanismos de Danos Celulares
+                        </h4>
+                        
+                        <div style={{ display: 'grid', gap: '1.5rem' }}>
+                          {/* Hipertermia */}
+                          <div style={{ padding: '1.5rem', background: 'linear-gradient(145deg, #fef2f2, #fde8e8)', borderRadius: '0.75rem', borderLeft: '4px solid var(--red-500)' }}>
+                            <h5 style={{ color: 'var(--red-800)', fontWeight: '600', marginBottom: '1rem', fontSize: '1.1rem' }}>
+                              🔥 Hipertermia (&gt;40°C)
+                            </h5>
+                            <ul style={{ color: 'var(--red-700)', lineHeight: '1.6', paddingLeft: '1.5rem' }}>
+                              <li><strong>Desnaturação proteica:</strong> Perda da estrutura terciária das enzimas e proteínas estruturais</li>
+                              <li><strong>Disfunção mitocondrial:</strong> Desacoplamento da fosforilação oxidativa, redução do ATP</li>
+                              <li><strong>Peroxidação lipídica:</strong> Danos à membrana celular por radicais livres</li>
+                              <li><strong>Ativação de caspases:</strong> Indução de apoptose celular programada</li>
+                              <li><strong>Resposta ao choque térmico:</strong> Síntese excessiva de proteínas de estresse (HSPs)</li>
+                            </ul>
+                          </div>
+
+                          {/* Hipotermia */}
+                          <div style={{ padding: '1.5rem', background: 'linear-gradient(145deg, #eff6ff, #dbeafe)', borderRadius: '0.75rem', borderLeft: '4px solid var(--blue-500)' }}>
+                            <h5 style={{ color: 'var(--blue-800)', fontWeight: '600', marginBottom: '1rem', fontSize: '1.1rem' }}>
+                              🧊 Hipotermia (&lt;35°C)
+                            </h5>
+                            <ul style={{ color: 'var(--blue-700)', lineHeight: '1.6', paddingLeft: '1.5rem' }}>
+                              <li><strong>Redução enzimática:</strong> Diminuição da atividade enzimática em 50% a cada 10°C de queda</li>
+                              <li><strong>Cristalização intracelular:</strong> Formação de cristais de gelo que rompem organelas</li>
+                              <li><strong>Vasoconstrição periférica:</strong> Redução da perfusão tecidual e oxigenação</li>
+                              <li><strong>Depressão metabólica:</strong> Redução do consumo de O₂ e produção de CO₂</li>
+                              <li><strong>Disfunção de bomba Na⁺/K⁺:</strong> Alteração do potencial de membrana</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Intervenções Fisioterapêuticas */}
+                      <div style={{
+                        background: 'linear-gradient(145deg, #f0fdf4, #dcfce7)',
+                        padding: '2rem',
+                        borderRadius: '1rem',
+                        border: '1px solid var(--green-300)'
+                      }}>
+                        <h4 style={{ 
+                          fontSize: '1.2rem', 
+                          fontWeight: '600', 
+                          color: 'var(--green-800)', 
+                          marginBottom: '1.5rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}>
+                          <Heart className="w-5 h-5" />
+                          Intervenções Fisioterapêuticas na Termorregulação
+                        </h4>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '1.5rem' }}>
+                          {/* Hipertermia */}
+                          <div style={{ background: 'white', padding: '1.5rem', borderRadius: '0.75rem', border: '1px solid var(--green-200)' }}>
+                            <h5 style={{ color: 'var(--red-800)', fontWeight: '600', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              <Thermometer className="w-4 h-4" />
+                              Manejo da Hipertermia
+                            </h5>
+                            <ul style={{ color: 'var(--slate-700)', lineHeight: '1.5', fontSize: '0.95rem', paddingLeft: '1rem' }}>
+                              <li><strong>Resfriamento ativo:</strong> Compressas frias em regiões de grande vascularização (axilas, virilhas, pescoço)</li>
+                              <li><strong>Posicionamento:</strong> Elevação de membros para favorecer retorno venoso</li>
+                              <li><strong>Mobilização passiva:</strong> Estimular circulação sem gerar calor metabólico</li>
+                              <li><strong>Monitoramento contínuo:</strong> Temperatura central e periférica</li>
+                              <li><strong>Exercícios respiratórios:</strong> Favorecer perda de calor por evaporação</li>
+                            </ul>
+                          </div>
+
+                          {/* Hipotermia */}
+                          <div style={{ background: 'white', padding: '1.5rem', borderRadius: '0.75rem', border: '1px solid var(--green-200)' }}>
+                            <h5 style={{ color: 'var(--blue-800)', fontWeight: '600', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              <Thermometer className="w-4 h-4" />
+                              Manejo da Hipotermia
+                            </h5>
+                            <ul style={{ color: 'var(--slate-700)', lineHeight: '1.5', fontSize: '0.95rem', paddingLeft: '1rem' }}>
+                              <li><strong>Reaquecimento passivo:</strong> Mantas térmicas e proteção contra perdas de calor</li>
+                              <li><strong>Mobilização ativa assistida:</strong> Gerar calor metabólico através de contração muscular</li>
+                              <li><strong>Técnicas de aquecimento:</strong> Infravermelho, mantas elétricas (com cuidado)</li>
+                              <li><strong>Exercícios isométricos:</strong> Contrações musculares para termogênese</li>
+                              <li><strong>Progressão gradual:</strong> Evitar reaquecimento muito rápido (afterdrop)</li>
+                            </ul>
+                          </div>
+                        </div>
+
+                        {/* Caso Clínico */}
+                        <div style={{
+                          background: 'linear-gradient(145deg, #fefce8, #fef3c7)',
+                          padding: '1.5rem',
+                          borderRadius: '0.75rem',
+                          border: '1px solid var(--amber-300)',
+                          marginTop: '1.5rem'
+                        }}>
+                          <h5 style={{ color: 'var(--amber-800)', fontWeight: '600', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            📋 Caso Clínico: Hipertermia em UTI
+                          </h5>
+                          <div style={{ color: 'var(--amber-800)', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                            <p style={{ marginBottom: '1rem', fontWeight: '500' }}>
+                              <strong>Paciente:</strong> Masculino, 68 anos, pós-operatório de cirurgia cardíaca, apresentando T° = 39.8°C há 6 horas.
+                            </p>
+                            <p style={{ marginBottom: '1rem' }}>
+                              <strong>Conduta fisioterapêutica:</strong> Aplicação de compressas frias em região axilar e inguinal, mobilização passiva de MMII para estimular retorno venoso, exercícios respiratórios para aumentar perda de calor por evaporação.
+                            </p>
+                            <p style={{ margin: 0, fontStyle: 'italic' }}>
+                              <strong>Resultado:</strong> Redução da temperatura para 38.2°C em 2 horas, melhora do estado geral e redução da taquicardia.
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1095,34 +1506,367 @@ const AvaliacaoUTI = () => {
                   border: '2px solid var(--emerald-300)'
                 }}>
                   <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: 'var(--emerald-800)', marginBottom: '1.5rem' }}>
-                    Tipos de Tórax
+                    Tipos de Tórax: Anatomia Patológica e Fisiopatologia
                   </h3>
-                  <p style={{ color: 'var(--emerald-700)', fontSize: '1rem', lineHeight: '1.7', marginBottom: '1.5rem' }}>
-                    A configuração torácica se modifica frente a situações crônicas que levam ao aumento do aprisionamento aéreo, bem como nas condições ortopédicas da coluna vertebral.
+                  <p style={{ color: 'var(--emerald-700)', fontSize: '1rem', lineHeight: '1.7', marginBottom: '2rem' }}>
+                    A configuração torácica se modifica frente a situações crônicas que levam ao aumento do aprisionamento aéreo, bem como nas condições ortopédicas da coluna vertebral. Cada alteração possui implicações biomecânicas específicas na função respiratória.
                   </p>
                   
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                    {[
-                      { nome: 'Tonel', desc: 'Aumento do diâmetro anteroposterior' },
-                      { nome: 'Pectus Carinatum', desc: 'Protusão esternal' },
-                      { nome: 'Pectus Excavatum', desc: 'Depressão esternal' },
-                      { nome: 'Cifoescoliótico', desc: 'Associação de cifose e escoliose' }
-                    ].map((tipo, index) => (
-                      <div key={index} style={{ 
-                        background: 'white',
+                  {/* Tipos de Tórax Expandidos */}
+                  <div style={{ display: 'grid', gap: '2rem' }}>
+                    
+                    {/* Tórax em Tonel */}
+                    <div style={{ 
+                      background: 'white',
+                      borderRadius: '1rem',
+                      padding: '2rem',
+                      border: '1px solid var(--emerald-200)',
+                      boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+                    }}>
+                      <div style={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        marginBottom: '1.5rem',
+                        padding: '1rem',
+                        background: 'linear-gradient(145deg, #fef3c7, #fde68a)',
+                        borderRadius: '0.75rem'
+                      }}>
+                        <div style={{ 
+                          width: '3rem',
+                          height: '3rem',
+                          background: 'var(--amber-500)',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'white',
+                          fontWeight: 'bold',
+                          fontSize: '1.2rem'
+                        }}>
+                          🫁
+                        </div>
+                        <div>
+                          <h4 style={{ fontSize: '1.3rem', fontWeight: '700', color: 'var(--amber-800)', margin: 0 }}>
+                            Tórax em Tonel (Barrel Chest)
+                          </h4>
+                          <p style={{ color: 'var(--amber-700)', fontSize: '0.9rem', margin: 0 }}>
+                            Diâmetro anteroposterior aumentado - Razão AP:Lateral &gt; 0.9
+                          </p>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                        {/* Fisiopatologia */}
+                        <div style={{ 
+                          background: 'linear-gradient(145deg, #fef2f2, #fde8e8)',
+                          padding: '1.5rem',
+                          borderRadius: '0.75rem',
+                          borderLeft: '4px solid var(--red-500)'
+                        }}>
+                          <h5 style={{ color: 'var(--red-800)', fontWeight: '600', marginBottom: '1rem', fontSize: '1.1rem' }}>
+                            🔬 Fisiopatologia
+                          </h5>
+                          <ul style={{ color: 'var(--red-700)', lineHeight: '1.6', paddingLeft: '1rem' }}>
+                            <li><strong>Hiperinsuflação pulmonar:</strong> Volume residual aumentado (150-200% do normal)</li>
+                            <li><strong>Perda de elasticidade:</strong> Destruição de fibras elásticas (enfisema)</li>
+                            <li><strong>Aprisionamento aéreo:</strong> Obstrução expiratória + colapso dinâmico</li>
+                            <li><strong>Desvantagem mecânica:</strong> Diafragma em posição baixa e horizontalizada</li>
+                            <li><strong>Músculos acessórios:</strong> Hipertrofia compensatória</li>
+                          </ul>
+                        </div>
+
+                        {/* Implicações Clínicas */}
+                        <div style={{ 
+                          background: 'linear-gradient(145deg, #eff6ff, #dbeafe)',
+                          padding: '1.5rem',
+                          borderRadius: '0.75rem',
+                          borderLeft: '4px solid var(--blue-500)'
+                        }}>
+                          <h5 style={{ color: 'var(--blue-800)', fontWeight: '600', marginBottom: '1rem', fontSize: '1.1rem' }}>
+                            💊 Implicações Clínicas
+                          </h5>
+                          <ul style={{ color: 'var(--blue-700)', lineHeight: '1.6', paddingLeft: '1rem' }}>
+                            <li><strong>Dispneia aos esforços:</strong> Ineficiência ventilatória</li>
+                            <li><strong>Fadiga muscular:</strong> Trabalho respiratório aumentado em 3-4x</li>
+                            <li><strong>Hipercapnia:</strong> Ventilação alveolar reduzida</li>
+                            <li><strong>Cor pulmonale:</strong> Hipertensão pulmonar secundária</li>
+                            <li><strong>Infecções recorrentes:</strong> Clearance mucociliar prejudicado</li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Intervenções Fisioterapêuticas Específicas */}
+                      <div style={{
+                        background: 'linear-gradient(145deg, #f0fdf4, #dcfce7)',
                         padding: '1.5rem',
                         borderRadius: '0.75rem',
-                        border: '1px solid var(--emerald-200)',
-                        textAlign: 'center'
+                        border: '1px solid var(--green-300)',
+                        marginTop: '1.5rem'
                       }}>
-                        <h4 style={{ fontSize: '1.1rem', fontWeight: '600', color: 'var(--emerald-800)', marginBottom: '0.5rem' }}>
-                          {tipo.nome}
-                        </h4>
-                        <p style={{ fontSize: '0.9rem', color: 'var(--emerald-700)', margin: 0 }}>
-                          {tipo.desc}
-                        </p>
+                        <h5 style={{ color: 'var(--green-800)', fontWeight: '600', marginBottom: '1rem', fontSize: '1.1rem' }}>
+                          🩺 Abordagem Fisioterapêutica
+                        </h5>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+                          <div>
+                            <h6 style={{ color: 'var(--green-700)', fontWeight: '600', marginBottom: '0.5rem' }}>Exercícios Respiratórios:</h6>
+                            <ul style={{ color: 'var(--green-600)', fontSize: '0.9rem', paddingLeft: '1rem' }}>
+                              <li>Respiração com lábios franzidos</li>
+                              <li>Padrão diafragmático</li>
+                              <li>Exercícios com EPAP</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <h6 style={{ color: 'var(--green-700)', fontWeight: '600', marginBottom: '0.5rem' }}>Expansão Torácica:</h6>
+                            <ul style={{ color: 'var(--green-600)', fontSize: '0.9rem', paddingLeft: '1rem' }}>
+                              <li>Mobilização costal</li>
+                              <li>Alongamento m. acessórios</li>
+                              <li>Exercícios posturais</li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                    ))}
+                    </div>
+
+                    {/* Pectus Carinatum */}
+                    <div style={{ 
+                      background: 'white',
+                      borderRadius: '1rem',
+                      padding: '2rem',
+                      border: '1px solid var(--purple-200)',
+                      boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+                    }}>
+                      <div style={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        marginBottom: '1.5rem',
+                        padding: '1rem',
+                        background: 'linear-gradient(145deg, #f3e8ff, #e9d5ff)',
+                        borderRadius: '0.75rem'
+                      }}>
+                        <div style={{ 
+                          width: '3rem',
+                          height: '3rem',
+                          background: 'var(--purple-500)',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'white',
+                          fontWeight: 'bold',
+                          fontSize: '1.2rem'
+                        }}>
+                          📐
+                        </div>
+                        <div>
+                          <h4 style={{ fontSize: '1.3rem', fontWeight: '700', color: 'var(--purple-800)', margin: 0 }}>
+                            Pectus Carinatum (Peito de Pombo)
+                          </h4>
+                          <p style={{ color: 'var(--purple-700)', fontSize: '0.9rem', margin: 0 }}>
+                            Protrusão anterior do esterno e cartilagens costais
+                          </p>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
+                        <div style={{ 
+                          background: 'linear-gradient(145deg, #fef3c7, #fde68a)',
+                          padding: '1.5rem',
+                          borderRadius: '0.75rem',
+                          borderLeft: '4px solid var(--amber-500)'
+                        }}>
+                          <h5 style={{ color: 'var(--amber-800)', fontWeight: '600', marginBottom: '1rem' }}>
+                            📊 Características
+                          </h5>
+                          <ul style={{ color: 'var(--amber-700)', lineHeight: '1.5', fontSize: '0.9rem', paddingLeft: '1rem' }}>
+                            <li>Incidência: 1:400 nascimentos</li>
+                            <li>Predominância masculina (4:1)</li>
+                            <li>Crescimento compensatório das cartilagens</li>
+                            <li>Frequentemente assimétrico</li>
+                          </ul>
+                        </div>
+
+                        <div style={{ 
+                          background: 'linear-gradient(145deg, #ecfdf5, #d1fae5)',
+                          padding: '1.5rem',
+                          borderRadius: '0.75rem',
+                          borderLeft: '4px solid var(--green-500)'
+                        }}>
+                          <h5 style={{ color: 'var(--green-800)', fontWeight: '600', marginBottom: '1rem' }}>
+                            🎯 Intervenção Fisioterapêutica
+                          </h5>
+                          <ul style={{ color: 'var(--green-700)', lineHeight: '1.5', fontSize: '0.9rem', paddingLeft: '1rem' }}>
+                            <li>Alongamento peitoral maior</li>
+                            <li>Fortalecimento músculos dorsais</li>
+                            <li>Exercícios de consciência postural</li>
+                            <li>Técnicas de mobilização costal</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Pectus Excavatum */}
+                    <div style={{ 
+                      background: 'white',
+                      borderRadius: '1rem',
+                      padding: '2rem',
+                      border: '1px solid var(--indigo-200)',
+                      boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+                    }}>
+                      <div style={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        marginBottom: '1.5rem',
+                        padding: '1rem',
+                        background: 'linear-gradient(145deg, #e0e7ff, #c7d2fe)',
+                        borderRadius: '0.75rem'
+                      }}>
+                        <div style={{ 
+                          width: '3rem',
+                          height: '3rem',
+                          background: 'var(--indigo-500)',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'white',
+                          fontWeight: 'bold',
+                          fontSize: '1.2rem'
+                        }}>
+                          🕳️
+                        </div>
+                        <div>
+                          <h4 style={{ fontSize: '1.3rem', fontWeight: '700', color: 'var(--indigo-800)', margin: 0 }}>
+                            Pectus Excavatum (Peito Escavado)
+                          </h4>
+                          <p style={{ color: 'var(--indigo-700)', fontSize: '0.9rem', margin: 0 }}>
+                            Depressão côncava do esterno e cartilagens costais
+                          </p>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                        <div style={{ 
+                          background: 'linear-gradient(145deg, #fef2f2, #fde8e8)',
+                          padding: '1.5rem',
+                          borderRadius: '0.75rem',
+                          borderLeft: '4px solid var(--red-500)'
+                        }}>
+                          <h5 style={{ color: 'var(--red-800)', fontWeight: '600', marginBottom: '1rem' }}>
+                            ⚠️ Comprometimentos Funcionais
+                          </h5>
+                          <ul style={{ color: 'var(--red-700)', lineHeight: '1.5', fontSize: '0.9rem', paddingLeft: '1rem' }}>
+                            <li><strong>Índice de Haller &gt;3.25:</strong> Indicação cirúrgica</li>
+                            <li><strong>Compressão cardíaca:</strong> Redução do débito até 20%</li>
+                            <li><strong>Restrição pulmonar:</strong> CVF reduzida em 10-15%</li>
+                            <li><strong>Limitação ao exercício:</strong> VO₂ máx. diminuído</li>
+                          </ul>
+                        </div>
+
+                        <div style={{ 
+                          background: 'linear-gradient(145deg, #f0fdf4, #dcfce7)',
+                          padding: '1.5rem',
+                          borderRadius: '0.75rem',
+                          borderLeft: '4px solid var(--green-500)'
+                        }}>
+                          <h5 style={{ color: 'var(--green-800)', fontWeight: '600', marginBottom: '1rem' }}>
+                            💪 Protocolo Fisioterapêutico
+                          </h5>
+                          <ul style={{ color: 'var(--green-700)', lineHeight: '1.5', fontSize: '0.9rem', paddingLeft: '1rem' }}>
+                            <li><strong>Pré-cirúrgico:</strong> Condicionamento cardiovascular</li>
+                            <li><strong>Pós-cirúrgico:</strong> Mobilização precoce</li>
+                            <li><strong>Exercícios específicos:</strong> Push-ups modificados</li>
+                            <li><strong>Expansão torácica:</strong> Mobilização ativa-assistida</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tórax Cifoescoliótico */}
+                    <div style={{ 
+                      background: 'white',
+                      borderRadius: '1rem',
+                      padding: '2rem',
+                      border: '1px solid var(--rose-200)',
+                      boxShadow: '0 4px 6px rgba(0,0,0,0.05)'
+                    }}>
+                      <div style={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '1rem',
+                        marginBottom: '1.5rem',
+                        padding: '1rem',
+                        background: 'linear-gradient(145deg, #fdf2f8, #fce7f3)',
+                        borderRadius: '0.75rem'
+                      }}>
+                        <div style={{ 
+                          width: '3rem',
+                          height: '3rem',
+                          background: 'var(--rose-500)',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'white',
+                          fontWeight: 'bold',
+                          fontSize: '1.2rem'
+                        }}>
+                          🔄
+                        </div>
+                        <div>
+                          <h4 style={{ fontSize: '1.3rem', fontWeight: '700', color: 'var(--rose-800)', margin: 0 }}>
+                            Tórax Cifoescoliótico
+                          </h4>
+                          <p style={{ color: 'var(--rose-700)', fontSize: '0.9rem', margin: 0 }}>
+                            Combinação de cifose e escoliose com deformidade tridimensional
+                          </p>
+                        </div>
+                      </div>
+
+                      <div style={{ 
+                        background: 'linear-gradient(145deg, #fefce8, #fef3c7)',
+                        padding: '1.5rem',
+                        borderRadius: '0.75rem',
+                        border: '1px solid var(--amber-300)',
+                        marginBottom: '1.5rem'
+                      }}>
+                        <h5 style={{ color: 'var(--amber-800)', fontWeight: '600', marginBottom: '1rem' }}>
+                          🎯 Caso Clínico Complexo
+                        </h5>
+                        <div style={{ color: 'var(--amber-800)', fontSize: '0.95rem', lineHeight: '1.6' }}>
+                          <p style={{ marginBottom: '1rem', fontWeight: '500' }}>
+                            <strong>Paciente:</strong> Feminina, 16 anos, escoliose idiopática com cifose torácica de 65° (Cobb), limitação ventilatória severa.
+                          </p>
+                          <p style={{ marginBottom: '1rem' }}>
+                            <strong>Comprometimentos:</strong> CVF = 45% do predito, assimetria torácica, dor crônica, limitação funcional severa.
+                          </p>
+                          <p style={{ margin: 0, fontStyle: 'italic' }}>
+                            <strong>Protocolo integrado:</strong> Cinesioterapia respiratória + RPG + fortalecimento assimétrico + técnicas de alongamento específicas.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+                        <div style={{ background: 'var(--rose-50)', padding: '1rem', borderRadius: '0.5rem', borderLeft: '3px solid var(--rose-500)' }}>
+                          <h6 style={{ color: 'var(--rose-800)', fontWeight: '600', marginBottom: '0.5rem' }}>Comprometimentos Ventilatórios:</h6>
+                          <ul style={{ color: 'var(--rose-700)', fontSize: '0.85rem', paddingLeft: '1rem', lineHeight: '1.4' }}>
+                            <li>Padrão restritivo (CVF ↓↓)</li>
+                            <li>Ventilação/perfusão alterada</li>
+                            <li>Músculos respiratórios encurtados</li>
+                          </ul>
+                        </div>
+                        <div style={{ background: 'var(--green-50)', padding: '1rem', borderRadius: '0.5rem', borderLeft: '3px solid var(--green-500)' }}>
+                          <h6 style={{ color: 'var(--green-800)', fontWeight: '600', marginBottom: '0.5rem' }}>Intervenções Prioritárias:</h6>
+                          <ul style={{ color: 'var(--green-700)', fontSize: '0.85rem', paddingLeft: '1rem', lineHeight: '1.4' }}>
+                            <li>Mobilização de coluna torácica</li>
+                            <li>Expansão costal assimétrica</li>
+                            <li>Fortalecimento do lado côncavo</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
