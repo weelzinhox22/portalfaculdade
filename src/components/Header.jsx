@@ -97,10 +97,10 @@ const Header = () => {
           gap: '2rem',
           '@media (max-width: 768px)': { display: 'none' }
         }}>
-          {navigation.map((item) => (
-            <Link
+            {navigation.map((item) => (
+                <Link
               key={item.href}
-              to={item.href}
+                  to={item.href}
               style={{
                 color: location.pathname === item.href 
                   ? '#0d9488'
@@ -121,8 +121,8 @@ const Header = () => {
                   ? '#0d9488'
                   : '#64748b';
               }}
-            >
-              {item.name}
+                >
+                  {item.name}
               {location.pathname === item.href && (
                 <div style={{
                   position: 'absolute',
@@ -134,8 +134,8 @@ const Header = () => {
                   borderRadius: '1px'
                 }} />
               )}
-            </Link>
-          ))}
+                </Link>
+            ))}
         </nav>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

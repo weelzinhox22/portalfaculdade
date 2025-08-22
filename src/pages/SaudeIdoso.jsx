@@ -108,12 +108,7 @@ const SaudeIdoso = () => {
     }
   ];
 
-  const quickStats = [
-    { label: 'Idosos Atendidos', value: '8k+', icon: '👴' },
-    { label: 'Escalas Validadas', value: '35+', icon: '📊' },
-    { label: 'Protocolos', value: '50+', icon: '📋' },
-    { label: 'Melhora Funcional', value: '89%', icon: '📈' }
-  ];
+
 
   const ageGroups = [
     { name: '60-70 anos', icon: '🚶‍♂️', color: 'bg-green-100 text-green-700', focus: 'Prevenção' },
@@ -285,40 +280,7 @@ const SaudeIdoso = () => {
           </div>
         </section>
 
-      {/* Quick Stats */}
-      <section style={{ padding: '3rem 0', background: 'white', borderBottom: '1px solid var(--neutral-200)' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
-            {quickStats.map((stat, index) => (
-              <div 
-                key={index}
-                style={{
-                  textAlign: 'center',
-                  padding: '1.5rem',
-                  borderRadius: '1rem',
-                  background: 'linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%)',
-                  border: '1px solid var(--neutral-200)',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-                <div style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--green-600)', marginBottom: '0.25rem' }}>
-                  {stat.value}
-                </div>
-                <div style={{ color: 'var(--neutral-600)', fontSize: '0.9rem' }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Common Conditions */}
       <section style={{ padding: '2rem 0', background: 'var(--green-50)', borderBottom: '1px solid var(--green-200)' }}>

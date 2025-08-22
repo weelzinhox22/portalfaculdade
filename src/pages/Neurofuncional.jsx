@@ -101,12 +101,7 @@ const Neurofuncional = () => {
     }
   ];
 
-  const quickStats = [
-    { label: 'Estudantes', value: '2.5k+', icon: '👥' },
-    { label: 'Casos Clínicos', value: '150+', icon: '📋' },
-    { label: 'Horas de Conteúdo', value: '80h', icon: '⏱️' },
-    { label: 'Taxa de Aprovação', value: '94%', icon: '🎯' }
-  ];
+
 
   useEffect(() => {
     // Scroll to top when component mounts
@@ -234,40 +229,7 @@ const Neurofuncional = () => {
         </div>
       </section>
 
-      {/* Quick Stats */}
-      <section style={{ padding: '3rem 0', background: 'white', borderBottom: '1px solid var(--neutral-200)' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
-            {quickStats.map((stat, index) => (
-              <div 
-                key={index}
-                style={{
-                  textAlign: 'center',
-                  padding: '1.5rem',
-                  borderRadius: '1rem',
-                  background: 'linear-gradient(145deg, #f8fafc 0%, #f1f5f9 100%)',
-                  border: '1px solid var(--neutral-200)',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
-                <div style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--purple-600)', marginBottom: '0.25rem' }}>
-                  {stat.value}
-                </div>
-                <div style={{ color: 'var(--neutral-600)', fontSize: '0.9rem' }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Modules Section */}
       <section style={{ padding: '4rem 0', background: 'var(--neutral-50)' }}>

@@ -545,7 +545,7 @@ const UnidadeHospitalar = () => {
                   marginBottom: '0.75rem' 
                 }}>
                   {area.title}
-                </h3>
+            </h3>
                 <p style={{ 
                   color: 'var(--teal-600)', 
                   lineHeight: '1.6', 
@@ -908,7 +908,7 @@ const UnidadeHospitalar = () => {
                     {material.type === 'PDF Científico' ? 'Acessar Site' : 
                      material.type === 'YouTube' ? 'Buscar Vídeos' : 
                      material.type === 'Base Científica' ? 'Pesquisar Artigos' : 'Acessar'}
-                  </button>
+                </button>
                 </div>
               </div>
             ))}
