@@ -185,7 +185,7 @@ const ExamesComplementares = () => {
   ];
 
   return (
-    <div className="exames-complementares-page" style={{ minHeight: '100vh', background: 'white' }}>
+    <div className="exames-complementares-page" style={{ minHeight: '100vh', background: 'white', paddingTop: '6rem' }}>
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%)',

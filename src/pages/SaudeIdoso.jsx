@@ -159,7 +159,17 @@ const SaudeIdoso = () => {
           />
           
           <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: '1fr 1fr', 
+              gap: '4rem', 
+              alignItems: 'center',
+              '@media (max-width: 768px)': {
+                gridTemplateColumns: '1fr',
+                gap: '2rem',
+                textAlign: 'center'
+              }
+            }}>
               <div>
                 <Link 
                   to="/" 
@@ -330,7 +340,15 @@ const SaudeIdoso = () => {
             Formação abrangente em fisioterapia geriátrica, do envelhecimento saudável aos cuidados especializados
           </p>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+            gap: '2rem',
+            '@media (max-width: 768px)': {
+              gridTemplateColumns: '1fr',
+              gap: '1.5rem'
+            }
+          }}>
             {modules.map((module, index) => (
               <div
                 key={module.id}
@@ -461,7 +479,15 @@ const SaudeIdoso = () => {
             Materiais desenvolvidos especificamente para a prática geriátrica baseada em evidências
           </p>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
+            gap: '2rem',
+            '@media (max-width: 768px)': {
+              gridTemplateColumns: '1fr',
+              gap: '1.5rem'
+            }
+          }}>
             {materials.map((material) => (
               <div
                 key={material.id}

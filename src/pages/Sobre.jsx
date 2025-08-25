@@ -55,7 +55,7 @@ const Sobre = () => {
   ];
 
   return (
-    <main className="main">
+    <main className="main" style={{ paddingTop: '6rem' }}>
       {/* Hero Section */}
       <section className="hero" style={{ background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)' }}>
         <div className="container">

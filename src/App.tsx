@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Layout from './components/Layout';
-import Home from './pages/Home';
-import SaudeAtleta from './pages/SaudeAtleta';
-import UnidadeHospitalar from './pages/UnidadeHospitalar';
-import SaudeIdoso from './pages/SaudeIdoso';
-import Neurofuncional from './pages/Neurofuncional';
+
+// Lazy loading para componentes de página
+const Home = lazy(() => import('./pages/Home'));
+const SaudeAtleta = lazy(() => import('./pages/SaudeAtleta'));
+const UnidadeHospitalar = lazy(() => import('./pages/UnidadeHospitalar'));
+const SaudeIdoso = lazy(() => import('./pages/SaudeIdoso'));
+const Neurofuncional = lazy(() => import('./pages/Neurofuncional'));
 import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import SearchResults from './pages/SearchResults';
@@ -104,8 +106,19 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          {/* Páginas com layout completo (Header + Footer) */}
-          <Route path="/" element={<Layout><Home /></Layout>} />
+          {/* Páginas com layout completo */}
+          <Route path="/" element={
+            <Layout>
+              <Suspense fallback={
+                <div className="flex items-center justify-center h-screen">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+                </div>
+              }>
+                <Home />
+              </Suspense>
+            </Layout>
+          } />
+          {/* Aplicar o mesmo padrão para outras rotas */}
           <Route path="/sobre" element={<Layout><Sobre /></Layout>} />
           <Route path="/contato" element={<Layout><Contato /></Layout>} />
           

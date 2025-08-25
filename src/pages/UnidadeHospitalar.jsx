@@ -228,7 +228,7 @@ const UnidadeHospitalar = () => {
   }, []);
 
   return (
-    <div className="specialty-page" style={{ paddingTop: 0 }}>
+    <div className="specialty-page" style={{ paddingTop: '6rem' }}>
       {/* Hero Section */}
       <section className="specialty-hero">
         <div 
@@ -490,7 +490,15 @@ const UnidadeHospitalar = () => {
             </p>
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+          <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+          gap: '2rem',
+          '@media (max-width: 768px)': {
+            gridTemplateColumns: '1fr',
+            gap: '1.5rem'
+          }
+        }}>
             {[
               {
                 icon: '🫁',
@@ -602,7 +610,15 @@ const UnidadeHospitalar = () => {
             Formação completa em fisioterapia hospitalar, desde cuidados básicos até técnicas críticas avançadas
           </p>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', 
+            gap: '2rem',
+            '@media (max-width: 768px)': {
+              gridTemplateColumns: '1fr',
+              gap: '1.5rem'
+            }
+          }}>
             {modules.map((module, index) => (
               <div
                 key={module.id}
@@ -771,7 +787,15 @@ const UnidadeHospitalar = () => {
             Materiais didáticos e recursos científicos reais para aprofundamento em fisioterapia hospitalar
           </p>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', 
+            gap: '2rem',
+            '@media (max-width: 768px)': {
+              gridTemplateColumns: '1fr',
+              gap: '1.5rem'
+            }
+          }}>
             {materials.map((material) => (
               <div
                 key={material.id}

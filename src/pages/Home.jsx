@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, ArrowRight, BookOpen, Users, Target, Award, Play, Download, Star, Quote, CheckCircle, TrendingUp, Users2, Globe, Shield } from 'lucide-react';
+import Newsletter from '../components/Newsletter';
+import AdSense from '../components/AdSense';
+import NewsletterBanner from '../components/NewsletterBanner';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -149,7 +152,7 @@ const Home = () => {
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        paddingTop: '5rem',
+        paddingTop: '6rem',
         background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)'
       }}>
         {/* Background Elements */}
@@ -483,6 +486,9 @@ const Home = () => {
           }
         `}</style>
       </section>
+
+      {/* Newsletter Banner */}
+      <NewsletterBanner />
 
       {/* Enhanced Search Section */}
       <section id="search" style={{
@@ -1782,6 +1788,38 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Newsletter Section */}
+      <section style={{
+        padding: '6rem 0',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 2rem',
+          position: 'relative',
+          zIndex: 1
+        }}>
+          <Newsletter variant="default" />
+        </div>
+      </section>
+
+      {/* AdSense Banner */}
+      <section style={{
+        padding: '2rem 0',
+        background: 'white'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 2rem'
+        }}>
+          <AdSense size="banner" slot="home-banner" />
+        </div>
+      </section>
+
       {/* Testimonials Section */}
       <section style={{
         padding: '8rem 0',
@@ -2072,6 +2110,20 @@ const Home = () => {
               <ArrowRight style={{ width: '20px', height: '20px' }} />
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* AdSense Medium */}
+      <section style={{
+        padding: '3rem 0',
+        background: 'white'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 2rem'
+        }}>
+          <AdSense size="medium" slot="home-content" />
         </div>
       </section>
 

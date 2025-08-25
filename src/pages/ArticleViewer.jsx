@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Download, Share2, Bookmark, Calendar, User, Quote, FileText, Eye, ThumbsUp, AlertCircle } from 'lucide-react';
 import realSearchService from '../services/realSearchService';
+import AdSense from '../components/AdSense';
+import Newsletter from '../components/Newsletter';
+import SidebarAds from '../components/SidebarAds';
 
 const ArticleViewer = () => {
   const { id } = useParams();
@@ -241,7 +244,10 @@ const ArticleViewer = () => {
   }
 
   return (
-    <div className="article-viewer" style={{ minHeight: '100vh', background: 'white', paddingTop: '5rem' }}>
+    <div className="article-viewer" style={{ minHeight: '100vh', background: 'white', paddingTop: '6rem' }}>
+      <div style={{ display: 'flex', gap: '2rem', maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
+        {/* Conteúdo Principal */}
+        <div style={{ flex: 1, minWidth: 0 }}>
       {/* Header */}
       <div style={{ background: 'var(--neutral-50)', borderBottom: '1px solid var(--neutral-200)', padding: '2rem 0' }}>
         <div className="container" style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 2rem' }}>
@@ -513,6 +519,11 @@ const ArticleViewer = () => {
               </div>
             </section>
 
+            {/* AdSense Inline */}
+            <section style={{ margin: '3rem 0' }}>
+              <AdSense size="medium" slot="article-inline" />
+            </section>
+
             {/* Full Content */}
             <section style={{ marginBottom: '3rem' }}>
               <h2 style={{ fontSize: '1.5rem', fontWeight: '700', marginBottom: '2rem', color: 'var(--neutral-800)' }}>
@@ -615,17 +626,31 @@ const ArticleViewer = () => {
             </div>
           </div>
         </div>
-      </div>
 
-      <style jsx>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
+        {/* Newsletter no final do artigo */}
+        <section style={{ padding: '4rem 0', background: '#f8fafc', margin: '3rem 0 0', borderRadius: '1rem' }}>
+          <Newsletter variant="compact" />
+        </section>
+
+        {/* AdSense no final */}
+        <section style={{ padding: '2rem 0' }}>
+          <AdSense size="medium" slot="article-bottom" />
+        </section>
+
+        </div>
+
+        {/* Sidebar com Anúncios */}
+        <aside style={{
+          width: '300px',
+          flexShrink: 0,
+          '@media (max-width: 1024px)': { display: 'none' }
+        }}>
+          <SidebarAds />
+        </aside>
+      </div>
     </div>
+  </div>
   );
 };
 
 export default ArticleViewer;
-

@@ -44,7 +44,7 @@ const NormasBiosseguranca1 = () => {
   ];
 
   return (
-    <div className="normas-biosseguranca-page" style={{ minHeight: '100vh', background: 'white' }}>
+    <div className="normas-biosseguranca-page" style={{ minHeight: '100vh', background: 'white', paddingTop: '6rem' }}>
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
@@ -1642,4 +1642,3 @@ const NormasBiosseguranca1 = () => {
 };
 
 export default NormasBiosseguranca1;
-

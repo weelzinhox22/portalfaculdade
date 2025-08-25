@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { IconArrowRight, IconSparkles } from '@tabler/icons-react';
+import { memo } from 'react';
 
 const SubjectCard = ({ subject, icon: Icon, color, description, href }) => {
   const colorClasses = {
@@ -96,4 +97,5 @@ const SubjectCard = ({ subject, icon: Icon, color, description, href }) => {
   );
 };
 
-export default SubjectCard;
+// Memoizar o componente para evitar renderizações desnecessárias
+export default memo(SubjectCard);

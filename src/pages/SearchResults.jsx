@@ -379,7 +379,7 @@ const SearchResults = () => {
   );
 
   return (
-    <div className="search-results-page" style={{ minHeight: '100vh', background: 'var(--neutral-50)', paddingTop: '5rem' }}>
+    <div className="search-results-page" style={{ minHeight: '100vh', background: 'var(--neutral-50)', paddingTop: '6rem' }}>
       <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
         {/* Header */}
         <div style={{ marginBottom: '2rem' }}>

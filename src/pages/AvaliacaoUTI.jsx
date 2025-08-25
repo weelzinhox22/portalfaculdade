@@ -94,7 +94,7 @@ const AvaliacaoUTI = () => {
   ];
 
   return (
-    <div className="avaliacao-uti-page" style={{ minHeight: '100vh', background: 'white' }}>
+    <div className="avaliacao-uti-page" style={{ minHeight: '100vh', background: 'white', paddingTop: '6rem' }}>
       {/* Hero Section */}
       <section style={{
         background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
