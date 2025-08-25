@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search, Menu, X } from 'lucide-react';
+import './header.css';
 
 const Header = () => {
   const location = useLocation();
@@ -9,13 +10,18 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Verificar se a rota atual corresponde ao link de navegação
+  const isActive = (href) => location.pathname === href;
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Saúde do Atleta', href: '/saude-atleta' },
-    { name: 'Unidade Hospitalar', href: '/unidade-hospitalar' },
-    { name: 'Saúde do Idoso', href: '/saude-idoso' },
-    { name: 'Neurofuncional', href: '/neurofuncional' },
+    { name: 'Atleta', href: '/saude-atleta' },
+    { name: 'Hospitalar', href: '/unidade-hospitalar' },
+    { name: 'Idoso', href: '/saude-idoso' },
+    { name: 'Neuro', href: '/neurofuncional' },
+    { name: 'Utilitários', href: '/ferramentas-calculo' },
+    { name: 'Questões', href: '/questoes' },
     { name: 'Sobre', href: '/sobre' },
     { name: 'Contato', href: '/contato' },
   ];
@@ -72,150 +78,170 @@ const Header = () => {
 
   return (
     <>
-      <header 
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          background: '#ffffff',
-          backdropFilter: 'none',
-          borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          padding: '0.75rem 0',
-          boxShadow: isScrolled 
-            ? '0 1px 3px rgba(0, 0, 0, 0.1)' 
-            : 'none'
-        }}
-      >
-        <div className="container" style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between',
-          maxWidth: '1200px',
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .nav-desktop { display: none !important; }
+            .mobile-menu-btn { display: flex !important; }
+          }
+          @media (min-width: 769px) {
+            .nav-desktop { display: flex !important; }
+            .mobile-menu-btn { display: none !important; }
+          }
+        `}
+      </style>
+      <header style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        background: isScrolled
+          ? 'rgba(255, 255, 255, 0.8)'
+          : 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: isScrolled
+          ? '1px solid rgba(0, 0, 0, 0.1)'
+          : '1px solid transparent',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        height: '60px'
+      }}>
+        <div style={{
+          maxWidth: '1400px',
           margin: '0 auto',
-          padding: '0 2rem',
-          background: 'transparent'
+          padding: '0 max(1rem, env(safe-area-inset-left))',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
         }}>
-          <Link 
-            to="/" 
+          {/* Logo */}
+          <Link
+            to="/"
             style={{
-              fontSize: '1.25rem',
-              fontWeight: '600',
-              color: '#0d9488',
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              color: '#1f2937',
               textDecoration: 'none',
-              fontFamily: 'Plus Jakarta Sans, sans-serif',
-              transition: 'all 0.3s ease',
               letterSpacing: '-0.025em',
-              textShadow: 'none'
+              transition: 'color 0.2s ease'
             }}
+            onMouseEnter={(e) => e.target.style.color = '#0d9488'}
+            onMouseLeave={(e) => e.target.style.color = '#1f2937'}
           >
-            FisioWel
+            FisioNeo
           </Link>
-          
-          {/* Desktop Navigation */}
-          <nav style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '2rem',
-            '@media (max-width: 768px)': { display: 'none' }
+
+          {/* Navigation Desktop */}
+          <nav className="nav-desktop" style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
           }}>
             {navigation.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 to={item.href}
                 style={{
-                  color: location.pathname === item.href 
-                    ? '#0d9488'
-                    : '#64748b',
-                  textDecoration: 'none',
+                  padding: '0.5rem 0.75rem',
                   fontSize: '0.875rem',
-                  fontWeight: location.pathname === item.href ? '500' : '400',
-                  transition: 'all 0.3s ease',
+                  fontWeight: 500,
+                  color: isActive(item.href) ? '#0d9488' : '#6b7280',
+                  textDecoration: 'none',
+                  borderRadius: '0.5rem',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                   position: 'relative',
-                  padding: '0.5rem 0',
-                  textShadow: 'none'
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.color = '#0d9488';
+                  if (!isActive(item.href)) {
+                    e.target.style.color = '#374151';
+                    e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.color = location.pathname === item.href 
-                    ? '#0d9488'
-                    : '#64748b';
+                  if (!isActive(item.href)) {
+                    e.target.style.color = '#6b7280';
+                    e.target.style.background = 'transparent';
+                  }
                 }}
               >
                 {item.name}
-                {location.pathname === item.href && (
+                {isActive(item.href) && (
                   <div style={{
                     position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: '2px',
+                    bottom: '-2px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '4px',
+                    height: '4px',
                     background: '#0d9488',
-                    borderRadius: '1px'
+                    borderRadius: '50%'
                   }} />
                 )}
               </Link>
             ))}
           </nav>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button 
+          {/* Right Side - Search & Mobile Menu */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {/* Search Button */}
+            <button
               onClick={toggleSearchModal}
               style={{
-                background: 'none',
-                border: 'none',
-                color: '#64748b',
-                cursor: 'pointer',
-                padding: '0.5rem',
-                borderRadius: '0.5rem',
-                transition: 'all 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = 'rgba(13, 148, 136, 0.1)';
-                e.target.style.color = '#0d9488';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = 'none';
-                e.target.style.color = '#64748b';
-              }}
-            >
-              <Search size={20} />
-            </button>
-            
-            {/* Mobile Menu Button */}
-            <button 
-              onClick={toggleMobileMenu}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#64748b',
-                cursor: 'pointer',
-                padding: '0.5rem',
-                borderRadius: '0.5rem',
-                transition: 'all 0.3s ease',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                '@media (min-width: 769px)': { display: 'none' }
+                width: '36px',
+                height: '36px',
+                background: 'none',
+                border: 'none',
+                color: '#6b7280',
+                cursor: 'pointer',
+                borderRadius: '0.5rem',
+                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = 'rgba(13, 148, 136, 0.1)';
-                e.target.style.color = '#0d9488';
+                e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                e.target.style.color = '#374151';
               }}
               onMouseLeave={(e) => {
                 e.target.style.background = 'none';
-                e.target.style.color = '#64748b';
+                e.target.style.color = '#6b7280';
+              }}
+            >
+              <Search size={18} />
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="mobile-menu-btn"
+              onClick={toggleMobileMenu}
+              style={{
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '36px',
+                height: '36px',
+                background: 'none',
+                border: 'none',
+                color: '#6b7280',
+                cursor: 'pointer',
+                borderRadius: '0.5rem',
+                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                e.target.style.color = '#374151';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'none';
+                e.target.style.color = '#6b7280';
               }}
               aria-label="Toggle mobile menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -223,40 +249,41 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           style={{
             position: 'fixed',
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            background: 'rgba(0, 0, 0, 0.5)',
-            backdropFilter: 'blur(4px)',
+            background: 'rgba(0, 0, 0, 0.2)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
             zIndex: 999,
-            animation: 'fadeIn 0.3s ease-out'
+            opacity: isMobileMenuOpen ? 1 : 0,
+            transition: 'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
           }}
           onClick={toggleMobileMenu}
         />
       )}
 
       {/* Mobile Menu */}
-      <div 
+      <div
         style={{
           position: 'fixed',
           top: 0,
           right: 0,
           bottom: 0,
-          width: '280px',
-          maxWidth: '85vw',
-          background: 'rgba(255, 255, 255, 0.98)',
+          width: '100%',
+          background: 'rgba(255, 255, 255, 0.95)',
           backdropFilter: 'blur(20px)',
-          borderLeft: '1px solid rgba(0, 0, 0, 0.1)',
+          WebkitBackdropFilter: 'blur(20px)',
           transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(100%)',
           opacity: isMobileMenuOpen ? 1 : 0,
           visibility: isMobileMenuOpen ? 'visible' : 'hidden',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           zIndex: 1000,
-          padding: '2rem 0',
+          padding: '80px 2rem 2rem',
           overflowY: 'auto'
         }}
       >
@@ -311,40 +338,46 @@ const Header = () => {
               flexDirection: 'column', 
               gap: '0.5rem'
             }}>
-              {navigation.map((item) => (
+              {navigation.map((item, index) => (
                 <Link
                   key={item.href}
                   to={item.href}
                   onClick={toggleMobileMenu}
                   style={{
-                    color: location.pathname === item.href ? '#0d9488' : '#374151',
+                    display: 'block',
+                    color: location.pathname === item.href ? '#0d9488' : '#1f2937',
                     textDecoration: 'none',
-                    fontSize: '1.1rem',
+                    fontSize: '1.125rem',
                     fontWeight: location.pathname === item.href ? '600' : '500',
-                    padding: '1rem 1.5rem',
-                    borderRadius: '0.75rem',
-                    transition: 'all 0.3s ease',
-                    background: location.pathname === item.href 
-                      ? 'rgba(13, 148, 136, 0.1)' 
-                      : 'transparent',
-                    border: location.pathname === item.href 
-                      ? '1px solid rgba(13, 148, 136, 0.2)' 
-                      : '1px solid transparent'
+                    padding: '1rem 0',
+                    borderBottom: index < navigation.length - 1 ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                    position: 'relative'
                   }}
                   onMouseEnter={(e) => {
                     if (location.pathname !== item.href) {
-                      e.target.style.background = 'rgba(13, 148, 136, 0.05)';
                       e.target.style.color = '#0d9488';
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (location.pathname !== item.href) {
-                      e.target.style.background = 'transparent';
-                      e.target.style.color = '#374151';
+                      e.target.style.color = '#1f2937';
                     }
                   }}
                 >
                   {item.name}
+                  {location.pathname === item.href && (
+                    <div style={{
+                      position: 'absolute',
+                      right: 0,
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      width: '4px',
+                      height: '4px',
+                      background: '#0d9488',
+                      borderRadius: '50%'
+                    }} />
+                  )}
                 </Link>
               ))}
             </div>
@@ -482,23 +515,7 @@ const Header = () => {
         </div>
       )}
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
+
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ArrowRight, BookOpen, Users, Target, Award, Play, Download, Star, Quote, CheckCircle, TrendingUp, Users2, Globe, Shield } from 'lucide-react';
+import { Search, ArrowRight, BookOpen, Users, Target, Award, Play, Download, Star, Quote, CheckCircle, TrendingUp, Users2, Globe, Shield, Calculator, Lightbulb } from 'lucide-react';
 import Newsletter from '../components/Newsletter';
 import AdSense from '../components/AdSense';
 import NewsletterBanner from '../components/NewsletterBanner';
@@ -83,6 +83,13 @@ const Home = () => {
       title: 'Certificação Reconhecida',
       description: 'Certificados válidos e reconhecidos pelas principais instituições de ensino.',
       highlight: 'Válido nacionalmente'
+    },
+    {
+      icon: <Calculator className="w-8 h-8" />,
+      title: 'Ferramentas de Cálculo',
+      description: 'Calculadoras fisioterapêuticas baseadas em evidências científicas para avaliação clínica.',
+      highlight: 'IMC, Postura, Flexibilidade e mais',
+      link: '/ferramentas-calculo'
     }
   ];
 
@@ -326,6 +333,60 @@ const Home = () => {
                 }}>
                   <BookOpen style={{ width: '20px', height: '20px' }} />
                   Ver Demonstração
+              </Link>
+
+              <Link to="/ferramentas-calculo" style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  color: 'white',
+                  padding: '1rem 2rem',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  borderRadius: '1rem',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(10px)',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <Target style={{ width: '20px', height: '20px' }} />
+                  Calculadoras
+              </Link>
+
+              <Link to="/sugestoes" style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: 'rgba(59, 130, 246, 0.2)',
+                  color: 'white',
+                  padding: '1rem 2rem',
+                  border: '1px solid rgba(59, 130, 246, 0.4)',
+                  borderRadius: '1rem',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(10px)',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <Lightbulb style={{ width: '20px', height: '20px' }} />
+                  Sugerir Tema
+              </Link>
+
+              <Link to="/questoes" style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: 'rgba(16, 185, 129, 0.2)',
+                  color: 'white',
+                  padding: '1rem 2rem',
+                  border: '1px solid rgba(16, 185, 129, 0.4)',
+                  borderRadius: '1rem',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  backdropFilter: 'blur(10px)',
+                  transition: 'all 0.3s ease'
+                }}>
+                  <BookOpen style={{ width: '20px', height: '20px' }} />
+                  Banco de Questões
               </Link>
             </div>
           </div>
@@ -1409,7 +1470,7 @@ const Home = () => {
               
               const color = colors[index % colors.length];
               
-              return (
+              const FeatureCard = (
               <div
                 key={index}
                 style={{
@@ -1422,7 +1483,8 @@ const Home = () => {
                     transition: 'all 0.4s ease',
                     height: '100%',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    cursor: feature.link ? 'pointer' : 'default'
                   }}
                 onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-10px)';
@@ -1561,6 +1623,13 @@ const Home = () => {
                   </div>
                 </div>
               );
+
+              // Se o feature tem link, envolve com Link, senão retorna o card normal
+              return feature.link ? (
+                <Link key={index} to={feature.link} style={{ textDecoration: 'none' }}>
+                  {FeatureCard}
+                </Link>
+              ) : FeatureCard;
             })}
           </div>
           

@@ -14,7 +14,7 @@ const AdSense = ({
       if (!window.adsbygoogle) {
         const script = document.createElement('script');
         script.async = true;
-        script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4874135205055438';
+        script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX';
         script.crossOrigin = 'anonymous';
         document.head.appendChild(script);
       }
@@ -53,8 +53,8 @@ const AdSense = ({
       <ins
         className="adsbygoogle"
         style={{ display: 'block', ...sizeStyles[size] }}
-        data-ad-client="ca-pub-4874135205055438"
-        data-ad-slot={slot || "1234567890"}
+        data-ad-client="ca-pub-XXXXXXXXXX"
+        data-ad-slot={slot || "XXXXXXXXXX"}
         data-ad-format={format}
         data-full-width-responsive={responsive.toString()}
       />
