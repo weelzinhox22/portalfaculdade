@@ -11,6 +11,7 @@ const Neurofuncional = lazy(() => import('./pages/Neurofuncional'));
 const FerramentasCalculo = lazy(() => import('./pages/FerramentasCalculo'));
 const Sugestoes = lazy(() => import('./pages/Sugestoes'));
 const Questoes = lazy(() => import('./pages/Questoes'));
+const Simulados = lazy(() => import('./pages/Simulados'));
 import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import SearchResults from './pages/SearchResults';
@@ -164,6 +165,15 @@ function App() {
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
               </div>}>
                 <Questoes />
+              </Suspense>
+            </Layout>
+          } />
+          <Route path="/simulados" element={
+            <Layout>
+              <Suspense fallback={<div className="flex items-center justify-center h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+              </div>}>
+                <Simulados />
               </Suspense>
             </Layout>
           } />

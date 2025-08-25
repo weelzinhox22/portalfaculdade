@@ -22,6 +22,7 @@ const Header = () => {
     { name: 'Neuro', href: '/neurofuncional' },
     { name: 'Utilitários', href: '/ferramentas-calculo' },
     { name: 'Questões', href: '/questoes' },
+    { name: 'Simulados', href: '/simulados' },
     { name: 'Sobre', href: '/sobre' },
     { name: 'Contato', href: '/contato' },
   ];

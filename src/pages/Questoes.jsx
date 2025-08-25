@@ -47,8 +47,9 @@ const Questoes = () => {
     ranking: 0
   });
 
-  // Banco de questões simulado
+  // Banco de questões expandido - Estilo Passei Direto
   const bancoQuestoes = [
+    // ANATOMIA - Questões Básicas a Avançadas
     {
       id: 1,
       area: 'anatomia',
@@ -68,6 +69,108 @@ const Questoes = () => {
       tags: ['anatomia', 'quadril', 'músculos'],
       autor: 'Prof. Dr. João Silva',
       dificuldadeNumerica: 2
+    },
+    {
+      id: 2,
+      area: 'anatomia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'O ligamento cruzado anterior (LCA) tem como função primária:',
+      alternativas: [
+        { id: 'a', texto: 'Prevenir a hiperextensão do joelho' },
+        { id: 'b', texto: 'Limitar a rotação interna da tíbia' },
+        { id: 'c', texto: 'Prevenir o deslocamento anterior da tíbia sobre o fêmur' },
+        { id: 'd', texto: 'Estabilizar o compartimento medial do joelho' },
+        { id: 'e', texto: 'Controlar a flexão do joelho' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'O LCA é o principal estabilizador anterior do joelho, prevenindo o deslocamento anterior da tíbia em relação ao fêmur, especialmente durante movimentos de pivô e desaceleração.',
+      referencias: 'Magee, D.J. Avaliação Musculoesquelética. 6ª ed.',
+      tags: ['anatomia', 'joelho', 'ligamentos'],
+      autor: 'Prof. Dra. Maria Santos',
+      dificuldadeNumerica: 5
+    },
+    {
+      id: 3,
+      area: 'anatomia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Sobre a inervação do plexo braquial, qual nervo é responsável pela inervação do músculo serrátil anterior?',
+      alternativas: [
+        { id: 'a', texto: 'Nervo torácico longo (C5, C6, C7)' },
+        { id: 'b', texto: 'Nervo peitoral medial (C8, T1)' },
+        { id: 'c', texto: 'Nervo subescapular (C5, C6)' },
+        { id: 'd', texto: 'Nervo axilar (C5, C6)' },
+        { id: 'e', texto: 'Nervo supraescapular (C5, C6)' }
+      ],
+      respostaCorreta: 'a',
+      explicacao: 'O nervo torácico longo, originado das raízes C5, C6 e C7, é responsável pela inervação do músculo serrátil anterior. Sua lesão causa a "escápula alada".',
+      referencias: 'Moore, K.L. Anatomia Orientada para a Clínica. 8ª ed.',
+      tags: ['anatomia', 'plexo-braquial', 'inervação'],
+      autor: 'Prof. Dr. Carlos Lima',
+      dificuldadeNumerica: 8
+    },
+
+    // NEUROLOGIA - Casos Clínicos Complexos
+    {
+      id: 4,
+      area: 'neurologia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Em relação à Escala de Coma de Glasgow, qual pontuação indica coma profundo?',
+      alternativas: [
+        { id: 'a', texto: '15 pontos' },
+        { id: 'b', texto: '8-12 pontos' },
+        { id: 'c', texto: '3-8 pontos' },
+        { id: 'd', texto: '13-15 pontos' },
+        { id: 'e', texto: '9-12 pontos' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'A Escala de Coma de Glasgow varia de 3 a 15 pontos. Pontuação de 3-8 indica coma severo, 9-12 coma moderado e 13-15 coma leve ou consciência normal.',
+      referencias: 'Teasdale, G. & Jennett, B. Lancet, 1974',
+      tags: ['neurologia', 'glasgow', 'coma'],
+      autor: 'Prof. Dra. Ana Costa',
+      dificuldadeNumerica: 5
+    },
+    {
+      id: 5,
+      area: 'neurologia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Paciente de 65 anos apresenta hemiparesia direita, afasia de Broca e desvio conjugado do olhar para a esquerda. A lesão mais provável localiza-se em:',
+      alternativas: [
+        { id: 'a', texto: 'Artéria cerebral média esquerda - território superficial' },
+        { id: 'b', texto: 'Artéria cerebral anterior direita' },
+        { id: 'c', texto: 'Artéria cerebral posterior esquerda' },
+        { id: 'd', texto: 'Artéria basilar' },
+        { id: 'e', texto: 'Artéria cerebral média direita - território profundo' }
+      ],
+      respostaCorreta: 'a',
+      explicacao: 'A combinação de hemiparesia direita, afasia de Broca (área de Broca no hemisfério dominante esquerdo) e desvio conjugado do olhar para a esquerda indica lesão no território superficial da artéria cerebral média esquerda.',
+      referencias: 'Adams & Victor. Neurologia. 11ª ed.',
+      tags: ['neurologia', 'avc', 'anatomia-vascular'],
+      autor: 'Prof. Dr. Roberto Mendes',
+      dificuldadeNumerica: 9
+    },
+    {
+      id: 6,
+      area: 'neurologia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na avaliação da espasticidade pela Escala de Ashworth Modificada, o grau 1+ corresponde a:',
+      alternativas: [
+        { id: 'a', texto: 'Nenhum aumento do tônus muscular' },
+        { id: 'b', texto: 'Leve aumento do tônus com resistência mínima no final da ADM' },
+        { id: 'c', texto: 'Leve aumento do tônus com resistência súbita seguida de relaxamento' },
+        { id: 'd', texto: 'Aumento mais marcante do tônus durante a maior parte da ADM' },
+        { id: 'e', texto: 'Considerável aumento do tônus com movimento passivo difícil' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'O grau 1+ da Escala de Ashworth Modificada caracteriza-se por leve aumento do tônus muscular manifestado por uma resistência súbita (catch) seguida de relaxamento ou resistência mínima durante o restante da amplitude de movimento.',
+      referencias: 'Bohannon, R.W. & Smith, M.B. Phys Ther, 1987',
+      tags: ['neurologia', 'espasticidade', 'avaliação'],
+      autor: 'Prof. Dra. Fernanda Silva',
+      dificuldadeNumerica: 7
     },
     {
       id: 2,
@@ -148,6 +251,490 @@ const Questoes = () => {
       tags: ['respiratoria', 'volumes', 'fisiologia'],
       autor: 'Prof. Dr. Pedro Mendes',
       dificuldadeNumerica: 3
+    },
+
+    // FISIOLOGIA DO EXERCÍCIO - Questões Avançadas
+    {
+      id: 6,
+      area: 'fisiologia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Durante o exercício aeróbico, qual é o principal sistema energético utilizado após os primeiros 2-3 minutos?',
+      alternativas: [
+        { id: 'a', texto: 'Sistema ATP-CP (fosfagênio)' },
+        { id: 'b', texto: 'Sistema glicolítico anaeróbico' },
+        { id: 'c', texto: 'Sistema oxidativo aeróbico' },
+        { id: 'd', texto: 'Gliconeogênese' },
+        { id: 'e', texto: 'Beta-oxidação exclusiva' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'Após 2-3 minutos de exercício, o sistema oxidativo aeróbico torna-se predominante, utilizando carboidratos e gorduras como substrato energético na presença de oxigênio.',
+      referencias: 'McArdle, W.D. Fisiologia do Exercício. 8ª ed.',
+      tags: ['fisiologia', 'exercício', 'metabolismo'],
+      autor: 'Prof. Dr. Pedro Oliveira',
+      dificuldadeNumerica: 6
+    },
+    {
+      id: 7,
+      area: 'fisiologia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Em relação ao VO2 máximo, qual afirmação está CORRETA?',
+      alternativas: [
+        { id: 'a', texto: 'É determinado exclusivamente pela capacidade pulmonar' },
+        { id: 'b', texto: 'Representa o platô no consumo de O2 durante exercício incremental' },
+        { id: 'c', texto: 'Não sofre influência do treinamento físico' },
+        { id: 'd', texto: 'É maior em indivíduos sedentários' },
+        { id: 'e', texto: 'Depende apenas da concentração de hemoglobina' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'O VO2 máximo representa o platô no consumo de oxigênio durante exercício incremental, indicando a capacidade máxima do organismo de captar, transportar e utilizar oxigênio.',
+      referencias: 'ACSM. Guidelines for Exercise Testing. 10ª ed.',
+      tags: ['fisiologia', 'vo2-max', 'teste-esforço'],
+      autor: 'Prof. Dra. Carla Rodrigues',
+      dificuldadeNumerica: 8
+    },
+
+    // PNEUMOLOGIA - Casos Clínicos
+    {
+      id: 8,
+      area: 'pneumologia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na espirometria, qual parâmetro representa o volume de ar que pode ser expirado após uma inspiração máxima?',
+      alternativas: [
+        { id: 'a', texto: 'Volume corrente (VC)' },
+        { id: 'b', texto: 'Volume de reserva expiratório (VRE)' },
+        { id: 'c', texto: 'Capacidade vital forçada (CVF)' },
+        { id: 'd', texto: 'Volume residual (VR)' },
+        { id: 'e', texto: 'Capacidade pulmonar total (CPT)' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'A Capacidade Vital Forçada (CVF) representa o volume máximo de ar que pode ser expirado forçadamente após uma inspiração máxima, sendo um importante parâmetro na avaliação da função pulmonar.',
+      referencias: 'Miller, M.R. et al. Eur Respir J, 2005',
+      tags: ['pneumologia', 'espirometria', 'função-pulmonar'],
+      autor: 'Prof. Dr. Eduardo Santos',
+      dificuldadeNumerica: 5
+    },
+    {
+      id: 9,
+      area: 'pneumologia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Em pacientes com DPOC, qual valor de VEF1/CVF confirma a presença de obstrução ao fluxo aéreo?',
+      alternativas: [
+        { id: 'a', texto: 'VEF1/CVF > 0,80' },
+        { id: 'b', texto: 'VEF1/CVF < 0,70' },
+        { id: 'c', texto: 'VEF1/CVF > 0,75' },
+        { id: 'd', texto: 'VEF1/CVF < 0,60' },
+        { id: 'e', texto: 'VEF1/CVF = 0,70' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'Segundo as diretrizes GOLD, um valor de VEF1/CVF < 0,70 após broncodilatador confirma a presença de obstrução ao fluxo aéreo e o diagnóstico de DPOC.',
+      referencias: 'GOLD Guidelines, 2023',
+      tags: ['pneumologia', 'dpoc', 'espirometria'],
+      autor: 'Prof. Dra. Patricia Lima',
+      dificuldadeNumerica: 8
+    },
+
+    // PEDIATRIA - Desenvolvimento Motor
+    {
+      id: 10,
+      area: 'pediatria',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Segundo os marcos do desenvolvimento motor, em que idade a criança normalmente consegue sentar sem apoio?',
+      alternativas: [
+        { id: 'a', texto: '4-5 meses' },
+        { id: 'b', texto: '6-8 meses' },
+        { id: 'c', texto: '9-10 meses' },
+        { id: 'd', texto: '11-12 meses' },
+        { id: 'e', texto: '13-15 meses' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'O sentar sem apoio é um marco importante do desenvolvimento motor que ocorre tipicamente entre 6-8 meses de idade, representando o desenvolvimento do controle postural do tronco.',
+      referencias: 'Piper, M.C. & Darrah, J. Motor Assessment of the Developing Infant',
+      tags: ['pediatria', 'desenvolvimento-motor', 'marcos'],
+      autor: 'Prof. Dra. Juliana Martins',
+      dificuldadeNumerica: 4
+    },
+    {
+      id: 11,
+      area: 'pediatria',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na paralisia cerebral do tipo diplegia espástica, qual padrão de marcha é mais comumente observado?',
+      alternativas: [
+        { id: 'a', texto: 'Marcha em tesoura com equinismo' },
+        { id: 'b', texto: 'Marcha atáxica com base alargada' },
+        { id: 'c', texto: 'Marcha festinante' },
+        { id: 'd', texto: 'Marcha em steppage' },
+        { id: 'e', texto: 'Marcha anserina' }
+      ],
+      respostaCorreta: 'a',
+      explicacao: 'Na diplegia espástica, a espasticidade predomina nos membros inferiores, resultando em padrão de marcha em tesoura (adução e rotação interna dos quadris) associado ao equinismo dos pés.',
+      referencias: 'Rosenbaum, P. et al. Dev Med Child Neurol, 2007',
+      tags: ['pediatria', 'paralisia-cerebral', 'marcha'],
+      autor: 'Prof. Dr. Ricardo Souza',
+      dificuldadeNumerica: 9
+    },
+
+    // GERIATRIA - Envelhecimento
+    {
+      id: 12,
+      area: 'geriatria',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Qual é o principal fator de risco modificável para quedas em idosos?',
+      alternativas: [
+        { id: 'a', texto: 'Idade avançada' },
+        { id: 'b', texto: 'Sexo feminino' },
+        { id: 'c', texto: 'Fraqueza muscular' },
+        { id: 'd', texto: 'História familiar de quedas' },
+        { id: 'e', texto: 'Baixa estatura' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'A fraqueza muscular, especialmente dos membros inferiores, é o principal fator de risco modificável para quedas em idosos, podendo ser melhorada através de exercícios de fortalecimento.',
+      referencias: 'Tinetti, M.E. N Engl J Med, 2003',
+      tags: ['geriatria', 'quedas', 'prevenção'],
+      autor: 'Prof. Dra. Mariana Costa',
+      dificuldadeNumerica: 5
+    },
+    {
+      id: 13,
+      area: 'geriatria',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na sarcopenia, qual é o ponto de corte para força de preensão palmar em homens segundo o consenso europeu (EWGSOP2)?',
+      alternativas: [
+        { id: 'a', texto: '< 16 kg' },
+        { id: 'b', texto: '< 20 kg' },
+        { id: 'c', texto: '< 27 kg' },
+        { id: 'd', texto: '< 30 kg' },
+        { id: 'e', texto: '< 35 kg' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'Segundo o consenso EWGSOP2, o ponto de corte para força de preensão palmar em homens é < 27 kg, sendo um dos critérios diagnósticos para sarcopenia.',
+      referencias: 'Cruz-Jentoft, A.J. et al. Age Ageing, 2019',
+      tags: ['geriatria', 'sarcopenia', 'força'],
+      autor: 'Prof. Dr. Antonio Silva',
+      dificuldadeNumerica: 8
+    },
+
+    // BIOMECÂNICA - Análise de Movimento
+    {
+      id: 14,
+      area: 'biomecanica',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Durante a fase de apoio da marcha, qual músculo é o principal responsável pela absorção do impacto no contato inicial?',
+      alternativas: [
+        { id: 'a', texto: 'Quadríceps femoral' },
+        { id: 'b', texto: 'Gastrocnêmio' },
+        { id: 'c', texto: 'Tibial anterior' },
+        { id: 'd', texto: 'Glúteo médio' },
+        { id: 'e', texto: 'Isquiotibiais' }
+      ],
+      respostaCorreta: 'a',
+      explicacao: 'O quadríceps femoral atua excentricamente durante o contato inicial e resposta à carga, controlando a flexão do joelho e absorvendo o impacto do contato com o solo.',
+      referencias: 'Perry, J. & Burnfield, J.M. Gait Analysis. 2ª ed.',
+      tags: ['biomecanica', 'marcha', 'músculos'],
+      autor: 'Prof. Dr. Fernando Reis',
+      dificuldadeNumerica: 6
+    },
+    {
+      id: 15,
+      area: 'biomecanica',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na análise cinemática da marcha, qual é o valor normal da flexão máxima do joelho durante a fase de balanço?',
+      alternativas: [
+        { id: 'a', texto: '30-40°' },
+        { id: 'b', texto: '45-55°' },
+        { id: 'c', texto: '60-70°' },
+        { id: 'd', texto: '75-85°' },
+        { id: 'e', texto: '90-100°' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'Durante a fase de balanço da marcha normal, o joelho atinge flexão máxima de aproximadamente 60-70°, permitindo o clearance adequado do pé com o solo.',
+      referencias: 'Whittle, M.W. Gait Analysis: An Introduction. 4ª ed.',
+      tags: ['biomecanica', 'cinemática', 'joelho'],
+      autor: 'Prof. Dra. Beatriz Almeida',
+      dificuldadeNumerica: 7
+    },
+
+    // ELETROTERAPIA - Recursos Físicos
+    {
+      id: 16,
+      area: 'eletroterapia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na estimulação elétrica neuromuscular (EENM), qual frequência é mais adequada para fortalecimento muscular?',
+      alternativas: [
+        { id: 'a', texto: '1-10 Hz' },
+        { id: 'b', texto: '20-35 Hz' },
+        { id: 'c', texto: '50-100 Hz' },
+        { id: 'd', texto: '150-200 Hz' },
+        { id: 'e', texto: '300-500 Hz' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'Para fortalecimento muscular através da EENM, utilizam-se frequências entre 50-100 Hz, que promovem contrações tetânicas sustentadas e recrutamento adequado das fibras musculares.',
+      referencias: 'Robinson, A.J. Clinical Electrophysiology. 3ª ed.',
+      tags: ['eletroterapia', 'eenm', 'fortalecimento'],
+      autor: 'Prof. Dr. Gustavo Pereira',
+      dificuldadeNumerica: 5
+    },
+    {
+      id: 17,
+      area: 'eletroterapia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'No ultrassom terapêutico, qual é o mecanismo primário do efeito térmico?',
+      alternativas: [
+        { id: 'a', texto: 'Cavitação estável' },
+        { id: 'b', texto: 'Micromassagem acústica' },
+        { id: 'c', texto: 'Absorção da energia ultrassônica pelos tecidos' },
+        { id: 'd', texto: 'Reflexão das ondas na interface tecidual' },
+        { id: 'e', texto: 'Dispersão das ondas ultrassônicas' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'O efeito térmico do ultrassom resulta da absorção da energia ultrassônica pelos tecidos, convertendo energia mecânica em calor, especialmente em tecidos com alto conteúdo proteico.',
+      referencias: 'Ter Haar, G. Ultrasound Med Biol, 2007',
+      tags: ['eletroterapia', 'ultrassom', 'efeitos-térmicos'],
+      autor: 'Prof. Dra. Claudia Moreira',
+      dificuldadeNumerica: 8
+    },
+
+    // HIDROTERAPIA - Propriedades Físicas
+    {
+      id: 18,
+      area: 'hidroterapia',
+      dificuldade: 'facil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Qual propriedade física da água é responsável pela redução do peso corporal durante exercícios aquáticos?',
+      alternativas: [
+        { id: 'a', texto: 'Viscosidade' },
+        { id: 'b', texto: 'Empuxo (flutuação)' },
+        { id: 'c', texto: 'Pressão hidrostática' },
+        { id: 'd', texto: 'Tensão superficial' },
+        { id: 'e', texto: 'Condutividade térmica' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'O empuxo ou força de flutuação, descrito pelo princípio de Arquimedes, é responsável pela redução do peso corporal na água, diminuindo a sobrecarga nas articulações.',
+      referencias: 'Becker, B.E. & Cole, A.J. Comprehensive Aquatic Therapy. 3ª ed.',
+      tags: ['hidroterapia', 'empuxo', 'propriedades-físicas'],
+      autor: 'Prof. Dra. Renata Oliveira',
+      dificuldadeNumerica: 3
+    },
+    {
+      id: 19,
+      area: 'hidroterapia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Em que profundidade da água o peso corporal é reduzido em aproximadamente 50%?',
+      alternativas: [
+        { id: 'a', texto: 'Altura dos tornozelos' },
+        { id: 'b', texto: 'Altura dos joelhos' },
+        { id: 'c', texto: 'Altura da cintura' },
+        { id: 'd', texto: 'Altura do processo xifoide' },
+        { id: 'e', texto: 'Altura dos ombros' }
+      ],
+      respostaCorreta: 'd',
+      explicacao: 'Quando a água atinge a altura do processo xifoide (parte inferior do esterno), o peso corporal é reduzido em aproximadamente 50%, proporcionando alívio significativo da carga articular.',
+      referencias: 'Harrison, R.A. et al. Physiotherapy, 1992',
+      tags: ['hidroterapia', 'redução-peso', 'profundidade'],
+      autor: 'Prof. Dr. Marcos Teixeira',
+      dificuldadeNumerica: 4
+    },
+
+    // ERGONOMIA - Saúde Ocupacional
+    {
+      id: 20,
+      area: 'ergonomia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Segundo a NR-17, qual é a altura recomendada para superfícies de trabalho em atividades que exigem precisão?',
+      alternativas: [
+        { id: 'a', texto: '70-75 cm' },
+        { id: 'b', texto: '75-80 cm' },
+        { id: 'c', texto: '80-85 cm' },
+        { id: 'd', texto: '85-95 cm' },
+        { id: 'e', texto: '95-105 cm' }
+      ],
+      respostaCorreta: 'd',
+      explicacao: 'Para atividades que exigem precisão, a NR-17 recomenda altura da superfície de trabalho entre 85-95 cm, permitindo apoio adequado dos antebraços e reduzindo a tensão nos ombros.',
+      referencias: 'NR-17 - Ergonomia. Ministério do Trabalho, 2018',
+      tags: ['ergonomia', 'nr17', 'altura-trabalho'],
+      autor: 'Prof. Dra. Silvia Barbosa',
+      dificuldadeNumerica: 5
+    },
+
+    // CASOS CLÍNICOS COMPLEXOS - Neurologia
+    {
+      id: 21,
+      area: 'neurologia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Paciente de 45 anos, vítima de TCE há 3 meses, apresenta rigidez em extensão dos MMSS e MMII, com rotação interna dos ombros e pronação dos antebraços. Este quadro sugere:',
+      alternativas: [
+        { id: 'a', texto: 'Postura de decorticação' },
+        { id: 'b', texto: 'Postura de descerebração' },
+        { id: 'c', texto: 'Rigidez em roda denteada' },
+        { id: 'd', texto: 'Espasticidade em flexão' },
+        { id: 'e', texto: 'Distonia generalizada' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'A postura de descerebração caracteriza-se por extensão rígida dos quatro membros, rotação interna dos ombros, pronação dos antebraços e flexão plantar dos pés, indicando lesão do tronco cerebral.',
+      referencias: 'Plum, F. & Posner, J.B. The Diagnosis of Stupor and Coma. 3ª ed.',
+      tags: ['neurologia', 'tce', 'posturas-patológicas'],
+      autor: 'Prof. Dr. Alexandre Nunes',
+      dificuldadeNumerica: 9
+    },
+    {
+      id: 22,
+      area: 'neurologia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na esclerose múltipla, qual sintoma é mais característico da forma remitente-recorrente?',
+      alternativas: [
+        { id: 'a', texto: 'Progressão contínua dos déficits' },
+        { id: 'b', texto: 'Episódios de exacerbação seguidos de remissão' },
+        { id: 'c', texto: 'Deterioração cognitiva precoce' },
+        { id: 'd', texto: 'Paralisia flácida permanente' },
+        { id: 'e', texto: 'Movimentos involuntários constantes' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'A forma remitente-recorrente da esclerose múltipla caracteriza-se por episódios de exacerbação (surtos) seguidos de períodos de remissão, com recuperação parcial ou total dos sintomas.',
+      referencias: 'Compston, A. & Coles, A. Lancet, 2008',
+      tags: ['neurologia', 'esclerose-múltipla', 'formas-clínicas'],
+      autor: 'Prof. Dra. Isabela Rocha',
+      dificuldadeNumerica: 8
+    },
+
+    // ORTOPEDIA - Lesões Esportivas
+    {
+      id: 23,
+      area: 'ortopedia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na síndrome da banda iliotibial, qual é o local mais comum de dor?',
+      alternativas: [
+        { id: 'a', texto: 'Face medial do joelho' },
+        { id: 'b', texto: 'Face lateral do joelho' },
+        { id: 'c', texto: 'Região poplítea' },
+        { id: 'd', texto: 'Face anterior do joelho' },
+        { id: 'e', texto: 'Região infrapatelar' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'Na síndrome da banda iliotibial, a dor localiza-se tipicamente na face lateral do joelho, sobre o epicôndilo lateral do fêmur, devido ao atrito da banda sobre esta proeminência óssea.',
+      referencias: 'Fredericson, M. & Weir, A. Sports Med, 2006',
+      tags: ['ortopedia', 'banda-iliotibial', 'joelho'],
+      autor: 'Prof. Dr. Rafael Santos',
+      dificuldadeNumerica: 4
+    },
+    {
+      id: 24,
+      area: 'ortopedia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'No teste de Hawkins-Kennedy positivo, qual estrutura está sendo testada?',
+      alternativas: [
+        { id: 'a', texto: 'Tendão do bíceps braquial' },
+        { id: 'b', texto: 'Tendão do supraespinhal' },
+        { id: 'c', texto: 'Ligamento glenoumeral inferior' },
+        { id: 'd', texto: 'Bursa subdeltoidea' },
+        { id: 'e', texto: 'Tendão do infraespinhal' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'O teste de Hawkins-Kennedy avalia o impacto do tendão do supraespinhal contra o ligamento coracoacromial, sendo positivo quando há dor durante a flexão de 90° do ombro com rotação interna forçada.',
+      referencias: 'Hawkins, R.J. & Kennedy, J.C. Am J Sports Med, 1980',
+      tags: ['ortopedia', 'ombro', 'testes-impacto'],
+      autor: 'Prof. Dra. Camila Ferreira',
+      dificuldadeNumerica: 7
+    },
+
+    // CARDIOLOGIA - Reabilitação Cardíaca
+    {
+      id: 25,
+      area: 'cardiologia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Na reabilitação cardíaca fase II, qual é a intensidade de exercício recomendada?',
+      alternativas: [
+        { id: 'a', texto: '40-50% da FCmáx' },
+        { id: 'b', texto: '60-80% da FCmáx' },
+        { id: 'c', texto: '85-95% da FCmáx' },
+        { id: 'd', texto: '50-60% da FC de reserva' },
+        { id: 'e', texto: '80-90% da FC de reserva' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'Na fase II da reabilitação cardíaca, recomenda-se exercício aeróbico com intensidade de 60-80% da frequência cardíaca máxima ou 40-70% da FC de reserva, dependendo da estratificação de risco.',
+      referencias: 'Diretrizes Brasileiras de Reabilitação Cardiovascular, 2020',
+      tags: ['cardiologia', 'reabilitação', 'intensidade-exercício'],
+      autor: 'Prof. Dr. Luiz Carlos',
+      dificuldadeNumerica: 6
+    },
+    {
+      id: 26,
+      area: 'cardiologia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Qual é o principal mecanismo de melhora da capacidade funcional após treinamento físico em pacientes com insuficiência cardíaca?',
+      alternativas: [
+        { id: 'a', texto: 'Aumento da fração de ejeção' },
+        { id: 'b', texto: 'Redução da pré-carga' },
+        { id: 'c', texto: 'Melhora da função endotelial e extração periférica de O2' },
+        { id: 'd', texto: 'Diminuição da frequência cardíaca de repouso' },
+        { id: 'e', texto: 'Aumento do débito cardíaco máximo' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'Em pacientes com IC, o treinamento físico melhora principalmente a função endotelial, a densidade capilar e a capacidade oxidativa muscular, aumentando a extração periférica de oxigênio.',
+      referencias: 'Piepoli, M.F. et al. Eur Heart J, 2011',
+      tags: ['cardiologia', 'insuficiência-cardíaca', 'treinamento'],
+      autor: 'Prof. Dra. Monica Andrade',
+      dificuldadeNumerica: 9
+    },
+
+    // ANATOMIA - Questões Avançadas
+    {
+      id: 27,
+      area: 'anatomia',
+      dificuldade: 'dificil',
+      tipo: 'multipla-escolha',
+      enunciado: 'Qual estrutura forma o limite posterior do triângulo femoral (triângulo de Scarpa)?',
+      alternativas: [
+        { id: 'a', texto: 'Músculo adutor longo' },
+        { id: 'b', texto: 'Músculo pectíneo' },
+        { id: 'c', texto: 'Músculo iliopsoas' },
+        { id: 'd', texto: 'Músculo sartório' },
+        { id: 'e', texto: 'Ligamento inguinal' }
+      ],
+      respostaCorreta: 'c',
+      explicacao: 'O triângulo femoral é delimitado superiormente pelo ligamento inguinal, medialmente pelo músculo adutor longo e lateralmente pelo músculo sartório. O músculo iliopsoas forma o assoalho (limite posterior).',
+      referencias: 'Moore, K.L. Anatomia Orientada para a Clínica. 8ª ed.',
+      tags: ['anatomia', 'triângulo-femoral', 'coxa'],
+      autor: 'Prof. Dr. Henrique Dias',
+      dificuldadeNumerica: 8
+    },
+    {
+      id: 28,
+      area: 'anatomia',
+      dificuldade: 'media',
+      tipo: 'multipla-escolha',
+      enunciado: 'Qual vértebra cervical é conhecida como "áxis"?',
+      alternativas: [
+        { id: 'a', texto: 'C1' },
+        { id: 'b', texto: 'C2' },
+        { id: 'c', texto: 'C3' },
+        { id: 'd', texto: 'C7' },
+        { id: 'e', texto: 'T1' }
+      ],
+      respostaCorreta: 'b',
+      explicacao: 'A segunda vértebra cervical (C2) é conhecida como áxis e possui o processo odontoide (dente), que se articula com o atlas (C1) permitindo a rotação da cabeça.',
+      referencias: 'Netter, F.H. Atlas de Anatomia Humana. 7ª ed.',
+      tags: ['anatomia', 'coluna-cervical', 'axis'],
+      autor: 'Prof. Dra. Leticia Gomes',
+      dificuldadeNumerica: 3
     }
   ];
 
@@ -158,8 +745,14 @@ const Questoes = () => {
     { value: 'cardiologia', label: 'Cardiologia', icon: '❤️' },
     { value: 'ortopedia', label: 'Ortopedia', icon: '🦵' },
     { value: 'respiratoria', label: 'Respiratória', icon: '🫁' },
+    { value: 'pneumologia', label: 'Pneumologia', icon: '🫁' },
     { value: 'pediatria', label: 'Pediatria', icon: '👶' },
-    { value: 'geriatria', label: 'Geriatria', icon: '👴' }
+    { value: 'geriatria', label: 'Geriatria', icon: '👴' },
+    { value: 'fisiologia', label: 'Fisiologia', icon: '⚡' },
+    { value: 'biomecanica', label: 'Biomecânica', icon: '🏃' },
+    { value: 'eletroterapia', label: 'Eletroterapia', icon: '⚡' },
+    { value: 'hidroterapia', label: 'Hidroterapia', icon: '🏊' },
+    { value: 'ergonomia', label: 'Ergonomia', icon: '💼' }
   ];
 
   const dificuldades = [
