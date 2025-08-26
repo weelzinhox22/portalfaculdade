@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ArrowRight, BookOpen, Users, Target, Award, Play, Download, Star, Quote, CheckCircle, TrendingUp, Users2, Globe, Shield, Calculator, Lightbulb } from 'lucide-react';
+import { Search, ArrowRight, BookOpen, Users, Target, Award, Play, Download, Star, Quote, CheckCircle, TrendingUp, Users2, Globe, Shield, Calculator, Lightbulb, HelpCircle } from 'lucide-react';
 import Newsletter from '../components/Newsletter';
 import AdSense from '../components/AdSense';
 import NewsletterBanner from '../components/NewsletterBanner';
@@ -90,6 +90,13 @@ const Home = () => {
       description: 'Calculadoras fisioterapêuticas baseadas em evidências científicas para avaliação clínica.',
       highlight: 'IMC, Postura, Flexibilidade e mais',
       link: '/ferramentas-calculo'
+    },
+    {
+      icon: <HelpCircle className="w-8 h-8" />,
+      title: 'Questões da Comunidade',
+      description: 'Questões criadas e aprovadas pela comunidade de fisioterapia. Contribua com seu conhecimento!',
+      highlight: 'Criadas por estudantes e profissionais',
+      link: '/questoes-comunidade'
     }
   ];
 

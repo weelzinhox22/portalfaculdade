@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect, lazy, Suspense } from 'react';
+import { AuthProvider } from './contexts/AuthContext';
 import Layout from './components/Layout';
 
 // Lazy loading para componentes de página
@@ -12,6 +13,16 @@ const FerramentasCalculo = lazy(() => import('./pages/FerramentasCalculo'));
 const Sugestoes = lazy(() => import('./pages/Sugestoes'));
 const Questoes = lazy(() => import('./pages/Questoes'));
 const Simulados = lazy(() => import('./pages/Simulados'));
+const CriarQuestao = lazy(() => import('./pages/CriarQuestao'));
+const QuestoesComunidade = lazy(() => import('./pages/QuestoesComunidade'));
+const Auth = lazy(() => import('./pages/Auth'));
+const Profile = lazy(() => import('./pages/Profile'));
+const AdminModerator = lazy(() => import('./pages/AdminModerator'));
+const PoliticaPrivacidade = lazy(() => import('./pages/PoliticaPrivacidade'));
+const TermosUso = lazy(() => import('./pages/TermosUso'));
+const CasosClinicos = lazy(() => import('./pages/CasosClinicos'));
+const Produtos = lazy(() => import('./pages/ProdutosSimple'));
+const Checkout = lazy(() => import('./pages/Checkout'));
 import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import SearchResults from './pages/SearchResults';
@@ -107,8 +118,9 @@ function App() {
   }
 
   return (
-    <Router>
-      <div className="App">
+    <AuthProvider>
+      <Router>
+        <div className="App">
         <Routes>
           {/* Páginas com layout completo */}
           <Route path="/" element={
@@ -177,9 +189,80 @@ function App() {
               </Suspense>
             </Layout>
           } />
+          <Route path="/criar-questao" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <CriarQuestao />
+            </Suspense>
+          } />
+          <Route path="/questoes-comunidade" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <QuestoesComunidade />
+            </Suspense>
+          } />
+          <Route path="/auth" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Auth />
+            </Suspense>
+          } />
+          <Route path="/profile" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Profile />
+            </Suspense>
+          } />
+          <Route path="/admin/moderator" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <AdminModerator />
+            </Suspense>
+          } />
+          <Route path="/politica-privacidade" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <PoliticaPrivacidade />
+            </Suspense>
+          } />
+          <Route path="/termos-uso" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <TermosUso />
+            </Suspense>
+          } />
+          <Route path="/casos-clinicos" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <CasosClinicos />
+            </Suspense>
+          } />
+          <Route path="/produtos" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Produtos />
+            </Suspense>
+          } />
+          <Route path="/checkout/:productId?" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Checkout />
+            </Suspense>
+          } />
         </Routes>
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

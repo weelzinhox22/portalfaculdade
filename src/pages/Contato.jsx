@@ -1,227 +1,584 @@
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
+import { 
+  ArrowLeft, Mail, Send, MessageCircle, HelpCircle, 
+  Bug, Lightbulb, CheckCircle, AlertTriangle, Clock
+} from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const Contato = () => {
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    assunto: '',
+    categoria: '',
+    mensagem: ''
+  })
+  const [status, setStatus] = useState('idle') // idle, loading, success, error
+  const [message, setMessage] = useState('')
+
+  const categorias = [
+    { value: 'suporte', label: 'Suporte Técnico', icon: <HelpCircle size={20} /> },
+    { value: 'bug', label: 'Reportar Bug', icon: <Bug size={20} /> },
+    { value: 'sugestao', label: 'Sugestão', icon: <Lightbulb size={20} /> },
+    { value: 'geral', label: 'Dúvida Geral', icon: <MessageCircle size={20} /> }
+  ]
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+    // Validação básica
+    if (!formData.nome || !formData.email || !formData.assunto || !formData.mensagem) {
+      setStatus('error')
+      setMessage('Por favor, preencha todos os campos obrigatórios.')
+      return
+    }
+
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      setStatus('error')
+      setMessage('Por favor, insira um email válido.')
+      return
+    }
+
+    setStatus('loading')
+    setMessage('')
+
+    try {
+      // Simular envio de email (aqui você integraria com um serviço real)
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      // Simular sucesso
+      setStatus('success')
+      setMessage('Mensagem enviada com sucesso! Responderemos em breve.')
+      
+      // Limpar formulário
+      setFormData({
+        nome: '',
+        email: '',
+        assunto: '',
+        categoria: '',
+        mensagem: ''
+      })
+    } catch (error) {
+      setStatus('error')
+      setMessage('Erro ao enviar mensagem. Tente novamente ou envie diretamente para fisiowel@gmail.com')
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Entre em Contato
-          </h1>
-          <p className="text-xl text-gray-600 leading-relaxed">
-            Estamos aqui para ajudar você em sua jornada acadêmica. 
-            Entre em contato conosco para dúvidas, sugestões ou parcerias.
-          </p>
-        </div>
-      </section>
-
-      {/* Contact Form and Info */}
-      <section className="py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Envie sua Mensagem
-              </h2>
-              
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-2">
-                      Nome *
-                    </label>
-                    <input
-                      type="text"
-                      id="nome"
-                      name="nome"
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="Seu nome completo"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      E-mail *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                      placeholder="seu@email.com"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="telefone" className="block text-sm font-medium text-gray-700 mb-2">
-                    Telefone
-                  </label>
-                  <input
-                    type="tel"
-                    id="telefone"
-                    name="telefone"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                    placeholder="(11) 99999-9999"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="assunto" className="block text-sm font-medium text-gray-700 mb-2">
-                    Assunto *
-                  </label>
-                  <select
-                    id="assunto"
-                    name="assunto"
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  >
-                    <option value="">Selecione um assunto</option>
-                    <option value="duvida">Dúvida sobre conteúdo</option>
-                    <option value="sugestao">Sugestão de melhoria</option>
-                    <option value="parceria">Proposta de parceria</option>
-                    <option value="tecnico">Suporte técnico</option>
-                    <option value="outro">Outro</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="mensagem" className="block text-sm font-medium text-gray-700 mb-2">
-                    Mensagem *
-                  </label>
-                  <textarea
-                    id="mensagem"
-                    name="mensagem"
-                    required
-                    rows={6}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
-                    placeholder="Descreva sua mensagem detalhadamente..."
-                  ></textarea>
-                </div>
-                
-                <button
-                  type="submit"
-                  className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
-                >
-                  <Send className="h-5 w-5 mr-2" />
-                  Enviar Mensagem
-                </button>
-              </form>
-            </div>
-
-            {/* Contact Info */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Informações de Contato
-                </h2>
-                <p className="text-gray-600 mb-8">
-                  Escolha a forma de contato que for mais conveniente para você. 
-                  Estamos sempre prontos para ajudar e responder suas questões.
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-3 rounded-lg mr-4 flex-shrink-0">
-                    <Mail className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">E-mail</h3>
-                    <p className="text-gray-600">contato@portalfisioterapia.com</p>
-                    <p className="text-gray-600">suporte@portalfisioterapia.com</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-3 rounded-lg mr-4 flex-shrink-0">
-                    <Phone className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Telefone</h3>
-                    <p className="text-gray-600">(11) 3000-0000</p>
-                    <p className="text-gray-600">(11) 99000-0000</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-3 rounded-lg mr-4 flex-shrink-0">
-                    <MapPin className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Endereço</h3>
-                    <p className="text-gray-600">
-                      Rua da Fisioterapia, 123<br />
-                      Bairro Saúde - São Paulo, SP<br />
-                      CEP: 01000-000
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-3 rounded-lg mr-4 flex-shrink-0">
-                    <Clock className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Horário de Atendimento</h3>
-                    <p className="text-gray-600">
-                      Segunda a Sexta: 8h às 18h<br />
-                      Sábado: 8h às 12h<br />
-                      Domingo: Fechado
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* FAQ Section */}
-              <div className="bg-gray-50 p-6 rounded-xl">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Perguntas Frequentes
-                </h3>
-                <div className="space-y-4 text-sm">
-                  <div>
-                    <p className="font-medium text-gray-900">Como posso acessar o conteúdo?</p>
-                    <p className="text-gray-600">Todo o conteúdo está disponível gratuitamente no portal. Basta navegar pelas seções.</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">Posso sugerir novos conteúdos?</p>
-                    <p className="text-gray-600">Sim! Use o formulário de contato com o assunto "Sugestão de melhoria".</p>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">Vocês oferecem certificados?</p>
-                    <p className="text-gray-600">Atualmente não, mas estamos trabalhando nesta funcionalidade.</p>
-                  </div>
-                </div>
-              </div>
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      padding: '2rem 1rem'
+    }}>
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto'
+      }}>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            background: 'rgba(255, 255, 255, 0.95)',
+            borderRadius: '2rem',
+            padding: '2rem',
+            marginBottom: '2rem',
+            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.15)'
+          }}
+        >
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginBottom: '1rem'
+          }}>
+            <button
+              onClick={() => navigate(-1)}
+              style={{
+                background: '#f3f4f6',
+                border: 'none',
+                borderRadius: '0.75rem',
+                padding: '0.75rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                color: '#6b7280',
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = '#e5e7eb'
+                e.target.style.color = '#374151'
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = '#f3f4f6'
+                e.target.style.color = '#6b7280'
+              }}
+            >
+              <ArrowLeft size={20} />
+            </button>
+            
+            <div>
+              <h1 style={{
+                margin: '0 0 0.5rem 0',
+                color: '#1f2937',
+                fontSize: '2.5rem',
+                fontWeight: 'bold'
+              }}>
+                Entre em Contato
+              </h1>
+              <p style={{
+                margin: 0,
+                color: '#6b7280',
+                fontSize: '1.1rem'
+              }}>
+                Estamos aqui para ajudar! Envie sua mensagem e responderemos em breve.
+              </p>
             </div>
           </div>
-        </div>
-      </section>
+        </motion.div>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Tem uma dúvida específica?
-          </h2>
-          <p className="text-blue-100 text-lg mb-8">
-            Nossa equipe de especialistas está pronta para ajudar você com questões acadêmicas e técnicas.
-          </p>
-          <a
-            href="mailto:contato@portalfisioterapia.com"
-            className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors inline-flex items-center"
+        {/* Content Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+          gap: '2rem'
+        }}>
+          {/* Formulário */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            style={{
+              background: 'rgba(255, 255, 255, 0.95)',
+              borderRadius: '2rem',
+              padding: '2rem',
+              boxShadow: '0 25px 50px rgba(0, 0, 0, 0.15)'
+            }}
           >
-            <Mail className="h-5 w-5 mr-2" />
-            Enviar E-mail Direto
-          </a>
-        </div>
-      </section>
-    </div>
-  );
-};
+            <h2 style={{
+              margin: '0 0 1.5rem 0',
+              color: '#1f2937',
+              fontSize: '1.5rem',
+              fontWeight: 'bold'
+            }}>
+              Enviar Mensagem
+            </h2>
 
-export default Contato;
+            <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
+              {/* Nome */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '0.5rem',
+                  color: '#374151',
+                  fontSize: '0.875rem',
+                  fontWeight: '600'
+                }}>
+                  Nome Completo *
+                </label>
+                <input
+                  type="text"
+                  name="nome"
+                  value={formData.nome}
+                  onChange={handleInputChange}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '0.75rem',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.2s'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                  placeholder="Seu nome completo"
+                />
+              </div>
+
+              {/* Email */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '0.5rem',
+                  color: '#374151',
+                  fontSize: '0.875rem',
+                  fontWeight: '600'
+                }}>
+                  Email *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '0.75rem',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.2s'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                  placeholder="seu.email@exemplo.com"
+                />
+              </div>
+
+              {/* Categoria */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '0.5rem',
+                  color: '#374151',
+                  fontSize: '0.875rem',
+                  fontWeight: '600'
+                }}>
+                  Categoria
+                </label>
+                <select
+                  name="categoria"
+                  value={formData.categoria}
+                  onChange={handleInputChange}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '0.75rem',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                    background: 'white'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                >
+                  <option value="">Selecione uma categoria</option>
+                  {categorias.map(cat => (
+                    <option key={cat.value} value={cat.value}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Assunto */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '0.5rem',
+                  color: '#374151',
+                  fontSize: '0.875rem',
+                  fontWeight: '600'
+                }}>
+                  Assunto *
+                </label>
+                <input
+                  type="text"
+                  name="assunto"
+                  value={formData.assunto}
+                  onChange={handleInputChange}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '0.75rem',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.2s'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                  placeholder="Resumo do que você precisa"
+                />
+              </div>
+
+              {/* Mensagem */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '0.5rem',
+                  color: '#374151',
+                  fontSize: '0.875rem',
+                  fontWeight: '600'
+                }}>
+                  Mensagem *
+                </label>
+                <textarea
+                  name="mensagem"
+                  value={formData.mensagem}
+                  onChange={handleInputChange}
+                  rows={6}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '2px solid #e5e7eb',
+                    borderRadius: '0.75rem',
+                    fontSize: '1rem',
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                    resize: 'vertical',
+                    minHeight: '120px'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+                  placeholder="Descreva detalhadamente sua dúvida, sugestão ou problema..."
+                />
+              </div>
+
+              {/* Status Message */}
+              {message && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  style={{
+                    padding: '1rem',
+                    borderRadius: '0.75rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    background: status === 'success' ? '#f0fdf4' : '#fef2f2',
+                    color: status === 'success' ? '#166534' : '#dc2626',
+                    border: `1px solid ${status === 'success' ? '#bbf7d0' : '#fecaca'}`
+                  }}
+                >
+                  {status === 'success' && <CheckCircle size={20} />}
+                  {status === 'error' && <AlertTriangle size={20} />}
+                  <span>{message}</span>
+                </motion.div>
+              )}
+
+              {/* Botão Submit */}
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                style={{
+                  background: status === 'loading' ? '#9ca3af' : 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '1rem 2rem',
+                  borderRadius: '0.75rem',
+                  cursor: status === 'loading' ? 'not-allowed' : 'pointer',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
+                }}
+                onMouseEnter={(e) => {
+                  if (status !== 'loading') {
+                    e.target.style.transform = 'translateY(-2px)'
+                    e.target.style.boxShadow = '0 10px 25px rgba(59, 130, 246, 0.3)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (status !== 'loading') {
+                    e.target.style.transform = 'translateY(0)'
+                    e.target.style.boxShadow = 'none'
+                  }
+                }}
+              >
+                {status === 'loading' ? (
+                  <>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Clock size={20} />
+                    </motion.div>
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send size={20} />
+                    Enviar Mensagem
+                  </>
+                )}
+              </button>
+            </form>
+          </motion.div>
+
+          {/* Informações de Contato */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+            style={{
+              display: 'grid',
+              gap: '2rem'
+            }}
+          >
+            {/* Email Direto */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.95)',
+              borderRadius: '2rem',
+              padding: '2rem',
+              boxShadow: '0 25px 50px rgba(0, 0, 0, 0.15)'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)',
+                  color: 'white',
+                  padding: '0.75rem',
+                  borderRadius: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Mail size={24} />
+                </div>
+                <h3 style={{
+                  margin: 0,
+                  color: '#1f2937',
+                  fontSize: '1.25rem',
+                  fontWeight: 'bold'
+                }}>
+                  Email Direto
+                </h3>
+              </div>
+              <p style={{
+                margin: '0 0 1rem 0',
+                color: '#6b7280',
+                lineHeight: '1.6'
+              }}>
+                Prefere enviar um email diretamente? Use nosso endereço oficial:
+              </p>
+              <a
+                href="mailto:fisiowel@gmail.com"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  color: '#3b82f6',
+                  textDecoration: 'none',
+                  fontSize: '1.1rem',
+                  fontWeight: '600',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  transition: 'all 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = '#eff6ff'
+                  e.target.style.color = '#1d4ed8'
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'transparent'
+                  e.target.style.color = '#3b82f6'
+                }}
+              >
+                <Mail size={20} />
+                fisiowel@gmail.com
+              </a>
+            </div>
+
+            {/* Tempo de Resposta */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.95)',
+              borderRadius: '2rem',
+              padding: '2rem',
+              boxShadow: '0 25px 50px rgba(0, 0, 0, 0.15)'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                marginBottom: '1rem'
+              }}>
+                <div style={{
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  color: 'white',
+                  padding: '0.75rem',
+                  borderRadius: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Clock size={24} />
+                </div>
+                <h3 style={{
+                  margin: 0,
+                  color: '#1f2937',
+                  fontSize: '1.25rem',
+                  fontWeight: 'bold'
+                }}>
+                  Tempo de Resposta
+                </h3>
+              </div>
+              <ul style={{
+                margin: 0,
+                padding: 0,
+                listStyle: 'none'
+              }}>
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  marginBottom: '0.5rem',
+                  color: '#6b7280'
+                }}>
+                  <div style={{
+                    width: '6px',
+                    height: '6px',
+                    background: '#10b981',
+                    borderRadius: '50%'
+                  }} />
+                  Suporte técnico: até 24 horas
+                </li>
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  marginBottom: '0.5rem',
+                  color: '#6b7280'
+                }}>
+                  <div style={{
+                    width: '6px',
+                    height: '6px',
+                    background: '#10b981',
+                    borderRadius: '50%'
+                  }} />
+                  Dúvidas gerais: até 48 horas
+                </li>
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  color: '#6b7280'
+                }}>
+                  <div style={{
+                    width: '6px',
+                    height: '6px',
+                    background: '#10b981',
+                    borderRadius: '50%'
+                  }} />
+                  Sugestões: até 1 semana
+                </li>
+              </ul>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Contato

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, Menu, X } from 'lucide-react';
+import { Search, Menu, X, User, LogIn, Plus } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
 import './header.css';
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
@@ -22,7 +24,9 @@ const Header = () => {
     { name: 'Neuro', href: '/neurofuncional' },
     { name: 'Utilitários', href: '/ferramentas-calculo' },
     { name: 'Questões', href: '/questoes' },
+    { name: 'Casos Clínicos', href: '/casos-clinicos' },
     { name: 'Simulados', href: '/simulados' },
+    { name: 'Produtos', href: '/produtos' },
     { name: 'Sobre', href: '/sobre' },
     { name: 'Contato', href: '/contato' },
   ];
@@ -131,7 +135,7 @@ const Header = () => {
             onMouseEnter={(e) => e.target.style.color = '#0d9488'}
             onMouseLeave={(e) => e.target.style.color = '#1f2937'}
           >
-            FisioNeo
+            FisioWel
           </Link>
 
           {/* Navigation Desktop */}
@@ -214,6 +218,131 @@ const Header = () => {
             >
               <Search size={18} />
             </button>
+
+            {/* Auth Buttons */}
+            {isAuthenticated ? (
+              <>
+                {/* Criar Questão Button */}
+                <button
+                  onClick={() => navigate('/criar-questao')}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '36px',
+                    height: '36px',
+                    background: 'none',
+                    border: 'none',
+                    color: '#6b7280',
+                    cursor: 'pointer',
+                    borderRadius: '0.5rem',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                    e.target.style.color = '#374151';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'none';
+                    e.target.style.color = '#6b7280';
+                  }}
+                  title="Criar Questão"
+                >
+                  <Plus size={18} />
+                </button>
+
+                {/* Moderator Button */}
+                <button
+                  onClick={() => navigate('/admin/moderator')}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '36px',
+                    height: '36px',
+                    background: 'none',
+                    border: 'none',
+                    color: '#ef4444',
+                    cursor: 'pointer',
+                    borderRadius: '0.5rem',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'rgba(239, 68, 68, 0.1)';
+                    e.target.style.color = '#dc2626';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'none';
+                    e.target.style.color = '#ef4444';
+                  }}
+                  title="Moderação"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                  </svg>
+                </button>
+
+                {/* User Profile Button */}
+                <button
+                  onClick={() => navigate('/profile')}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '36px',
+                    height: '36px',
+                    background: 'none',
+                    border: 'none',
+                    color: '#6b7280',
+                    cursor: 'pointer',
+                    borderRadius: '0.5rem',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                    e.target.style.color = '#374151';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'none';
+                    e.target.style.color = '#6b7280';
+                  }}
+                  title="Meu Perfil"
+                >
+                  <User size={18} />
+                </button>
+              </>
+            ) : (
+              /* Login Button */
+              <button
+                onClick={() => navigate('/auth')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: '36px',
+                  height: '36px',
+                  background: 'none',
+                  border: 'none',
+                  color: '#6b7280',
+                  cursor: 'pointer',
+                  borderRadius: '0.5rem',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                  e.target.style.color = '#374151';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'none';
+                  e.target.style.color = '#6b7280';
+                }}
+                title="Entrar"
+              >
+                <LogIn size={18} />
+              </button>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -515,7 +644,6 @@ const Header = () => {
           </div>
         </div>
       )}
-
 
     </>
   );

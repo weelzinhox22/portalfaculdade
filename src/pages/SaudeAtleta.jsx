@@ -3,6 +3,7 @@ import { ArrowLeft, Download, Play, ExternalLink, BookOpen, FileText, Video, Act
 import { Link } from 'react-router-dom';
 
 const SaudeAtleta = () => {
+  const isMobile = window.innerWidth <= 768;
   const modules = [
     {
       id: 1,
@@ -127,15 +128,16 @@ const SaudeAtleta = () => {
     <div className="specialty-page">
       {/* Hero Section */}
       <section className="specialty-hero">
-        <div 
-          className="hero-background"
+        <div
+          className="hero-background specialty-hero"
           style={{
             background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
-            minHeight: '60vh',
+            minHeight: isMobile ? '50vh' : '60vh',
             display: 'flex',
             alignItems: 'center',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            padding: isMobile ? '3rem 0' : '4rem 0'
           }}
         >
           {/* Animated Background Pattern */}
@@ -152,7 +154,13 @@ const SaudeAtleta = () => {
           />
           
           <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: isMobile ? '2rem' : '4rem',
+              alignItems: 'center',
+              textAlign: isMobile ? 'center' : 'left'
+            }}>
               <div>
                 <Link 
                   to="/" 
