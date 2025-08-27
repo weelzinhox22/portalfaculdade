@@ -23,6 +23,7 @@ const TermosUso = lazy(() => import('./pages/TermosUso'));
 const CasosClinicos = lazy(() => import('./pages/CasosClinicos'));
 const Produtos = lazy(() => import('./pages/ProdutosSimple'));
 const Checkout = lazy(() => import('./pages/Checkout'));
+const Downloads = lazy(() => import('./pages/Downloads'));
 import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import SearchResults from './pages/SearchResults';
@@ -257,6 +258,13 @@ function App() {
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
             </div>}>
               <Checkout />
+            </Suspense>
+          } />
+          <Route path="/downloads" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Downloads />
             </Suspense>
           } />
         </Routes>

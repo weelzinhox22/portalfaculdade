@@ -12,23 +12,40 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [dropdownTimeout, setDropdownTimeout] = useState(null);
   
   // Verificar se a rota atual corresponde ao link de navegação
   const isActive = (href) => location.pathname === href;
 
   const navigation = [
     { name: 'Home', href: '/' },
-    { name: 'Atleta', href: '/saude-atleta' },
-    { name: 'Hospitalar', href: '/unidade-hospitalar' },
-    { name: 'Idoso', href: '/saude-idoso' },
-    { name: 'Neuro', href: '/neurofuncional' },
-    { name: 'Utilitários', href: '/ferramentas-calculo' },
-    { name: 'Questões', href: '/questoes' },
-    { name: 'Casos Clínicos', href: '/casos-clinicos' },
-    { name: 'Simulados', href: '/simulados' },
-    { name: 'Produtos', href: '/produtos' },
+    {
+      name: 'Especialidades',
+      href: '#',
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Saúde do Atleta', href: '/saude-atleta', icon: '🏃‍♂️', description: 'Fisioterapia esportiva' },
+        { name: 'Unidade Hospitalar', href: '/unidade-hospitalar', icon: '🏥', description: 'Fisioterapia hospitalar' },
+        { name: 'Saúde do Idoso', href: '/saude-idoso', icon: '👴', description: 'Geriatria e gerontologia' },
+        { name: 'Neurofuncional', href: '/neurofuncional', icon: '🧠', description: 'Fisioterapia neurológica' }
+      ]
+    },
+    {
+      name: 'Estudos',
+      href: '#',
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Questões', href: '/questoes', icon: '❓', description: 'Banco de questões comentadas' },
+        { name: 'Casos Clínicos', href: '/casos-clinicos', icon: '📋', description: 'Casos reais para prática' },
+        { name: 'Simulados', href: '/simulados', icon: '📝', description: 'Simulados completos' },
+        { name: 'Utilitários', href: '/ferramentas-calculo', icon: '🧮', description: 'Calculadoras e ferramentas' }
+      ]
+    },
+    { name: 'Downloads', href: '/downloads', badge: 'Grátis', badgeColor: '#10b981' },
+    { name: 'Produtos', href: '/produtos', badge: 'Novo', badgeColor: '#ef4444' },
     { name: 'Sobre', href: '/sobre' },
-    { name: 'Contato', href: '/contato' },
+    { name: 'Contato', href: '/contato' }
   ];
 
   useEffect(() => {
@@ -58,6 +75,15 @@ const Header = () => {
     };
   }, [isMobileMenuOpen]);
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeout) {
+        clearTimeout(dropdownTimeout);
+      }
+    };
+  }, [dropdownTimeout]);
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -79,6 +105,21 @@ const Header = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleDropdownEnter = (itemName) => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    setActiveDropdown(itemName);
+  };
+
+  const handleDropdownLeave = () => {
+    const timeout = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150); // 150ms delay antes de fechar
+    setDropdownTimeout(timeout);
   };
 
   return (
@@ -145,47 +186,188 @@ const Header = () => {
             gap: '0.5rem'
           }}>
             {navigation.map((item) => (
-              <Link
+              <div
                 key={item.name}
-                to={item.href}
-                style={{
-                  padding: '0.5rem 0.75rem',
-                  fontSize: '0.875rem',
-                  fontWeight: 500,
-                  color: isActive(item.href) ? '#0d9488' : '#6b7280',
-                  textDecoration: 'none',
-                  borderRadius: '0.5rem',
-                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                  position: 'relative',
-                  whiteSpace: 'nowrap'
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive(item.href)) {
-                    e.target.style.color = '#374151';
-                    e.target.style.background = 'rgba(0, 0, 0, 0.05)';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive(item.href)) {
-                    e.target.style.color = '#6b7280';
-                    e.target.style.background = 'transparent';
-                  }
-                }}
+                style={{ position: 'relative' }}
+                onMouseEnter={() => item.hasDropdown && handleDropdownEnter(item.name)}
+                onMouseLeave={() => item.hasDropdown && handleDropdownLeave()}
               >
-                {item.name}
-                {isActive(item.href) && (
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '-2px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '4px',
-                    height: '4px',
-                    background: '#0d9488',
-                    borderRadius: '50%'
-                  }} />
+                {item.hasDropdown ? (
+                  <button
+                    style={{
+                      padding: '0.5rem 0.75rem',
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      color: '#6b7280',
+                      background: 'none',
+                      border: 'none',
+                      borderRadius: '0.5rem',
+                      transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                      position: 'relative',
+                      whiteSpace: 'nowrap',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.25rem'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.color = '#374151';
+                      e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.color = '#6b7280';
+                      e.target.style.background = 'transparent';
+                    }}
+                  >
+                    {item.name}
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      style={{
+                        transform: activeDropdown === item.name ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.2s ease'
+                      }}
+                    >
+                      <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5"/>
+                    </svg>
+                  </button>
+                ) : (
+                  <Link
+                    to={item.href}
+                    style={{
+                      padding: '0.5rem 0.75rem',
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      color: isActive(item.href) ? '#0d9488' : '#6b7280',
+                      textDecoration: 'none',
+                      borderRadius: '0.5rem',
+                      transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                      position: 'relative',
+                      whiteSpace: 'nowrap',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive(item.href)) {
+                        e.target.style.color = '#374151';
+                        e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive(item.href)) {
+                        e.target.style.color = '#6b7280';
+                        e.target.style.background = 'transparent';
+                      }
+                    }}
+                  >
+                    {item.name}
+                    {item.badge && (
+                      <span style={{
+                        background: item.badgeColor || '#ef4444',
+                        color: 'white',
+                        fontSize: '0.625rem',
+                        fontWeight: '600',
+                        padding: '0.125rem 0.375rem',
+                        borderRadius: '0.75rem',
+                        lineHeight: '1'
+                      }}>
+                        {item.badge}
+                      </span>
+                    )}
+                    {isActive(item.href) && (
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '-2px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        width: '4px',
+                        height: '4px',
+                        background: '#0d9488',
+                        borderRadius: '50%'
+                      }} />
+                    )}
+                  </Link>
                 )}
-              </Link>
+
+                {/* Dropdown Menu */}
+                {item.hasDropdown && activeDropdown === item.name && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: '0',
+                      paddingTop: '0.5rem',
+                      zIndex: 50
+                    }}
+                    onMouseEnter={() => handleDropdownEnter(item.name)}
+                    onMouseLeave={() => handleDropdownLeave()}
+                  >
+                    <div style={{
+                      background: 'white',
+                      borderRadius: '1rem',
+                      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                      border: '1px solid #e5e7eb',
+                      minWidth: '280px',
+                      padding: '1rem',
+                      animation: 'fadeInUp 0.2s ease-out'
+                    }}>
+                      {item.dropdownItems.map((dropdownItem, idx) => (
+                        <Link
+                          key={dropdownItem.name}
+                          to={dropdownItem.href}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.75rem',
+                            padding: '0.75rem',
+                            borderRadius: '0.5rem',
+                            textDecoration: 'none',
+                            color: '#374151',
+                            transition: 'all 0.2s ease',
+                            marginBottom: idx < item.dropdownItems.length - 1 ? '0.25rem' : '0'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = '#f9fafb';
+                            e.currentTarget.style.transform = 'translateX(4px)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.transform = 'translateX(0px)';
+                          }}
+                        >
+                          <span style={{
+                            fontSize: '1.25rem',
+                            minWidth: '1.5rem',
+                            textAlign: 'center'
+                          }}>
+                            {dropdownItem.icon}
+                          </span>
+                          <div style={{ flex: 1 }}>
+                            <div style={{
+                              fontWeight: '600',
+                              fontSize: '0.875rem',
+                              color: '#1f2937',
+                              marginBottom: '0.125rem'
+                            }}>
+                              {dropdownItem.name}
+                            </div>
+                            <div style={{
+                              fontSize: '0.75rem',
+                              color: '#6b7280',
+                              lineHeight: '1.3'
+                            }}>
+                              {dropdownItem.description}
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
 
@@ -469,46 +651,110 @@ const Header = () => {
               gap: '0.5rem'
             }}>
               {navigation.map((item, index) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  onClick={toggleMobileMenu}
-                  style={{
-                    display: 'block',
-                    color: location.pathname === item.href ? '#0d9488' : '#1f2937',
-                    textDecoration: 'none',
-                    fontSize: '1.125rem',
-                    fontWeight: location.pathname === item.href ? '600' : '500',
-                    padding: '1rem 0',
-                    borderBottom: index < navigation.length - 1 ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
-                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                    position: 'relative'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (location.pathname !== item.href) {
-                      e.target.style.color = '#0d9488';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (location.pathname !== item.href) {
-                      e.target.style.color = '#1f2937';
-                    }
-                  }}
-                >
-                  {item.name}
-                  {location.pathname === item.href && (
-                    <div style={{
-                      position: 'absolute',
-                      right: 0,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      width: '4px',
-                      height: '4px',
-                      background: '#0d9488',
-                      borderRadius: '50%'
-                    }} />
+                <div key={item.name}>
+                  {item.hasDropdown ? (
+                    <div>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '1rem 0',
+                        borderBottom: index < navigation.length - 1 ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
+                      }}>
+                        <span style={{
+                          fontSize: '1.125rem',
+                          fontWeight: '600',
+                          color: '#1f2937'
+                        }}>
+                          {item.name}
+                        </span>
+                      </div>
+                      <div style={{
+                        paddingLeft: '1rem',
+                        marginBottom: '1rem'
+                      }}>
+                        {item.dropdownItems.map((dropdownItem) => (
+                          <Link
+                            key={dropdownItem.name}
+                            to={dropdownItem.href}
+                            onClick={toggleMobileMenu}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.75rem',
+                              padding: '0.75rem 0',
+                              color: location.pathname === dropdownItem.href ? '#0d9488' : '#6b7280',
+                              textDecoration: 'none',
+                              fontSize: '1rem',
+                              fontWeight: location.pathname === dropdownItem.href ? '600' : '500',
+                              transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                          >
+                            <span style={{ fontSize: '1rem' }}>{dropdownItem.icon}</span>
+                            <div>
+                              <div style={{
+                                fontWeight: '500',
+                                color: location.pathname === dropdownItem.href ? '#0d9488' : '#374151'
+                              }}>
+                                {dropdownItem.name}
+                              </div>
+                              <div style={{
+                                fontSize: '0.875rem',
+                                color: '#6b7280',
+                                marginTop: '0.125rem'
+                              }}>
+                                {dropdownItem.description}
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      onClick={toggleMobileMenu}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        color: location.pathname === item.href ? '#0d9488' : '#1f2937',
+                        textDecoration: 'none',
+                        fontSize: '1.125rem',
+                        fontWeight: location.pathname === item.href ? '600' : '500',
+                        padding: '1rem 0',
+                        borderBottom: index < navigation.length - 1 ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
+                        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                        position: 'relative'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        {item.name}
+                        {item.badge && (
+                          <span style={{
+                            background: item.badgeColor || '#ef4444',
+                            color: 'white',
+                            fontSize: '0.625rem',
+                            fontWeight: '600',
+                            padding: '0.125rem 0.375rem',
+                            borderRadius: '0.75rem',
+                            lineHeight: '1'
+                          }}>
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
+                      {location.pathname === item.href && (
+                        <div style={{
+                          width: '4px',
+                          height: '4px',
+                          background: '#0d9488',
+                          borderRadius: '50%'
+                        }} />
+                      )}
+                    </Link>
                   )}
-                </Link>
+                </div>
               ))}
             </div>
           </nav>
