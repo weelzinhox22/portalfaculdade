@@ -354,6 +354,7 @@ const Footer = () => {
             }}>
               {[
                 { name: 'Política de Privacidade', href: '/politica-privacidade' },
+                { name: 'Política de Cookies', href: '/politica-cookies' },
                 { name: 'Termos de Uso', href: '/termos-uso' },
                 { name: 'Suporte', href: '/contato' }
               ].map((link, index) => (

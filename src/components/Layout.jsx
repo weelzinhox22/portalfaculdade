@@ -1,6 +1,7 @@
 import Header from './Header';
 import Footer from './Footer';
 import StickyAd from './StickyAd';
+import PrivacyNotice from './PrivacyNotice';
 
 const Layout = ({ children }) => {
   return (
@@ -16,6 +17,9 @@ const Layout = ({ children }) => {
         slot="sticky-global"
         autoHide={false}
       />
+
+      {/* Privacy Notice */}
+      <PrivacyNotice />
     </div>
   );
 };

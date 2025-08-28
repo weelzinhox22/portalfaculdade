@@ -1,0 +1,32 @@
+{
+  "name": "fisioestudos-mercadopago-oficial",
+  "version": "1.0.0",
+  "description": "Mercado Pago API oficial - PIX + Cartão",
+  "main": "server-mp-oficial.js",
+  "scripts": {
+    "start": "node server-mp-oficial.js",
+    "dev": "nodemon server-mp-oficial.js",
+    "test": "node -e \"console.log('Testando...'); require('./server-mp-oficial.js')\""
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "mercadopago", 
+    "pix", 
+    "cartao", 
+    "fisioterapia", 
+    "ebooks",
+    "api-oficial"
+  ],
+  "author": "FisioEstudos",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

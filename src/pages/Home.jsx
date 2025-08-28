@@ -1,13 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Search, ArrowRight, BookOpen, Users, Target, Award, Play, Download, Star, Quote, CheckCircle, TrendingUp, Users2, Globe, Shield, Calculator, Lightbulb, HelpCircle } from 'lucide-react';
 import Newsletter from '../components/Newsletter';
 import AdSense from '../components/AdSense';
 import NewsletterBanner from '../components/NewsletterBanner';
+import useMobile from '../hooks/useMobile';
+import { useAuth } from '../contexts/AuthContext';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const isMobile = useMobile();
+  const { isAuthenticated } = useAuth();
+
+  // Add CSS animations
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+      }
+
+      @keyframes glow {
+        0%, 100% { box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1); }
+        50% { box-shadow: 0 8px 32px rgba(255, 255, 255, 0.3); }
+      }
+
+      @keyframes slideInLeft {
+        0% { transform: translateX(-100px); opacity: 0; }
+        100% { transform: translateX(0); opacity: 1; }
+      }
+
+      @keyframes slideInRight {
+        0% { transform: translateX(100px); opacity: 0; }
+        100% { transform: translateX(0); opacity: 1; }
+      }
+
+      @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+      }
+
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   const subjects = [
     {
@@ -167,15 +218,81 @@ const Home = () => {
         alignItems: 'center',
         overflow: 'hidden',
         paddingTop: '6rem',
-        background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)'
+        background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 25%, #8b5cf6 75%, #ec4899 100%)'
       }}>
-        {/* Background Elements */}
+        {/* Animated Background Elements */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\' fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")',
-          opacity: 0.6
+          background: 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\' fill=\'%23ffffff\' fill-opacity=\'0.08\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")',
+          opacity: 0.7,
+          animation: 'float 20s ease-in-out infinite'
         }}></div>
+
+        {/* Floating Elements */}
+        <div style={{
+          position: 'absolute',
+          top: '20%',
+          left: '10%',
+          width: '60px',
+          height: '60px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          borderRadius: '50%',
+          animation: 'float 6s ease-in-out infinite',
+          backdropFilter: 'blur(10px)'
+        }}></div>
+
+        <div style={{
+          position: 'absolute',
+          top: '60%',
+          right: '15%',
+          width: '40px',
+          height: '40px',
+          background: 'rgba(255, 255, 255, 0.15)',
+          borderRadius: '50%',
+          animation: 'float 8s ease-in-out infinite reverse',
+          backdropFilter: 'blur(10px)'
+        }}></div>
+
+        <div style={{
+          position: 'absolute',
+          top: '30%',
+          right: '25%',
+          width: '80px',
+          height: '80px',
+          background: 'rgba(255, 255, 255, 0.08)',
+          borderRadius: '50%',
+          animation: 'float 12s ease-in-out infinite',
+          backdropFilter: 'blur(10px)'
+        }}></div>
+
+        {/* Medical Icons Floating */}
+        <div style={{
+          position: 'absolute',
+          top: '15%',
+          right: '10%',
+          fontSize: '2rem',
+          opacity: 0.3,
+          animation: 'float 10s ease-in-out infinite'
+        }}>🫁</div>
+
+        <div style={{
+          position: 'absolute',
+          bottom: '20%',
+          left: '5%',
+          fontSize: '1.5rem',
+          opacity: 0.3,
+          animation: 'float 14s ease-in-out infinite reverse'
+        }}>🦴</div>
+
+        <div style={{
+          position: 'absolute',
+          top: '40%',
+          left: '15%',
+          fontSize: '1.8rem',
+          opacity: 0.3,
+          animation: 'float 16s ease-in-out infinite'
+        }}>🧠</div>
         
         {/* Content Container */}
         <div style={{
@@ -197,7 +314,7 @@ const Home = () => {
               color: 'white',
               animation: 'fadeIn 0.8s ease-out'
             }}>
-              {/* Badges */}
+              {/* Enhanced Badges */}
               <div style={{
                 display: 'flex',
                 gap: '1rem',
@@ -208,51 +325,76 @@ const Home = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  background: 'rgba(255, 255, 255, 0.15)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%)',
+                  backdropFilter: 'blur(15px)',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
                   borderRadius: '2rem',
-                  padding: '0.5rem 1rem',
+                  padding: '0.75rem 1.25rem',
                   fontSize: '0.875rem',
-                  fontWeight: 500
+                  fontWeight: 600,
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+                  animation: 'glow 2s ease-in-out infinite alternate'
                 }}>
-                  <Star style={{ width: '16px', height: '16px', color: '#fbbf24' }} />
-                  <span>Portal #1 em Fisioterapia</span>
+                  <Star style={{ width: '18px', height: '18px', color: '#fbbf24' }} />
+                  <span>🏆 Portal #1 em Fisioterapia</span>
                 </div>
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  background: 'rgba(255, 255, 255, 0.15)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(16, 185, 129, 0.2) 100%)',
+                  backdropFilter: 'blur(15px)',
+                  border: '1px solid rgba(16, 185, 129, 0.4)',
                   borderRadius: '2rem',
-                  padding: '0.5rem 1rem',
+                  padding: '0.75rem 1.25rem',
                   fontSize: '0.875rem',
-                  fontWeight: 500
+                  fontWeight: 600,
+                  boxShadow: '0 8px 32px rgba(16, 185, 129, 0.2)'
                 }}>
-                  <Users style={{ width: '16px', height: '16px', color: '#93c5fd' }} />
-                  <span>+10.000 estudantes</span>
+                  <Users style={{ width: '18px', height: '18px', color: '#10b981' }} />
+                  <span>✨ +10.000 estudantes</span>
+                </div>
+
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.3) 0%, rgba(245, 158, 11, 0.2) 100%)',
+                  backdropFilter: 'blur(15px)',
+                  border: '1px solid rgba(245, 158, 11, 0.4)',
+                  borderRadius: '2rem',
+                  padding: '0.75rem 1.25rem',
+                  fontSize: '0.875rem',
+                  fontWeight: 600,
+                  boxShadow: '0 8px 32px rgba(245, 158, 11, 0.2)'
+                }}>
+                  <BookOpen style={{ width: '18px', height: '18px', color: '#f59e0b' }} />
+                  <span>📚 24 Livros por R$ 15</span>
                 </div>
               </div>
-              
-              {/* Main Title */}
+
+              {/* Enhanced Main Title */}
               <h1 style={{
-                fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-                fontWeight: 800,
+                fontSize: 'clamp(2.8rem, 6vw, 4.5rem)',
+                fontWeight: 900,
                 lineHeight: 1.1,
                 marginBottom: '1.5rem',
-                fontFamily: "'Plus Jakarta Sans', sans-serif"
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+                textShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
               }}>
-                <span style={{ display: 'block' }}>Transforme sua</span>
-                <span style={{ 
-                  display: 'block', 
-                  background: 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)', 
-                  WebkitBackgroundClip: 'text', 
-                  backgroundClip: 'text', 
+                <span style={{
+                  display: 'block',
+                  animation: 'slideInLeft 0.8s ease-out'
+                }}>Transforme sua</span>
+                <span style={{
+                  display: 'block',
+                  background: 'linear-gradient(135deg, #ffffff 0%, #fbbf24 50%, #f59e0b 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
                   color: 'transparent',
                   marginTop: '0.5rem',
-                  marginBottom: '0.5rem'
+                  marginBottom: '0.5rem',
+                  animation: 'slideInRight 0.8s ease-out 0.2s both'
                 }}>
                   Jornada Acadêmica
                 </span>
@@ -307,24 +449,24 @@ const Home = () => {
                 gap: '1rem',
                 flexWrap: 'wrap'
               }}>
-                <Link to="#search" style={{
+                <Link to="/livros" style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  background: 'white',
-                  color: '#2563eb',
+                  background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                  color: 'white',
                   padding: '1rem 2rem',
                   borderRadius: '1rem',
                   fontWeight: 600,
                   textDecoration: 'none',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                  boxShadow: '0 10px 15px -3px rgba(245, 158, 11, 0.4), 0 4px 6px -2px rgba(245, 158, 11, 0.2)',
                   transition: 'all 0.3s ease'
                 }}>
-                  <Play style={{ width: '20px', height: '20px' }} />
-                  Começar Agora
+                  <BookOpen style={{ width: '20px', height: '20px' }} />
+                  📚 Ver Livros (R$ 15)
                   <ArrowRight style={{ width: '16px', height: '16px', marginLeft: '0.5rem' }} />
               </Link>
-                <Link to="#features" style={{
+                <Link to="/quiz" style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.5rem',
@@ -338,8 +480,8 @@ const Home = () => {
                   backdropFilter: 'blur(10px)',
                   transition: 'all 0.3s ease'
                 }}>
-                  <BookOpen style={{ width: '20px', height: '20px' }} />
-                  Ver Demonstração
+                  <span style={{ fontSize: '20px' }}>🧠</span>
+                  Fazer Quiz Grátis
               </Link>
 
               <Link to="/ferramentas-calculo" style={{
@@ -430,38 +572,54 @@ const Home = () => {
           </div>
               
               {/* Redesigned Mini Cards - Better positioned */}
-              {/* Card 1 - Artigos */}
+              {/* Enhanced Card 1 - Artigos */}
               <div style={{
                 position: 'absolute',
                 top: '20px',
                 right: '20px',
-                background: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(10px)',
-                borderRadius: '12px',
-                padding: '12px 16px',
-                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                minWidth: '140px',
-                animation: 'float 3s ease-in-out infinite',
-                zIndex: 10
+                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%)',
+                backdropFilter: 'blur(15px)',
+                borderRadius: '16px',
+                padding: '16px 20px',
+                boxShadow: '0 12px 35px rgba(37, 99, 235, 0.2), 0 4px 15px rgba(0, 0, 0, 0.1)',
+                border: '2px solid rgba(37, 99, 235, 0.2)',
+                minWidth: '150px',
+                animation: 'float 4s ease-in-out infinite',
+                zIndex: 10,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px) scale(1.05)';
+                e.currentTarget.style.boxShadow = '0 20px 45px rgba(37, 99, 235, 0.3), 0 8px 25px rgba(0, 0, 0, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                e.currentTarget.style.boxShadow = '0 12px 35px rgba(37, 99, 235, 0.2), 0 4px 15px rgba(0, 0, 0, 0.1)';
               }}>
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
-                  marginBottom: '6px'
+                  gap: '10px',
+                  marginBottom: '8px'
                 }}>
-                  <span style={{ fontSize: '16px' }}>📚</span>
                   <span style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
+                    fontSize: '18px',
+                    filter: 'drop-shadow(0 2px 4px rgba(37, 99, 235, 0.3))'
+                  }}>📚</span>
+                  <span style={{
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
                     color: '#374151'
                   }}>Artigos</span>
-        </div>
+                </div>
                 <div style={{
-                  fontSize: '1.25rem',
-                  fontWeight: 800,
-                  color: '#2563eb',
+                  fontSize: '1.4rem',
+                  fontWeight: 900,
+                  background: 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent',
                   textAlign: 'center'
                 }}>500+</div>
               </div>
@@ -553,6 +711,412 @@ const Home = () => {
             to { opacity: 1; transform: translateY(0); }
           }
         `}</style>
+      </section>
+
+      {/* Funcionalidades Principais */}
+      <section style={{
+        padding: '6rem 2rem',
+        background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
+        position: 'relative'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ textAlign: 'center', marginBottom: '4rem' }}
+          >
+            <h2 style={{
+              fontSize: isMobile ? '2.5rem' : '3.5rem',
+              fontWeight: '700',
+              color: '#92400e',
+              marginBottom: '1rem'
+            }}>
+              🎯 Tudo que Você Precisa em Um Só Lugar
+            </h2>
+            <p style={{
+              fontSize: '1.25rem',
+              color: '#92400e',
+              maxWidth: '800px',
+              margin: '0 auto',
+              opacity: 0.8
+            }}>
+              Descubra todas as ferramentas e recursos que preparamos para acelerar seu aprendizado
+            </p>
+          </motion.div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem'
+          }}>
+            {[
+              ...(isAuthenticated ? [{
+                icon: '📊',
+                title: 'Meu Dashboard',
+                description: 'Acompanhe seu progresso, conquistas e estatísticas de estudo',
+                link: '/dashboard',
+                color: '#0ea5e9',
+                badge: 'SEU PAINEL',
+                stats: 'Progresso • Conquistas • Metas'
+              }] : []),
+              {
+                icon: '🧠',
+                title: 'Quiz Interativo',
+                description: 'Teste seus conhecimentos com 10 questões práticas de fisioterapia',
+                link: '/quiz',
+                color: '#8b5cf6',
+                badge: 'NOVO',
+                stats: '10 Questões • 5 min'
+              },
+              {
+                icon: '📚',
+                title: 'Biblioteca Digital',
+                description: '24 livros digitais com desconto de até 93% - todas as especialidades',
+                link: '/livros',
+                color: '#f59e0b',
+                badge: 'R$ 15',
+                stats: '24 Livros • Todas Especialidades'
+              },
+              {
+                icon: '🎓',
+                title: 'Cursos Online',
+                description: 'Cursos completos com certificado para aprimorar seus conhecimentos',
+                link: '/cursos',
+                color: '#8b5cf6',
+                badge: 'EM BREVE',
+                stats: '8 Cursos • Certificados'
+              },
+              {
+                icon: '📝',
+                title: 'Blog Educativo',
+                description: 'Artigos atualizados sobre técnicas, patologias e novidades da área',
+                link: '/blog',
+                color: '#0ea5e9',
+                badge: 'NOVO',
+                stats: '12 Artigos • Busca Avançada'
+              },
+              {
+                icon: '📧',
+                title: 'Newsletter Exclusiva',
+                description: 'Conteúdo exclusivo, dicas práticas e novidades direto no seu email',
+                link: '/newsletter',
+                color: '#10b981',
+                badge: 'GRÁTIS',
+                stats: '2.500+ Inscritos • Semanal'
+              },
+              {
+                icon: '📱',
+                title: 'Downloads Gratuitos',
+                description: 'Materiais, planilhas e recursos exclusivos para download',
+                link: '/downloads',
+                color: '#10b981',
+                badge: 'GRÁTIS',
+                stats: 'Materiais Exclusivos'
+              }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{
+                  transform: 'translateY(-10px)',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                }}
+                style={{
+                  background: 'white',
+                  borderRadius: '2rem',
+                  padding: '2.5rem',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  border: '1px solid rgba(0,0,0,0.05)'
+                }}
+                onClick={() => navigate(feature.link)}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: '1.5rem',
+                  right: '1.5rem',
+                  background: feature.color,
+                  color: 'white',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '1.5rem',
+                  fontSize: '0.75rem',
+                  fontWeight: '700',
+                  letterSpacing: '0.05em'
+                }}>
+                  {feature.badge}
+                </div>
+
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  background: `linear-gradient(135deg, ${feature.color}20 0%, ${feature.color}10 100%)`,
+                  borderRadius: '1.5rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '2.5rem',
+                  marginBottom: '1.5rem'
+                }}>
+                  {feature.icon}
+                </div>
+
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '700',
+                  color: '#1f2937',
+                  marginBottom: '1rem'
+                }}>
+                  {feature.title}
+                </h3>
+
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '1rem',
+                  lineHeight: '1.6',
+                  marginBottom: '1.5rem'
+                }}>
+                  {feature.description}
+                </p>
+
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: '1.5rem'
+                }}>
+                  <span style={{
+                    color: feature.color,
+                    fontSize: '0.875rem',
+                    fontWeight: '600'
+                  }}>
+                    {feature.stats}
+                  </span>
+                </div>
+
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: feature.color,
+                  fontWeight: '600',
+                  fontSize: '1rem',
+                  padding: '1rem',
+                  background: `${feature.color}10`,
+                  borderRadius: '1rem',
+                  transition: 'all 0.3s ease'
+                }}>
+                  Explorar Agora →
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Banner Promocional de Produtos */}
+      <section style={{
+        padding: '4rem 2rem',
+        background: 'linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%)',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+          opacity: 0.3
+        }} />
+
+        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ textAlign: 'center', marginBottom: '3rem' }}
+          >
+            <h2 style={{
+              fontSize: isMobile ? '2.5rem' : '3.5rem',
+              fontWeight: '700',
+              color: 'white',
+              marginBottom: '1rem'
+            }}>
+              🔥 Oferta Especial!
+            </h2>
+            <p style={{
+              fontSize: '1.25rem',
+              color: 'rgba(255, 255, 255, 0.9)',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              Acesso completo ao conhecimento em fisioterapia por preços incríveis
+            </p>
+          </motion.div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: '2rem',
+            alignItems: 'center'
+          }}>
+            {/* Livros */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ transform: 'translateY(-5px)' }}
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: '2rem',
+                padding: '2.5rem',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                cursor: 'pointer'
+              }}
+              onClick={() => navigate('/livros')}
+            >
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                marginBottom: '1.5rem'
+              }}>
+                <div style={{
+                  fontSize: '3rem'
+                }}>
+                  📚
+                </div>
+                <div>
+                  <h3 style={{
+                    fontSize: '1.75rem',
+                    fontWeight: '700',
+                    color: 'white',
+                    marginBottom: '0.5rem'
+                  }}>
+                    24 Livros Digitais
+                  </h3>
+                  <div style={{
+                    background: '#f59e0b',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '1rem',
+                    fontSize: '1rem',
+                    fontWeight: '700',
+                    display: 'inline-block'
+                  }}>
+                    Apenas R$ 15,00 cada
+                  </div>
+                </div>
+              </div>
+
+              <p style={{
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontSize: '1rem',
+                lineHeight: '1.6',
+                marginBottom: '1.5rem'
+              }}>
+                Biblioteca completa com todas as especialidades da fisioterapia.
+                Desconto de até 93% do valor original!
+              </p>
+
+              <div style={{
+                background: 'white',
+                color: '#1e40af',
+                padding: '1rem 2rem',
+                borderRadius: '1rem',
+                fontSize: '1rem',
+                fontWeight: '700',
+                textAlign: 'center',
+                transition: 'all 0.3s ease'
+              }}>
+                📚 Ver Todos os Livros →
+              </div>
+            </motion.div>
+
+            {/* Cursos */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              whileHover={{ transform: 'translateY(-5px)' }}
+              style={{
+                background: 'rgba(255, 255, 255, 0.1)',
+                backdropFilter: 'blur(10px)',
+                borderRadius: '2rem',
+                padding: '2.5rem',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                cursor: 'pointer'
+              }}
+              onClick={() => navigate('/cursos')}
+            >
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+                marginBottom: '1.5rem'
+              }}>
+                <div style={{
+                  fontSize: '3rem'
+                }}>
+                  🎓
+                </div>
+                <div>
+                  <h3 style={{
+                    fontSize: '1.75rem',
+                    fontWeight: '700',
+                    color: 'white',
+                    marginBottom: '0.5rem'
+                  }}>
+                    Cursos Online
+                  </h3>
+                  <div style={{
+                    background: '#8b5cf6',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '1rem',
+                    fontSize: '1rem',
+                    fontWeight: '700',
+                    display: 'inline-block'
+                  }}>
+                    Em Breve
+                  </div>
+                </div>
+              </div>
+
+              <p style={{
+                color: 'rgba(255, 255, 255, 0.8)',
+                fontSize: '1rem',
+                lineHeight: '1.6',
+                marginBottom: '1.5rem'
+              }}>
+                8 cursos completos com certificado reconhecido.
+                Aprenda com os melhores professores da área!
+              </p>
+
+              <div style={{
+                background: 'white',
+                color: '#1e40af',
+                padding: '1rem 2rem',
+                borderRadius: '1rem',
+                fontSize: '1rem',
+                fontWeight: '700',
+                textAlign: 'center',
+                transition: 'all 0.3s ease'
+              }}>
+                🎓 Ver Cursos →
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
       {/* Newsletter Banner */}
@@ -2482,6 +3046,155 @@ const Home = () => {
                 <span>Entre em Contato</span>
             </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Seção Novo Conteúdo */}
+      <section style={{
+        padding: '5rem 2rem',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            style={{ textAlign: 'center', marginBottom: '3rem' }}
+          >
+            <h2 style={{
+              fontSize: isMobile ? '2rem' : '3rem',
+              fontWeight: '700',
+              color: '#1e293b',
+              marginBottom: '1rem'
+            }}>
+              🚀 Explore Mais Conteúdo
+            </h2>
+            <p style={{
+              fontSize: '1.25rem',
+              color: '#64748b',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              Descubra todas as ferramentas e recursos que preparamos para você
+            </p>
+          </motion.div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem'
+          }}>
+            {[
+              {
+                title: '📚 Biblioteca Digital',
+                description: 'Mais de 24 livros digitais de fisioterapia com desconto de até 93%',
+                link: '/livros',
+                color: '#f59e0b',
+                badge: 'R$ 15'
+              },
+              {
+                title: '🎓 Cursos Online',
+                description: 'Cursos completos com certificado para aprimorar seus conhecimentos',
+                link: '/cursos',
+                color: '#8b5cf6',
+                badge: 'Em Breve'
+              },
+              {
+                title: '📝 Blog Educativo',
+                description: 'Artigos atualizados sobre técnicas, patologias e novidades da área',
+                link: '/blog',
+                color: '#0ea5e9',
+                badge: '12 Artigos'
+              },
+              {
+                title: '🧠 Quiz Interativo',
+                description: 'Teste seus conhecimentos com questões práticas de fisioterapia',
+                link: '/quiz',
+                color: '#8b5cf6',
+                badge: '10 Questões'
+              },
+              {
+                title: '📧 Newsletter',
+                description: 'Receba conteúdo exclusivo e dicas práticas direto no seu email',
+                link: '/newsletter',
+                color: '#10b981',
+                badge: 'Grátis'
+              },
+              {
+                title: '📱 Downloads',
+                description: 'Materiais gratuitos, planilhas e recursos para download',
+                link: '/downloads',
+                color: '#10b981',
+                badge: 'Grátis'
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{
+                  transform: 'translateY(-5px)',
+                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
+                }}
+                style={{
+                  background: 'white',
+                  borderRadius: '1.5rem',
+                  padding: '2rem',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  transition: 'all 0.3s ease',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                onClick={() => window.location.href = item.link}
+              >
+                <div style={{
+                  position: 'absolute',
+                  top: '1rem',
+                  right: '1rem',
+                  background: item.color,
+                  color: 'white',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '1rem',
+                  fontSize: '0.75rem',
+                  fontWeight: '600'
+                }}>
+                  {item.badge}
+                </div>
+
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '700',
+                  color: '#1f2937',
+                  marginBottom: '1rem'
+                }}>
+                  {item.title}
+                </h3>
+
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '1rem',
+                  lineHeight: '1.6',
+                  marginBottom: '1.5rem'
+                }}>
+                  {item.description}
+                </p>
+
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: item.color,
+                  fontWeight: '600',
+                  fontSize: '1rem'
+                }}>
+                  Explorar →
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

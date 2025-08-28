@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider } from './contexts/AuthContext';
+import { FavoritosProvider } from './contexts/FavoritosContext';
 import Layout from './components/Layout';
 
 // Lazy loading para componentes de página
@@ -9,6 +10,14 @@ const SaudeAtleta = lazy(() => import('./pages/SaudeAtleta'));
 const UnidadeHospitalar = lazy(() => import('./pages/UnidadeHospitalar'));
 const SaudeIdoso = lazy(() => import('./pages/SaudeIdoso'));
 const Neurofuncional = lazy(() => import('./pages/Neurofuncional'));
+// Novas especialidades
+const Respiratoria = lazy(() => import('./pages/Respiratoria'));
+const Ortopedica = lazy(() => import('./pages/Ortopedica'));
+const Esportiva = lazy(() => import('./pages/Esportiva'));
+const Pediatrica = lazy(() => import('./pages/Pediatrica'));
+const Geriatrica = lazy(() => import('./pages/Geriatrica'));
+const Aquatica = lazy(() => import('./pages/Aquatica'));
+const UTI = lazy(() => import('./pages/UTI'));
 const FerramentasCalculo = lazy(() => import('./pages/FerramentasCalculo'));
 const Sugestoes = lazy(() => import('./pages/Sugestoes'));
 const Questoes = lazy(() => import('./pages/Questoes'));
@@ -24,6 +33,20 @@ const CasosClinicos = lazy(() => import('./pages/CasosClinicos'));
 const Produtos = lazy(() => import('./pages/ProdutosSimple'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Downloads = lazy(() => import('./pages/Downloads'));
+const Livros = lazy(() => import('./pages/Livros'));
+const CheckoutSuccess = lazy(() => import('./pages/CheckoutSuccess'));
+const CheckoutFailure = lazy(() => import('./pages/CheckoutFailure'));
+const CheckoutPIX = lazy(() => import('./pages/CheckoutPIX'));
+const CheckoutPIXReal = lazy(() => import('./pages/CheckoutPIXReal'));
+const CheckoutDireto = lazy(() => import('./pages/CheckoutDireto'));
+const Blog = lazy(() => import('./pages/Blog'));
+const Cursos = lazy(() => import('./pages/Cursos'));
+const Quiz = lazy(() => import('./pages/Quiz'));
+const Newsletter = lazy(() => import('./pages/Newsletter'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Conquistas = lazy(() => import('./pages/Conquistas'));
+const Favoritos = lazy(() => import('./pages/Favoritos'));
+const PoliticaCookies = lazy(() => import('./pages/PoliticaCookies'));
 import Sobre from './pages/Sobre';
 import Contato from './pages/Contato';
 import SearchResults from './pages/SearchResults';
@@ -120,7 +143,8 @@ function App() {
 
   return (
     <AuthProvider>
-      <Router>
+      <FavoritosProvider>
+        <Router>
         <div className="App">
         <Routes>
           {/* Páginas com layout completo */}
@@ -144,6 +168,16 @@ function App() {
           <Route path="/unidade-hospitalar" element={<Layout><UnidadeHospitalar /></Layout>} />
           <Route path="/saude-idoso" element={<Layout><SaudeIdoso /></Layout>} />
           <Route path="/neurofuncional" element={<Layout><Neurofuncional /></Layout>} />
+
+          {/* Novas especialidades */}
+          <Route path="/respiratoria" element={<Layout><Respiratoria /></Layout>} />
+          <Route path="/neurologica" element={<Layout><Neurofuncional /></Layout>} />
+          <Route path="/ortopedica" element={<Layout><Ortopedica /></Layout>} />
+          <Route path="/esportiva" element={<Layout><Esportiva /></Layout>} />
+          <Route path="/pediatrica" element={<Layout><Pediatrica /></Layout>} />
+          <Route path="/geriatrica" element={<Layout><Geriatrica /></Layout>} />
+          <Route path="/aquatica" element={<Layout><Aquatica /></Layout>} />
+          <Route path="/uti" element={<Layout><UTI /></Layout>} />
           
           {/* Páginas de busca e artigos */}
           <Route path="/search" element={<Layout><SearchResults /></Layout>} />
@@ -267,9 +301,108 @@ function App() {
               <Downloads />
             </Suspense>
           } />
+          <Route path="/livros" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Livros />
+            </Suspense>
+          } />
+          <Route path="/checkout/success" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <CheckoutSuccess />
+            </Suspense>
+          } />
+          <Route path="/checkout/failure" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <CheckoutFailure />
+            </Suspense>
+          } />
+          <Route path="/checkout-pix" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <CheckoutPIX />
+            </Suspense>
+          } />
+          <Route path="/checkout-pix-real" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <CheckoutPIXReal />
+            </Suspense>
+          } />
+          <Route path="/checkout-direto" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <CheckoutDireto />
+            </Suspense>
+          } />
+          <Route path="/blog" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Blog />
+            </Suspense>
+          } />
+          <Route path="/cursos" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Cursos />
+            </Suspense>
+          } />
+          <Route path="/quiz" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Quiz />
+            </Suspense>
+          } />
+          <Route path="/newsletter" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Newsletter />
+            </Suspense>
+          } />
+          <Route path="/dashboard" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Dashboard />
+            </Suspense>
+          } />
+          <Route path="/conquistas" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Conquistas />
+            </Suspense>
+          } />
+          <Route path="/favoritos" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <Favoritos />
+            </Suspense>
+          } />
+          <Route path="/politica-cookies" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-screen">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+            </div>}>
+              <PoliticaCookies />
+            </Suspense>
+          } />
         </Routes>
         </div>
       </Router>
+      </FavoritosProvider>
     </AuthProvider>
   );
 }

@@ -20,32 +20,66 @@ const Header = () => {
 
   const navigation = [
     { name: 'Home', href: '/' },
+    // PRODUTOS PRINCIPAIS - VISÍVEIS PARA VENDAS
+    {
+      name: 'Livros',
+      href: '/livros',
+      badge: 'R$ 15',
+      badgeColor: '#f59e0b',
+      highlight: true // Destaque especial
+    },
+    {
+      name: 'Cursos',
+      href: '/cursos',
+      badge: 'Em Breve',
+      badgeColor: '#8b5cf6',
+      highlight: true // Destaque especial
+    },
+    // ESPECIALIDADES - PARA ESTUDOS
     {
       name: 'Especialidades',
       href: '#',
       hasDropdown: true,
       dropdownItems: [
-        { name: 'Saúde do Atleta', href: '/saude-atleta', icon: '🏃‍♂️', description: 'Fisioterapia esportiva' },
-        { name: 'Unidade Hospitalar', href: '/unidade-hospitalar', icon: '🏥', description: 'Fisioterapia hospitalar' },
-        { name: 'Saúde do Idoso', href: '/saude-idoso', icon: '👴', description: 'Geriatria e gerontologia' },
-        { name: 'Neurofuncional', href: '/neurofuncional', icon: '🧠', description: 'Fisioterapia neurológica' }
+        { name: 'Saúde do Atleta', href: '/saude-atleta', icon: '🏃‍♂️', description: 'Fisioterapia esportiva completa', badge: 'Completo', badgeColor: '#10b981' },
+        { name: 'Unidade Hospitalar', href: '/unidade-hospitalar', icon: '🏥', description: 'Fisioterapia hospitalar', badge: 'Completo', badgeColor: '#10b981' },
+        { name: 'Saúde do Idoso', href: '/saude-idoso', icon: '👴', description: 'Geriatria e gerontologia', badge: 'Completo', badgeColor: '#10b981' },
+        { name: 'Neurofuncional', href: '/neurofuncional', icon: '🧠', description: 'Reabilitação neurológica', badge: 'Completo', badgeColor: '#10b981' },
+        { name: 'Fisioterapia Respiratória', href: '/respiratoria', icon: '🫁', description: 'Técnicas respiratórias e ventilação', badge: 'Novo', badgeColor: '#0ea5e9' },
+        { name: 'Fisioterapia Ortopédica', href: '/ortopedica', icon: '🦴', description: 'Lesões musculoesqueléticas', badge: 'Novo', badgeColor: '#0ea5e9' },
+        { name: 'Fisioterapia Esportiva', href: '/esportiva', icon: '⚽', description: 'Prevenção e reabilitação esportiva', badge: 'Em Breve', badgeColor: '#8b5cf6' },
+        { name: 'Fisioterapia Pediátrica', href: '/pediatrica', icon: '👶', description: 'Desenvolvimento infantil', badge: 'Em Breve', badgeColor: '#8b5cf6' }
       ]
     },
+    // CONTEÚDO GRATUITO - PARA ATRAIR
     {
-      name: 'Estudos',
+      name: 'Quiz',
+      href: '/quiz',
+      badge: 'Novo',
+      badgeColor: '#8b5cf6'
+    },
+    {
+      name: 'Blog',
+      href: '/blog',
+      badge: '12 Artigos',
+      badgeColor: '#0ea5e9'
+    },
+    // DROPDOWN COM OUTROS ITENS
+    {
+      name: 'Mais',
       href: '#',
       hasDropdown: true,
       dropdownItems: [
+        { name: 'Newsletter', href: '/newsletter', icon: '📧', description: 'Conteúdo exclusivo semanal', badge: 'Grátis', badgeColor: '#10b981' },
+        { name: 'Downloads', href: '/downloads', icon: '📱', description: 'Materiais gratuitos', badge: 'Grátis', badgeColor: '#10b981' },
         { name: 'Questões', href: '/questoes', icon: '❓', description: 'Banco de questões comentadas' },
-        { name: 'Casos Clínicos', href: '/casos-clinicos', icon: '📋', description: 'Casos reais para prática' },
         { name: 'Simulados', href: '/simulados', icon: '📝', description: 'Simulados completos' },
-        { name: 'Utilitários', href: '/ferramentas-calculo', icon: '🧮', description: 'Calculadoras e ferramentas' }
+        { name: 'Calculadoras', href: '/ferramentas-calculo', icon: '🧮', description: 'Ferramentas clínicas' },
+        { name: 'Sobre Nós', href: '/sobre', icon: 'ℹ️', description: 'Nossa história e missão' },
+        { name: 'Contato', href: '/contato', icon: '📞', description: 'Fale conosco' },
+        { name: 'Política de Cookies', href: '/politica-cookies', icon: '🍪', description: 'Privacidade e cookies' }
       ]
-    },
-    { name: 'Downloads', href: '/downloads', badge: 'Grátis', badgeColor: '#10b981' },
-    { name: 'Produtos', href: '/produtos', badge: 'Novo', badgeColor: '#ef4444' },
-    { name: 'Sobre', href: '/sobre' },
-    { name: 'Contato', href: '/contato' }
+    }
   ];
 
   useEffect(() => {
@@ -126,6 +160,15 @@ const Header = () => {
     <>
       <style>
         {`
+          @keyframes pulse {
+            0%, 100% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.05);
+            }
+          }
+
           @media (max-width: 768px) {
             .nav-desktop { display: none !important; }
             .mobile-menu-btn { display: flex !important; }
@@ -237,42 +280,62 @@ const Header = () => {
                   <Link
                     to={item.href}
                     style={{
-                      padding: '0.5rem 0.75rem',
+                      padding: item.highlight ? '0.75rem 1rem' : '0.5rem 0.75rem',
                       fontSize: '0.875rem',
-                      fontWeight: 500,
-                      color: isActive(item.href) ? '#0d9488' : '#6b7280',
+                      fontWeight: item.highlight ? 600 : 500,
+                      color: isActive(item.href) ? '#0d9488' : (item.highlight ? '#1f2937' : '#6b7280'),
                       textDecoration: 'none',
-                      borderRadius: '0.5rem',
+                      borderRadius: '0.75rem',
                       transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                       position: 'relative',
                       whiteSpace: 'nowrap',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.5rem'
+                      gap: '0.5rem',
+                      background: item.highlight ? 'linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)' : 'transparent',
+                      border: item.highlight ? '1px solid rgba(14, 165, 233, 0.2)' : 'none'
                     }}
                     onMouseEnter={(e) => {
                       if (!isActive(item.href)) {
-                        e.target.style.color = '#374151';
-                        e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                        if (item.highlight) {
+                          e.target.style.color = '#0ea5e9';
+                          e.target.style.background = 'linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)';
+                          e.target.style.transform = 'translateY(-1px)';
+                          e.target.style.boxShadow = '0 4px 12px rgba(14, 165, 233, 0.3)';
+                        } else {
+                          e.target.style.color = '#374151';
+                          e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+                        }
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (!isActive(item.href)) {
-                        e.target.style.color = '#6b7280';
-                        e.target.style.background = 'transparent';
+                        if (item.highlight) {
+                          e.target.style.color = '#1f2937';
+                          e.target.style.background = 'linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%)';
+                          e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow = 'none';
+                        } else {
+                          e.target.style.color = '#6b7280';
+                          e.target.style.background = 'transparent';
+                        }
                       }
                     }}
                   >
                     {item.name}
                     {item.badge && (
                       <span style={{
-                        background: item.badgeColor || '#ef4444',
+                        background: item.highlight
+                          ? `linear-gradient(135deg, ${item.badgeColor} 0%, ${item.badgeColor}dd 100%)`
+                          : item.badgeColor || '#ef4444',
                         color: 'white',
-                        fontSize: '0.625rem',
-                        fontWeight: '600',
-                        padding: '0.125rem 0.375rem',
-                        borderRadius: '0.75rem',
-                        lineHeight: '1'
+                        fontSize: item.highlight ? '0.75rem' : '0.625rem',
+                        fontWeight: '700',
+                        padding: item.highlight ? '0.25rem 0.5rem' : '0.125rem 0.375rem',
+                        borderRadius: '1rem',
+                        lineHeight: '1',
+                        boxShadow: item.highlight ? `0 2px 8px ${item.badgeColor}40` : 'none',
+                        animation: item.highlight ? 'pulse 2s infinite' : 'none'
                       }}>
                         {item.badge}
                       </span>
@@ -463,6 +526,40 @@ const Header = () => {
                     <path d="M12 2L2 7l10 5 10-5-10-5z"/>
                     <path d="M2 17l10 5 10-5"/>
                     <path d="M2 12l10 5 10-5"/>
+                  </svg>
+                </button>
+
+                {/* Dashboard Button */}
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '36px',
+                    height: '36px',
+                    background: 'none',
+                    border: 'none',
+                    color: '#0ea5e9',
+                    cursor: 'pointer',
+                    borderRadius: '0.5rem',
+                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'rgba(14, 165, 233, 0.1)';
+                    e.target.style.color = '#0284c7';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'none';
+                    e.target.style.color = '#0ea5e9';
+                  }}
+                  title="Meu Dashboard"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
                   </svg>
                 </button>
 
