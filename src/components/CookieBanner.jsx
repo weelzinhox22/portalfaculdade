@@ -25,27 +25,6 @@ const CookieBanner = () => {
     setShowBanner(false);
   };
 
-  useEffect(() => {
-    // Verificar se o usuário já aceitou cookies
-    const cookieConsent = localStorage.getItem('cookieConsent');
-    if (!cookieConsent) {
-      // Mostrar banner após 2 segundos
-      setTimeout(() => {
-        setShowBanner(true);
-      }, 2000);
-    }
-  }, []);
-
-  const handleAccept = () => {
-    localStorage.setItem('cookieConsent', 'accepted');
-    setShowBanner(false);
-  };
-
-  const handleReject = () => {
-    localStorage.setItem('cookieConsent', 'rejected');
-    setShowBanner(false);
-  };
-
   if (!showBanner) return null;
 
   return (
