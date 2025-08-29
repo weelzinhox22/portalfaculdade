@@ -610,7 +610,7 @@ const Quiz = () => {
                   }}
                 >
                   <span style={{
-                    display: 'inline-block',
+                    display: 'flex',
                     width: '24px',
                     height: '24px',
                     borderRadius: '50%',
@@ -619,7 +619,6 @@ const Quiz = () => {
                     fontSize: '0.875rem',
                     fontWeight: '600',
                     marginRight: '1rem',
-                    display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>

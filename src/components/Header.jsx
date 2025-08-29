@@ -59,6 +59,12 @@ const Header = () => {
       badgeColor: '#8b5cf6'
     },
     {
+      name: 'Fórum',
+      href: '/forum',
+      badge: 'Comunidade',
+      badgeColor: '#10b981'
+    },
+    {
       name: 'Blog',
       href: '/blog',
       badge: '12 Artigos',

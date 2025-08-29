@@ -1,0 +1,573 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { MessageSquare, Users, Eye, Clock, Pin, Lock, Plus, Search, Filter, TrendingUp, Star, Award, Loader } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { getForumCategories, getForumTopics, getForumStats } from '../services/forumService.ts';
+import { setupForumCategories } from '../utils/setupForum';
+
+const Forum = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('recent');
+  const [categories, setCategories] = useState([]);
+  const [topics, setTopics] = useState([]);
+  const [stats, setStats] = useState({ members: 0, topics: 0, replies: 0 });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Carregar dados do Supabase
+  useEffect(() => {
+    loadForumData();
+  }, [selectedCategory, searchQuery, sortBy]);
+
+  const loadForumData = async () => {
+    try {
+      console.log('🔄 Iniciando carregamento do fórum...');
+      setLoading(true);
+      setError(null);
+
+      // Buscar categorias (criar se não existirem)
+      console.log('📂 Buscando categorias...');
+      let categoriesData = await getForumCategories();
+      console.log('📂 Categorias encontradas:', categoriesData);
+      
+      if (!categoriesData || categoriesData.length === 0) {
+        console.log('🔧 Criando categorias padrão...');
+        categoriesData = await setupForumCategories();
+        console.log('✅ Categorias criadas:', categoriesData);
+      }
+
+      console.log('📝 Buscando tópicos e estatísticas...');
+      let topicsData, statsData;
+      try {
+        [topicsData, statsData] = await Promise.all([
+          getForumTopics(selectedCategory, searchQuery, sortBy),
+          getForumStats()
+        ]);
+        console.log('📝 Tópicos encontrados:', topicsData);
+        console.log('📊 Estatísticas:', statsData);
+      } catch (err) {
+        console.error('❌ Erro ao buscar tópicos ou estatísticas:', err);
+        setError(err.message);
+        return;
+      }
+
+      console.log('🔄 Atualizando estados...');
+      
+      // Adicionar categoria "Todas"
+      const allCategories = [
+        {
+          id: 'all',
+          name: 'Todas as Categorias',
+          icon: '🌟',
+          color: '#6366f1',
+          description: 'Todos os tópicos da comunidade'
+        },
+        ...categoriesData
+      ];
+
+      setCategories(allCategories);
+      setTopics(topicsData);
+      setStats(statsData);
+    } catch (err) {
+      console.error('Erro ao carregar dados do fórum:', err);
+      setError('Erro ao carregar dados do fórum. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleNewTopic = () => {
+    if (!user) {
+      alert('Você precisa estar logado para criar um tópico.');
+      return;
+    }
+    navigate('/forum/new-topic');
+  };
+
+  const handleTopicClick = (topicId) => {
+    navigate(`/forum/topic/${topicId}`);
+  };
+
+  const formatTimeAgo = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
+
+    if (diffInHours < 1) return 'Agora mesmo';
+    if (diffInHours < 24) return `${diffInHours}h atrás`;
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 7) return `${diffInDays}d atrás`;
+
+    return date.toLocaleDateString('pt-BR');
+  };
+
+  return (
+    <div style={{ 
+      minHeight: '100vh', 
+      background: 'linear-gradient(to bottom, #f8fafc, #ffffff)',
+      paddingTop: '6rem'
+    }}>
+      {/* Header */}
+      <div style={{
+        background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
+        color: 'white',
+        padding: '4rem 2rem',
+        textAlign: 'center'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h1 style={{
+            fontSize: '3rem',
+            fontWeight: '800',
+            marginBottom: '1rem'
+          }}>
+            💬 Fórum da Comunidade
+          </h1>
+          <p style={{
+            fontSize: '1.25rem',
+            opacity: 0.9,
+            marginBottom: '2rem'
+          }}>
+            Conecte-se com fisioterapeutas, compartilhe experiências e aprenda juntos
+          </p>
+          
+          <div style={{
+            display: 'flex',
+            gap: '2rem',
+            justifyContent: 'center',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '2rem', fontWeight: '700' }}>
+                {loading ? '...' : `${stats.members}+`}
+              </div>
+              <div style={{ opacity: 0.8 }}>Membros Ativos</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '2rem', fontWeight: '700' }}>
+                {loading ? '...' : stats.topics}
+              </div>
+              <div style={{ opacity: 0.8 }}>Tópicos</div>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: '2rem', fontWeight: '700' }}>
+                {loading ? '...' : `${stats.replies}+`}
+              </div>
+              <div style={{ opacity: 0.8 }}>Respostas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>
+        {/* Dev Tools - Remove in production */}
+        {process.env.NODE_ENV === 'development' && (
+          <button
+            onClick={async () => {
+              try {
+                const testTopic = await createForumTopic({
+                  title: "Tópico de Teste",
+                  content: "Este é um tópico de teste para verificar o funcionamento do fórum.",
+                  category_id: "geral",
+                  user_id: user?.id
+                });
+                console.log('✅ Tópico de teste criado:', testTopic);
+                loadForumData();
+              } catch (err) {
+                console.error('❌ Erro ao criar tópico de teste:', err);
+                setError(err.message);
+              }
+            }}
+            style={{
+              padding: '0.5rem 1rem',
+              marginBottom: '1rem',
+              background: '#3b82f6',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.5rem',
+              cursor: 'pointer'
+            }}
+          >
+            Criar Tópico de Teste
+          </button>
+        )}
+        {/* Controls */}
+        {error && (
+          <div style={{
+            padding: '1rem',
+            marginBottom: '1rem',
+            backgroundColor: '#fee2e2',
+            color: '#dc2626',
+            borderRadius: '0.5rem',
+          }}>
+            {error}
+          </div>
+        )}
+
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <Loader style={{ animation: 'spin 1s linear infinite', margin: '0 auto' }} />
+            <div style={{ marginTop: '1rem' }}>Carregando tópicos...</div>
+          </div>
+        ) : (
+          <div style={{
+            display: 'flex',
+            gap: '1rem',
+            marginBottom: '2rem',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            {/* Search */}
+            <div style={{ position: 'relative' }}>
+              <Search style={{
+                position: 'absolute',
+                left: '1rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: '#6b7280',
+                width: '20px',
+                height: '20px'
+              }} />
+              <input
+                type="text"
+                placeholder="Buscar tópicos..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{
+                  padding: '0.75rem 1rem 0.75rem 3rem',
+                  border: '2px solid #e5e7eb',
+                  borderRadius: '0.75rem',
+                  fontSize: '0.875rem',
+                  width: '300px',
+                  outline: 'none',
+                  transition: 'border-color 0.3s ease'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
+              />
+            </div>
+
+            {/* Sort */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              style={{
+                padding: '0.75rem 1rem',
+                border: '2px solid #e5e7eb',
+                borderRadius: '0.75rem',
+                fontSize: '0.875rem',
+                outline: 'none'
+              }}
+            >
+              <option value="recent">Mais Recentes</option>
+              <option value="popular">Mais Populares</option>
+              <option value="replies">Mais Respostas</option>
+            </select>
+          </div>
+
+          {/* New Topic Button */}
+          <button
+            onClick={handleNewTopic}
+            style={{
+              background: user ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : '#9ca3af',
+              color: 'white',
+              border: 'none',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '0.75rem',
+              fontSize: '0.875rem',
+              fontWeight: '600',
+              cursor: user ? 'pointer' : 'not-allowed',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              if (user) {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.4)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (user) {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = 'none';
+              }
+            }}
+          >
+            <Plus style={{ width: '16px', height: '16px' }} />
+            {user ? 'Novo Tópico' : 'Faça Login'}
+          </button>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '300px 1fr', gap: '2rem' }}>
+          {/* Categories Sidebar */}
+          <div>
+            <h3 style={{
+              fontSize: '1.25rem',
+              fontWeight: '700',
+              marginBottom: '1rem',
+              color: '#1f2937'
+            }}>
+              📂 Categorias
+            </h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {categories.map(category => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  style={{
+                    padding: '1rem',
+                    background: selectedCategory === category.id ? 
+                      `linear-gradient(135deg, ${category.color}15 0%, ${category.color}10 100%)` : 
+                      'white',
+                    border: selectedCategory === category.id ? 
+                      `2px solid ${category.color}` : 
+                      '2px solid #e5e7eb',
+                    borderRadius: '0.75rem',
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedCategory !== category.id) {
+                      e.target.style.background = '#f8fafc';
+                      e.target.style.borderColor = '#d1d5db';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedCategory !== category.id) {
+                      e.target.style.background = 'white';
+                      e.target.style.borderColor = '#e5e7eb';
+                    }
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span style={{ fontSize: '1.5rem' }}>{category.icon}</span>
+                    <div style={{ flex: 1 }}>
+                      <div style={{
+                        fontWeight: '600',
+                        color: selectedCategory === category.id ? category.color : '#374151',
+                        fontSize: '0.875rem'
+                      }}>
+                        {category.name}
+                      </div>
+                      <div style={{
+                        fontSize: '0.75rem',
+                        color: '#6b7280',
+                        marginTop: '0.25rem'
+                      }}>
+                        {category.id === 'all' ? `${topics.length} tópicos` :
+                         `${topics.filter(t => t.category_id === category.id).length} tópicos`}
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Topics List */}
+          <div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '1.5rem'
+            }}>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: '700',
+                color: '#1f2937'
+              }}>
+                💬 Discussões Recentes
+              </h3>
+              <span style={{
+                color: '#6b7280',
+                fontSize: '0.875rem'
+              }}>
+                {topics.length} tópicos encontrados
+              </span>
+            </div>
+
+            {loading ? (
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: '4rem',
+                color: '#6b7280'
+              }}>
+                <Loader style={{ width: '32px', height: '32px', animation: 'spin 1s linear infinite' }} />
+                <span style={{ marginLeft: '1rem' }}>Carregando tópicos...</span>
+              </div>
+            ) : error ? (
+              <div style={{
+                textAlign: 'center',
+                padding: '4rem 2rem',
+                color: '#ef4444'
+              }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.5rem' }}>
+                  Erro ao carregar tópicos
+                </h3>
+                <p>{error}</p>
+                <button
+                  onClick={loadForumData}
+                  style={{
+                    marginTop: '1rem',
+                    padding: '0.5rem 1rem',
+                    background: '#3b82f6',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '0.5rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Tentar Novamente
+                </button>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {topics.map(topic => (
+                  <div
+                    key={topic.id}
+                    onClick={() => handleTopicClick(topic.id)}
+                    style={{
+                      background: 'white',
+                      border: '2px solid #e5e7eb',
+                      borderRadius: '1rem',
+                      padding: '1.5rem',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#e5e7eb';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+                      <div style={{
+                        width: '50px',
+                        height: '50px',
+                        background: topic.forum_categories?.color || '#3b82f6',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.5rem'
+                      }}>
+                        {topic.forum_categories?.icon || '💬'}
+                      </div>
+
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                          {topic.is_pinned && (
+                            <Pin style={{ width: '16px', height: '16px', color: '#f59e0b' }} />
+                          )}
+                          {topic.views > 100 && (
+                            <TrendingUp style={{ width: '16px', height: '16px', color: '#ef4444' }} />
+                          )}
+                          <h4 style={{
+                            fontSize: '1.125rem',
+                            fontWeight: '600',
+                            color: '#1f2937',
+                            margin: 0
+                          }}>
+                            {topic.title}
+                          </h4>
+                        </div>
+
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '1rem',
+                          fontSize: '0.875rem',
+                          color: '#6b7280',
+                          marginBottom: '0.75rem'
+                        }}>
+                          <span>Por {topic.profiles?.full_name || 'Usuário'}</span>
+                          <span>•</span>
+                          <span>{formatTimeAgo(topic.last_reply_at || topic.created_at)}</span>
+                          <span>•</span>
+                          <span style={{
+                            background: topic.forum_categories?.color + '20',
+                            color: topic.forum_categories?.color,
+                            padding: '0.125rem 0.5rem',
+                            borderRadius: '0.5rem',
+                            fontSize: '0.75rem'
+                          }}>
+                            {topic.forum_categories?.name}
+                          </span>
+                        </div>
+
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '1.5rem',
+                          fontSize: '0.875rem',
+                          color: '#6b7280'
+                        }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                            <MessageSquare style={{ width: '16px', height: '16px' }} />
+                            <span>{topic.replies_count} respostas</span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                            <Eye style={{ width: '16px', height: '16px' }} />
+                            <span>{topic.views} visualizações</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {!loading && !error && topics.length === 0 && (
+              <div style={{
+                textAlign: 'center',
+                padding: '4rem 2rem',
+                color: '#6b7280'
+              }}>
+                <MessageSquare style={{ width: '48px', height: '48px', margin: '0 auto 1rem' }} />
+                <h3 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '0.5rem' }}>
+                  Nenhum tópico encontrado
+                </h3>
+                <p>Tente ajustar os filtros ou seja o primeiro a criar um tópico nesta categoria!</p>
+                <button
+                  onClick={handleNewTopic}
+                  style={{
+                    marginTop: '1rem',
+                    padding: '0.75rem 1.5rem',
+                    background: '#10b981',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '0.75rem',
+                    cursor: 'pointer',
+                    fontWeight: '600'
+                  }}
+                >
+                  Criar Primeiro Tópico
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Forum;

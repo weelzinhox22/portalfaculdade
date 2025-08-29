@@ -18,6 +18,9 @@ const Pediatrica = lazy(() => import('./pages/Pediatrica'));
 const Geriatrica = lazy(() => import('./pages/Geriatrica'));
 const Aquatica = lazy(() => import('./pages/Aquatica'));
 const UTI = lazy(() => import('./pages/UTI'));
+const Forum = lazy(() => import('./pages/Forum'));
+const NewTopic = lazy(() => import('./pages/NewTopic'));
+const TopicView = lazy(() => import('./pages/TopicView'));
 const FerramentasCalculo = lazy(() => import('./pages/FerramentasCalculo'));
 const Sugestoes = lazy(() => import('./pages/Sugestoes'));
 const Questoes = lazy(() => import('./pages/Questoes'));
@@ -178,6 +181,11 @@ function App() {
           <Route path="/geriatrica" element={<Layout><Geriatrica /></Layout>} />
           <Route path="/aquatica" element={<Layout><Aquatica /></Layout>} />
           <Route path="/uti" element={<Layout><UTI /></Layout>} />
+
+          {/* Fórum da Comunidade */}
+          <Route path="/forum" element={<Layout><Forum /></Layout>} />
+          <Route path="/forum/new-topic" element={<Layout><NewTopic /></Layout>} />
+          <Route path="/forum/topic/:topicId" element={<Layout><TopicView /></Layout>} />
           
           {/* Páginas de busca e artigos */}
           <Route path="/search" element={<Layout><SearchResults /></Layout>} />
