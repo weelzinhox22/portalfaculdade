@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MessageSquare, Users, Eye, Clock, Pin, Lock, Plus, Search, Filter, TrendingUp, Star, Award, Loader } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { getForumCategories, getForumTopics, getForumStats } from '../services/forumService.ts';
+import { getForumCategories, getForumTopics, getForumStats } from '../services/forumService';
 import { setupForumCategories } from '../utils/setupForum';
 
 const Forum = () => {
