@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { AlertCircle } from 'lucide-react';
 
-const FormField = ({ 
+interface FormFieldProps {
+  label: string;
+  error: string;
+  children: ReactNode;
+  required?: boolean;
+  showCharCount?: boolean;
+  currentLength?: number;
+  maxLength?: number;
+}
+
+const FormField: React.FC<FormFieldProps> = ({ 
   label, 
   error, 
   children, 

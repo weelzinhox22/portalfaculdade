@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NewTopic from './pages/NewTopic';
 import CategorySelector from './components/CategorySelector';
@@ -11,7 +11,11 @@ const MockAuthContext = React.createContext({
   isAuthenticated: true
 });
 
-const MockAuthProvider = ({ children }) => {
+interface MockAuthProviderProps {
+  children: ReactNode;
+}
+
+const MockAuthProvider = ({ children }: MockAuthProviderProps) => {
   const mockUser = { id: 'mock-user-123', email: 'user@example.com' };
   
   return (
@@ -80,6 +84,8 @@ const CategorySelectorDemo = () => {
 const FormFieldsDemo = () => {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
+  const [titleError, setTitleError] = React.useState('');
+  const [contentError, setContentError] = React.useState('');
   
   return (
     <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto' }}>
@@ -93,6 +99,7 @@ const FormFieldsDemo = () => {
         showCharCount
         currentLength={title.length}
         maxLength={200}
+        error={titleError}
       >
         <input
           type="text"
@@ -113,6 +120,7 @@ const FormFieldsDemo = () => {
       <FormField
         label="💬 Conteúdo"
         required
+        error={contentError}
       >
         <textarea
           value={content}
