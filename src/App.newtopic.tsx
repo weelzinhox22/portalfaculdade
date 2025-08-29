@@ -86,6 +86,53 @@ const FormFieldsDemo = () => {
   const [content, setContent] = React.useState('');
   const [titleError, setTitleError] = React.useState('');
   const [contentError, setContentError] = React.useState('');
+
+  // Validação dos campos
+  React.useEffect(() => {
+    if (title.length > 200) {
+      setTitleError('O título não pode ter mais de 200 caracteres');
+    } else {
+      setTitleError('');
+    }
+  }, [title]);
+
+  React.useEffect(() => {
+    if (content.length > 5000) {
+      setContentError('O conteúdo não pode ter mais de 5000 caracteres');
+    } else {
+      setContentError('');
+    }
+  }, [content]);
+  
+  const validateFields = () => {
+    let isValid = true;
+    
+    // Validate title
+    if (title.length === 0) {
+      setTitleError('O título é obrigatório');
+      isValid = false;
+    } else if (title.length > 200) {
+      setTitleError('O título não pode ter mais de 200 caracteres');
+      isValid = false;
+    } else {
+      setTitleError('');
+    }
+    
+    // Validate content
+    if (content.length === 0) {
+      setContentError('O conteúdo é obrigatório');
+      isValid = false;
+    } else {
+      setContentError('');
+    }
+    
+    return isValid;
+  };
+
+  // Validate on change
+  React.useEffect(() => {
+    validateFields();
+  }, [title, content]);
   
   return (
     <div style={{ padding: '2rem', maxWidth: '600px', margin: '0 auto' }}>
@@ -105,6 +152,7 @@ const FormFieldsDemo = () => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          onBlur={validateFields}
           placeholder="Digite o título do tópico..."
           style={{
             width: '100%',
