@@ -10,6 +10,8 @@ const SaudeAtleta = lazy(() => import('./pages/SaudeAtleta'));
 const UnidadeHospitalar = lazy(() => import('./pages/UnidadeHospitalar'));
 const SaudeIdoso = lazy(() => import('./pages/SaudeIdoso'));
 const Neurofuncional = lazy(() => import('./pages/Neurofuncional'));
+const Neuropatia = lazy(() => import('./pages/Neuropatia'));
+const NeuropatiaGuide = lazy(() => import('./pages/NeuropatiaGuide'));
 // Novas especialidades
 const Respiratoria = lazy(() => import('./pages/Respiratoria'));
 const Ortopedica = lazy(() => import('./pages/Ortopedica'));
@@ -171,6 +173,8 @@ function App() {
           <Route path="/unidade-hospitalar" element={<Layout><UnidadeHospitalar /></Layout>} />
           <Route path="/saude-idoso" element={<Layout><SaudeIdoso /></Layout>} />
           <Route path="/neurofuncional" element={<Layout><Neurofuncional /></Layout>} />
+          <Route path="/neuropatia" element={<Layout><Neuropatia /></Layout>} />
+          <Route path="/neuropatia-guide" element={<Layout><NeuropatiaGuide /></Layout>} />
 
           {/* Novas especialidades */}
           <Route path="/respiratoria" element={<Layout><Respiratoria /></Layout>} />

@@ -6,6 +6,7 @@ import Newsletter from '../components/Newsletter';
 import NewsletterBanner from '../components/NewsletterBanner';
 import useMobile from '../hooks/useMobile';
 import { useAuth } from '../contexts/AuthContext';
+import ScrollReveal from '../components/animations/ScrollReveal';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -719,30 +720,27 @@ const Home = () => {
         position: 'relative'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: '4rem' }}
-          >
-            <h2 style={{
-              fontSize: isMobile ? '2.5rem' : '3.5rem',
-              fontWeight: '700',
-              color: '#92400e',
-              marginBottom: '1rem'
-            }}>
-              🎯 Tudo que Você Precisa em Um Só Lugar
-            </h2>
-            <p style={{
-              fontSize: '1.25rem',
-              color: '#92400e',
-              maxWidth: '800px',
-              margin: '0 auto',
-              opacity: 0.8
-            }}>
-              Descubra todas as ferramentas e recursos que preparamos para acelerar seu aprendizado
-            </p>
-          </motion.div>
+          <ScrollReveal>
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+              <h2 style={{
+                fontSize: isMobile ? '2.5rem' : '3.5rem',
+                fontWeight: '700',
+                color: '#92400e',
+                marginBottom: '1rem'
+              }}>
+                🎯 Tudo que Você Precisa em Um Só Lugar
+              </h2>
+              <p style={{
+                fontSize: '1.25rem',
+                color: '#92400e',
+                maxWidth: '800px',
+                margin: '0 auto',
+                opacity: 0.8
+              }}>
+                Descubra todas as ferramentas e recursos que preparamos para acelerar seu aprendizado
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div style={{
             display: 'grid',
@@ -814,29 +812,31 @@ const Home = () => {
                 stats: 'Materiais Exclusivos'
               }
             ].map((feature, index) => (
-              <motion.div
+              <ScrollReveal
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{
-                  transform: 'translateY(-10px)',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-                }}
-                style={{
-                  background: 'white',
-                  borderRadius: '2rem',
-                  padding: '2.5rem',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  border: '1px solid rgba(0,0,0,0.05)'
-                }}
-                onClick={() => navigate(feature.link)}
+                delay={index}
+                direction={index % 2 === 0 ? 'left' : 'right'}
+                distance={60}
               >
+                <motion.div
+                  whileHover={{
+                    transform: 'translateY(-10px)',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                  }}
+                  style={{
+                    background: 'white',
+                    borderRadius: '2rem',
+                    padding: '2.5rem',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    border: '1px solid rgba(0,0,0,0.05)',
+                    height: '100%'
+                  }}
+                  onClick={() => navigate(feature.link)}
+                >
                 <div style={{
                   position: 'absolute',
                   top: '1.5rem',
@@ -913,7 +913,8 @@ const Home = () => {
                 }}>
                   Explorar Agora →
                 </div>
-              </motion.div>
+                </motion.div>
+              </ScrollReveal>
             ))}
           </div>
         </div>

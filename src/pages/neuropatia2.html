@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Interativo sobre Neuropatia Diabética</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Blue Accent -->
+    <!-- Application Structure Plan: A single-page application with a fixed top navigation bar for quick access to thematic sections: 'O que é', 'Tipos e Sintomas', 'Diagnóstico e Tratamento', 'Prevenção', 'Ferramentas de Estudo' and 'Referências'. This structure was chosen to provide a logical, user-driven exploration path. The core of the application is the 'Tipos e Sintomas' section, which uses an interactive tab system. This allows the user to focus on one type of neuropathy at a time, preventing information overload and making complex details more digestible. The new 'Ferramentas de Estudo' section centralizes the interactive AI-powered features (Quiz, Study Assistant, Document Summary, Image Generation, Glossary, Analogy, Citation, Review Questions, Critical Review, Case Study, Paraphraser, Concept Explorer, Counter-argument Generator, Comparison Table Generator, Study Plan Generator, Concept Synthesis Generator, Hypothesis Generator, and Presentation Outline Generator) to enhance the learning experience. The flow encourages understanding the basics first, then diving into specifics, and finally learning about management and prevention, mirroring a typical learning journey. -->
+    <!-- Visualization & Content Choices: 
+        1. Report Info: Prevalence of neuropathy types. Goal: Inform. Viz: Donut Chart. Interaction: Hover to see percentages. Justification: A donut chart is excellent for showing part-to-whole relationships clearly and engagingly. Library: Chart.js (Canvas).
+        2. Report Info: Different types of neuropathy and their specific symptoms. Goal: Organize & Compare. Presentation: Interactive tabs/cards. Interaction: Click on a neuropathy type to reveal its detailed information (symptoms, progression). Justification: This avoids a long, overwhelming list and allows for focused learning and easy comparison between types. Method: HTML/CSS/JS.
+        3. Report Info: Pillars of prevention. Goal: Organize. Presentation: Diagram using HTML/CSS. Interaction: Static visual hierarchy. Justification: A simple visual diagram reinforces the core concepts of prevention more effectively than a bulleted list. Method: HTML/CSS with Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            color: #374151;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Floating elements */
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .content-wrapper {
+            background: white;
+            margin-top: -50px;
+            position: relative;
+            z-index: 3;
+            border-radius: 50px 50px 0 0;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+        .card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            border-radius: 1.5rem 1.5rem 0 0;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Improved sections */
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        .tab-button {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .tab-button:hover::before {
+            left: 100%;
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Ferramentas de estudo - Design moderno */
+        .ferramentas-grid {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 2rem;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ferramentas-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><circle cx="20" cy="20" r="2" fill="rgba(102,126,234,0.1)"/><circle cx="60" cy="60" r="2" fill="rgba(118,75,162,0.1)"/><circle cx="40" cy="10" r="1" fill="rgba(240,147,251,0.1)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .tool-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Botões modernos */
+        .modern-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 0.75rem;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .modern-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .modern-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .modern-button:hover::before {
+            left: 100%;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .chart-container {
+            position: relative; 
+            width: 100%; 
+            max-width: 400px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            height: 300px;
+            max-height: 400px;
+        }
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column-reverse;
+            background: #fafafa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+        .message-sent {
+            background-color: #e0f2fe;
+            color: #1e40af;
+            border-radius: 1rem 1rem 0 1rem;
+            padding: 0.75rem;
+            max-width: 80%;
+            align-self: flex-end;
+            margin-bottom: 0.5rem;
+        }
+        .message-received {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border-radius: 1rem 1rem 1rem 0;
+            padding: 0.75rem;
+            max-width: 80%;
+            align-self: flex-start;
+            margin-bottom: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .comparison-table-container {
+            overflow-x: auto;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #e2e8f0;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="floating-element" style="top: 10%; left: 10%; animation-delay: 0s;">
+            <div style="font-size: 3rem; opacity: 0.3;">🧠</div>
+        </div>
+        <div class="floating-element" style="top: 20%; right: 15%; animation-delay: 2s;">
+            <div style="font-size: 2rem; opacity: 0.4;">⚕️</div>
+        </div>
+        <div class="floating-element" style="bottom: 30%; left: 20%; animation-delay: 4s;">
+            <div style="font-size: 2.5rem; opacity: 0.3;">🩺</div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Neuropatia Diabética</h1>
+            <p class="hero-subtitle">Guia Interativo Completo</p>
+            <p class="hero-description">
+                Explore um guia abrangente sobre neuropatia diabética com ferramentas de IA avançadas, 
+                conteúdo científico atualizado e recursos interativos para aprofundar seu aprendizado.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button onclick="document.getElementById('o-que-e').scrollIntoView({behavior: 'smooth'})" 
+                        class="modern-button">
+                    🚀 Começar Agora
+                </button>
+                <button onclick="document.getElementById('ferramentas').scrollIntoView({behavior: 'smooth'})" 
+                        class="modern-button" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    🤖 Ferramentas IA
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <header class="bg-white/90 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-gray-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-800">Neuropatia Diabética</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#o-que-e" class="nav-link pb-1">O que é?</a>
+                <a href="#tipos-sintomas" class="nav-link pb-1">Tipos e Sintomas</a>
+                <a href="#diagnostico-tratamento" class="nav-link pb-1">Diagnóstico e Tratamento</a>
+                <a href="#prevencao" class="nav-link pb-1">Prevenção</a>
+                <a href="#ferramentas" class="nav-link pb-1">Ferramentas</a>
+                <a href="#referencias" class="nav-link pb-1">Referências</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                 <div id="open-icon">
+                    <div class="w-6 h-0.5 bg-gray-600 mb-1.5"></div>
+                    <div class="w-6 h-0.5 bg-gray-600"></div>
+                 </div>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#o-que-e" class="block py-2 text-gray-700 hover:text-blue-500">O que é?</a>
+            <a href="#tipos-sintomas" class="block py-2 text-gray-700 hover:text-blue-500">Tipos e Sintomas</a>
+            <a href="#diagnostico-tratamento" class="block py-2 text-gray-700 hover:text-blue-500">Diagnóstico e Tratamento</a>
+            <a href="#prevencao" class="block py-2 text-gray-700 hover:text-blue-500">Prevenção</a>
+            <a href="#ferramentas" class="block py-2 text-gray-700 hover:text-blue-500">Ferramentas</a>
+            <a href="#referencias" class="block py-2 text-gray-700 hover:text-blue-500">Referências</a>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <main class="container mx-auto px-6 py-16">
+
+        <section id="o-que-e" class="mb-20 scroll-mt-24">
+            <h2 class="section-title text-4xl mb-8">Compreendendo a Neuropatia Diabética</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-10">
+                Esta seção introdutória define a neuropatia diabética, uma das complicações mais comuns e debilitantes do diabetes. Aqui, exploramos sua causa fundamental—os danos aos nervos causados por níveis elevados de glicose no sangue—e sua prevalência, preparando o terreno para uma análise mais aprofundada dos diferentes tipos e seus impactos.
+            </p>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-4">
+                    <h3 class="text-2xl font-semibold">O que é e por que ocorre?</h3>
+                    <div id="whatIsContent">
+                         <p id="whatIsText">A neuropatia diabética é um termo que descreve um conjunto de distúrbios nervosos causados pelo diabetes mellitus. A exposição prolongada a altos níveis de glicose no sangue (hiperglicemia) pode danificar as fibras nervosas em todo o corpo, mas afeta mais comumente os nervos das pernas e dos pés.</p>
+                        <p>O mecanismo exato é complexo, envolvendo fatores metabólicos e vasculares. A hiperglicemia danifica os pequenos vasos sanguíneos (vasa nervorum) que suprem os nervos com oxigênio e nutrientes, levando à lesão nervosa. Além disso, processos inflamatórios e estresse oxidativo contribuem para a degeneração das fibras nervosas.</p>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-r-lg">
+                            <p><span class="font-bold">Estatística Chave:</span> Estima-se que até 50% das pessoas com diabetes desenvolverão alguma forma de neuropatia ao longo da vida, destacando a importância do controle glicêmico rigoroso.</p>
+                        </div>
+                    </div>
+                     <button id="speak-what-is-button" class="mt-4 w-full bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors">Falar Conteúdo ✨</button>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-center mb-4">Prevalência dos Tipos de Neuropatia</h3>
+                    <div class="chart-container">
+                        <canvas id="neuropathyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tipos-sintomas" class="mb-20 scroll-mt-24">
+            <h2 class="section-title text-4xl mb-8">Tipos e Manifestações Clínicas</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-10">
+                A neuropatia diabética não é uma condição única, mas um espectro de distúrbios. Nesta seção interativa, você pode explorar os quatro tipos principais. Clique em cada tipo para descobrir seus sintomas característicos, as áreas do corpo que afetam e a progressão típica da doença, desde sensações comuns até manifestações mais atípicas e raras.
+            </p>
+            <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                <button class="tab-button active text-sm md:text-base font-semibold py-2 px-4 rounded-full bg-white shadow-sm" data-tab="pds">Polineuropatia Simétrica Distal</button>
+                <button class="tab-button text-sm md:text-base font-semibold py-2 px-4 rounded-full bg-white shadow-sm" data-tab="autonomica">Neuropatia Autonômica</button>
+                <button class="tab-button text-sm md:text-base font-semibold py-2 px-4 rounded-full bg-white shadow-sm" data-tab="radiculoplexopatia">Radiculoplexopatia Diabética</button>
+                <button class="tab-button text-sm md:text-base font-semibold py-2 px-4 rounded-full bg-white shadow-sm" data-tab="mononeuropatia">Mononeuropatia</button>
+            </div>
+
+            <div class="bg-white p-8 rounded-lg shadow-lg min-h-[300px]">
+                <div id="pds" class="tab-content active">
+                    <h3 class="text-2xl font-bold mb-4">Polineuropatia Simétrica Distal (PSD)</h3>
+                    <p class="mb-4">É a forma mais comum. Afeta os nervos periféricos de forma simétrica, começando nas extremidades mais longas do corpo (pés) e progredindo para cima (pernas, mãos).</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2">Sintomas Típicos (Sensitivos)</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Dormência, formigamento ou queimação nos pés.</li>
+                                <li>Sensação de "agulhadas" ou "choques".</li>
+                                <li>Perda da capacidade de sentir dor, temperatura e tato.</li>
+                                <li>Hipersensibilidade ao toque (alodinia).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2">Sintomas Atípicos e de Progressão (Motores)</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Fraqueza muscular nos pés e mãos.</li>
+                                <li>Perda de reflexos e equilíbrio.</li>
+                                <li>Deformidades nos pés (ex: "pé de Charcot").</li>
+                                <li>Úlceras que não cicatrizam devido à perda de sensibilidade.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="autonomica" class="tab-content">
+                    <h3 class="text-2xl font-bold mb-4">Neuropatia Autonômica</h3>
+                    <p class="mb-4">Afeta os nervos que controlam as funções involuntárias do corpo, como frequência cardíaca, digestão e pressão arterial.</p>
+                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2">Cardiovascular</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Tontura ao levantar-se (hipotensão postural).</li>
+                                <li>Frequência cardíaca em repouso acelerada.</li>
+                                <li>Infarto do miocárdio silencioso (sem dolor).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2">Gastrointestinal</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Dificuldade para engolir.</li>
+                                <li>Náuseas, vômitos, sensação de estômago cheio (gastroparesia).</li>
+                                <li>Diarreia noturna ou constipação.</li>
+                            </ul>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold text-lg mb-2">Geniturinário e Outros</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Disfunção erétil em homens.</li>
+                                <li>Bexiga neurogênica (dificuldade para esvaziar a bexiga).</li>
+                                <li>Alterações na sudorese (suor excessivo ou ausente).</li>
+                                <li>Hipoglicemia sem sintomas de alerta.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="radiculoplexopatia" class="tab-content">
+                    <h3 class="text-2xl font-bold mb-4">Radiculoplexopatia Diabética (Amiotrofia Diabética)</h3>
+                    <p class="mb-4">Uma forma menos comum e severa que afeta os nervos das coxas, quadris, nádegas ou pernas, geralmente de um lado do corpo. A dor é um sintoma proeminente.</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Início Súbito:</strong> Geralmente começa com dor intensa e unilateral na coxa ou quadril.</li>
+                        <li><strong>Fraqueza Muscular Severa:</strong> Leva à atrofia (perda de massa) dos músculos da coxa, dificultando a locomoção.</li>
+                        <li><strong>Perda de Peso:</strong> Frequentemente associada a uma perda de peso não intencional.</li>
+                        <li><strong>Recuperação Lenta:</strong> A recuperação pode ocorrer, mas é geralmente lenta e, por vezes, incompleta.</li>
+                    </ul>
+                </div>
+
+                <div id="mononeuropatia" class="tab-content">
+                    <h3 class="text-2xl font-bold mb-4">Mononeuropatia</h3>
+                    <p class="mb-4">Refere-se ao dano a um único nervo específico, que pode ser no rosto, tronco ou perna. O início é súbito e pode ser doloroso.</p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2">Tipos Comuns</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li><strong>Paralisia de Nervo Craniano:</strong> Afeta nervos que controlam os músculos oculares, causando visão dupla ou queda da pálpebra. A paralisia de Bell (paralisia facial) também é mais comum.</li>
+                                <li><strong>Síndrome do Túnel do Carpo:</strong> Compressão do nervo mediano no punho, causando dor e dormência na mão.</li>
+                                <li><strong>Compressão do Nervo Ulnar/Fibular:</strong> Causa sintomas em outras partes do braço ou da perna.</li>
+                            </ul>
+                        </div>
+                        <div>
+                             <h4 class="font-semibold text-lg mb-2">Características</h4>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Início agudo e localizado.</li>
+                                <li>Não está diretamente relacionado à duração do diabetes.</li>
+                                <li>Geralmente melhora por conta própria ao longo de semanas ou meses.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="diagnostico-tratamento" class="mb-20 scroll-mt-24">
+            <h2 class="section-title text-4xl mb-8">Diagnóstico e Abordagens de Tratamento</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-10">
+                O diagnóstico precoce e o tratamento adequado são cruciais para gerenciar a neuropatia e prevenir complicações graves. Esta seção detalha os métodos de diagnóstico, desde exames físicos simples até testes mais complexos, e explora o pilar triplo do tratamento: controle glicêmico, manejo da dor e cuidados preventivos.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card p-8" id="diagnosticoContent">
+                    <h3 class="text-2xl font-semibold mb-4">Como é Feito o Diagnóstico?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-blue-500 font-bold text-xl mr-4">&#10148;</span>
+                            <div>
+                                <h4 class="font-bold">Exame Físico e Anamnese</h4>
+                                <p>O médico avalia os sintomas, reflexos, força muscular e a sensibilidade do paciente à vibração, toque leve, temperatura e dor.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-500 font-bold text-xl mr-4">&#10148;</span>
+                            <div>
+                                <h4 class="font-bold">Teste com Monofilamento</h4>
+                                <p>Usa-se um fio de nylon macio (monofilamento de 10g) para tocar a pele dos pés e verificar a sensibilidade protetora.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <span class="text-blue-500 font-bold text-xl mr-4">&#10148;</span>
+                            <div>
+                                <h4 class="font-bold">Eletroneuromiografia (ENMG)</h4>
+                                <p>Estudos de condução nervosa que medem a velocidade com que os sinais elétricos viajam pelos nervos, confirmando o dano nervoso.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <span class="text-blue-500 font-bold text-xl mr-4">&#10148;</span>
+                            <div>
+                                <h4 class="font-bold">Avaliação Autonômica</h4>
+                                <p>Testes específicos para avaliar a resposta da frequência cardíaca e da pressão arterial a certas manobras (ex: teste de inclinação).</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card p-8" id="tratamentoContent">
+                    <h3 class="text-2xl font-semibold mb-4">Pilares do Tratamento</h3>
+                     <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-green-500 font-bold text-xl mr-4">&#10003;</span>
+                            <div>
+                                <h4 class="font-bold">Controle Glicêmico Rigoroso</h4>
+                                <p>A base de tudo. Manter os níveis de glicose no sangue dentro da meta é a única maneira de retardar a progressão da neuropatia.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-green-500 font-bold text-xl mr-4">&#10003;</span>
+                            <div>
+                                <h4 class="font-bold">Manejo da Dor Neuropática</h4>
+                                <p>Medicamentos como antidepressivos (duloxetina, amitriptilina) e anticonvulsivantes (pregabalina, gabapentina) são usados para controlar a dor. Analgésicos comuns são ineficazes.</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                             <span class="text-green-500 font-bold text-xl mr-4">&#10003;</span>
+                            <div>
+                                <h4 class="font-bold">Tratamento de Complicações</h4>
+                                <p>Manejo específico para problemas autonômicos (ex: medicamentos para gastroparesia ou hipotensão) e cuidados intensivos com os pés para prevenir úlceras e amputações.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <button id="speak-diagnostico-tratamento-button" class="mt-4 w-full bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors">Falar Conteúdo ✨</button>
+        </section>
+
+         <section id="prevencao" class="mb-20 scroll-mt-24">
+            <h2 class="section-title text-4xl mb-8">Prevenção: A Melhor Estratégia</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-10">
+                Embora não haja cura para a neuropatia diabética, a prevenção e o retardamento de sua progressão são totalmente possíveis. Esta seção foca nas estratégias fundamentais que todo paciente com diabetes deve adotar. A chave está em uma abordagem multifacetada que combina controle médico rigoroso, autocuidado diário e um estilo de vida saudável.
+            </p>
+            <div id="prevencaoContent" class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="card p-8">
+                    <div class="mx-auto bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
+                        <span class="text-4xl">🩸</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Controle Glicêmico</h3>
+                    <p>Manter a hemoglobina glicada (HbA1c) na meta definida pelo seu médico. É o fator mais importante para prevenir ou retardar a neuropatia.</p>
+                </div>
+                <div class="card p-8">
+                     <div class="mx-auto bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
+                        <span class="text-4xl">👟</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Cuidados com os Pés</h3>
+                    <p>Inspecionar os pés diariamente em busca de cortes ou bolhas. Usar sapatos confortáveis, nunca andar descalço e visitar um podólogo regularmente.</p>
+                </div>
+                <div class="card p-8">
+                    <div class="mx-auto bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mb-4">
+                        <span class="text-4xl">❤️</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Estilo de Vida Saudável</h3>
+                    <p>Controlar a pressão arterial e o colesterol, manter um peso saudável, praticar atividade física regularmente e não fumar. Esses fatores protegem os vasos sanguíneos que nutrem os nervos.</p>
+                </div>
+            </div>
+            <button id="speak-prevencao-button" class="mt-4 w-full bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors">Falar Conteúdo ✨</button>
+        </section>
+        
+        <section id="ferramentas" class="mb-20 scroll-mt-24">
+            <h2 class="section-title text-4xl mb-8">🚀 Ferramentas de Estudo Inteligentes</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-12 text-gray-700">
+                Potencialize seu aprendizado com nossa suíte completa de ferramentas alimentadas por IA. 
+                Cada ferramenta foi cuidadosamente projetada para acelerar sua compreensão sobre neuropatia diabética.
+            </p>
+            <div class="ferramentas-grid">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+                <div class="tool-card">
+                    <div class="text-center mb-4">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🧠</div>
+                        <h3 class="text-2xl font-semibold">Quiz Interativo</h3>
+                    </div>
+                    <div id="quiz-container">
+                        <div class="flex flex-col items-center">
+                            <div id="quiz-message" class="text-center text-gray-600 mb-4">Clique no botão para gerar 5 perguntas de múltipla escolha.</div>
+                            <button id="generate-quiz-button" class="modern-button w-full">🎯 Gerar Quiz</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="text-center mb-4">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📄</div>
+                        <h3 class="text-2xl font-semibold">Resumo Completo</h3>
+                    </div>
+                    <div id="summary-container" class="space-y-4">
+                         <div id="summary-message" class="text-center text-gray-600 mb-4">Clique no botão para gerar um resumo do documento.</div>
+                         <button id="generate-summary-button" class="modern-button w-full">📋 Gerar Resumo</button>
+                         <div id="summary-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="text-center mb-4">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🤖</div>
+                        <h3 class="text-2xl font-semibold">Assistente de Estudos</h3>
+                    </div>
+                    <div id="chat-container" class="chat-container">
+                        <div id="messages" class="flex flex-col"></div>
+                    </div>
+                    <div class="flex mt-4">
+                        <input type="text" id="chat-input" placeholder="Pergunte sobre neuropatia diabética..." class="flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="send-button" class="ml-2 bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                              <path d="M3.478 2.405a.75.75 0 0 0-.926.94l2.432 7.917H11.25a.75.75 0 0 1 0 1.5H4.984l-2.432 7.917a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.405Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Imagens</h3>
+                    <div id="image-container" class="space-y-4">
+                        <input type="text" id="image-prompt-input" placeholder="Ex: 'Nervo saudável e danificado'" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="generate-image-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Imagem ✨</button>
+                        <div id="image-output" class="mt-4 flex justify-center"></div>
+                        <div id="image-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Glossário de Termos</h3>
+                    <div id="glossary-container" class="space-y-4">
+                        <div id="glossary-message" class="text-center text-gray-600 mb-4">Clique para gerar um glossário com termos-chave.</div>
+                        <button id="generate-glossary-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Glossário ✨</button>
+                        <div id="glossary-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                    </div>
+                </div>
+                 <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Analogia</h3>
+                    <div id="analogy-container" class="space-y-4">
+                        <input type="text" id="analogy-prompt-input" placeholder="Ex: 'vasa nervorum'" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="generate-analogy-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Analogia ✨</button>
+                        <div id="analogy-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="analogy-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                 <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Citação ABNT</h3>
+                    <div id="citation-container" class="space-y-4">
+                        <textarea id="citation-input" rows="3" placeholder="Cole o texto ou dados bibliográficos aqui..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <button id="generate-citation-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Citação ✨</button>
+                        <div id="citation-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="citation-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Perguntas de Revisão</h3>
+                    <div id="review-container" class="space-y-4">
+                        <div id="review-message" class="text-center text-gray-600 mb-4">Clique no botão para gerar perguntas abertas sobre o conteúdo.</div>
+                        <button id="generate-review-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Perguntas ✨</button>
+                        <div id="review-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                    </div>
+                </div>
+                 <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Resenha Crítica</h3>
+                    <div id="critical-review-container" class="space-y-4">
+                        <textarea id="critical-review-input" rows="5" placeholder="Cole o texto que você deseja analisar criticamente..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <button id="generate-critical-review-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Resenha Crítica ✨</button>
+                        <div id="critical-review-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="critical-review-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Estudo de Caso</h3>
+                    <div id="case-study-container" class="space-y-4">
+                        <input type="text" id="case-study-prompt-input" placeholder="Ex: 'paciente com neuropatia autonômica'" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="generate-case-study-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Estudo de Caso ✨</button>
+                        <div id="case-study-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="case-study-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Parafraseador Acadêmico</h3>
+                    <div id="paraphrase-container" class="space-y-4">
+                        <textarea id="paraphrase-input" rows="5" placeholder="Cole o texto que você deseja parafrasear..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <button id="paraphrase-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Parafrasear Texto ✨</button>
+                        <div id="paraphrase-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="paraphrase-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Explorador de Conceitos</h3>
+                    <div id="concept-container" class="space-y-4">
+                        <input type="text" id="concept-input" placeholder="Digite um conceito para explicar..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="concept-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Explicar Conceito ✨</button>
+                        <div id="concept-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="concept-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Contra-argumento</h3>
+                    <div id="counter-argument-container" class="space-y-4">
+                        <textarea id="counter-argument-input" rows="5" placeholder="Cole uma afirmação para criar um contra-argumento..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <button id="generate-counter-argument-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Contra-argumento ✨</button>
+                        <div id="counter-argument-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="counter-argument-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Tabela Comparativa</h3>
+                    <div id="comparison-table-container" class="space-y-4">
+                        <div class="flex space-x-2">
+                            <input type="text" id="comparison-concept-1-input" placeholder="Conceito 1..." class="flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <input type="text" id="comparison-concept-2-input" placeholder="Conceito 2..." class="flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <button id="generate-comparison-table-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Tabela ✨</button>
+                        <div id="comparison-table-output" class="p-4 bg-gray-100 rounded-md hidden comparison-table-container"></div>
+                        <div id="comparison-table-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Flashcards</h3>
+                    <div id="flashcard-container" class="space-y-4">
+                        <input type="text" id="flashcard-input" placeholder="Digite um termo ou conceito..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="generate-flashcard-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Flashcard ✨</button>
+                        <div id="flashcard-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="flashcard-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Linha do Tempo</h3>
+                    <div id="timeline-container" class="space-y-4">
+                        <input type="text" id="timeline-input" placeholder="Digite um tópico para a linha do tempo..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="generate-timeline-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Linha do Tempo ✨</button>
+                        <div id="timeline-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="timeline-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Estudo Dirigido</h3>
+                    <div id="study-plan-container" class="space-y-4">
+                        <input type="text" id="study-plan-input" placeholder="Digite um tópico para o estudo dirigido..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="generate-study-plan-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Plano ✨</button>
+                        <div id="study-plan-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="study-plan-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Síntese de Conceitos</h3>
+                    <div id="concept-synthesis-container" class="space-y-4">
+                        <textarea id="concept-synthesis-input" rows="3" placeholder="Digite os conceitos para sintetizar (ex: 'hiperglicemia, vasa nervorum')..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        <button id="generate-synthesis-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Síntese ✨</button>
+                        <div id="concept-synthesis-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="concept-synthesis-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Gerador de Hipótese</h3>
+                    <div id="hypothesis-container" class="space-y-4">
+                        <input type="text" id="hypothesis-input" placeholder="Digite um tópico para a hipótese..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="generate-hypothesis-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Hipótese ✨</button>
+                        <div id="hypothesis-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="hypothesis-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">Roteiro de Apresentação</h3>
+                    <div id="presentation-container" class="space-y-4">
+                        <input type="text" id="presentation-input" placeholder="Digite um tema para o roteiro..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="generate-presentation-button" class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors w-full">Gerar Roteiro ✨</button>
+                        <div id="presentation-output" class="p-4 bg-gray-100 rounded-md hidden"></div>
+                        <div id="presentation-message" class="text-center text-gray-600 mt-4 hidden"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="referencias" class="scroll-mt-24">
+            <h2 class="section-title text-4xl mb-8">📚 Referências Bibliográficas</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-10">
+                A informação apresentada foi compilada a partir de diretrizes de sociedades médicas, artigos de revisão e publicações científicas de referência. A lista a seguir está formatada de acordo com as normas da ABNT e serve como base para aprofundamento nos estudos.
+            </p>
+            <div class="bg-white p-8 rounded-lg shadow-lg space-y-4 text-sm md:text-base">
+                <p>AMERICAN DIABETES ASSOCIATION. 12. Retinopathy, Neuropathy, and Foot Care: Standards of Medical Care in Diabetes—2023. <strong>Diabetes Care</strong>, v. 46, n. Supplement 1, p. S203–S215, jan. 2023.</p>
+                <p>FELDMAN, E. L. et al. Diabetic neuropathy. <strong>Nature Reviews Disease Primers</strong>, v. 5, n. 1, p. 41, jun. 2019.</p>
+                <p>IQBAL, Z. et al. Diabetic peripheral neuropathy: epidemiology, diagnosis, and pharmacotherapy. <strong>Clinical Therapeutics</strong>, v. 40, n. 6, p. 828–849, jun. 2018.</p>
+                <p>POP-BUSUI, R. et al. Diabetic Neuropathy: A Position Statement by the American Diabetes Association. <strong>Diabetes Care</strong>, v. 40, n. 1, p. 136–154, jan. 2017.</p>
+                <p>SOCIEDADE BRASILEIRA DE DIABETES. <strong>Diretrizes da Sociedade Brasileira de Diabetes 2019-2020</strong>. São Paulo: Clannad, 2019. Disponível em: [https://www.diabetes.org.br/profissionais/images/DIRETRIZES-COMPLETA-2019-2020.pdf]. Acesso em: 31 ago. 2025.</p>
+                <p>VINIK, A. I.; NEVIAN, C. B.; CASellini, C. M.; Parson, H. K. Diabetic Neuropathy. In: FEINGOLD, K. R. et al. (Eds.). <strong>Endotext</strong>. South Dartmouth (MA): MDText.com, Inc., 2000.</p>
+            </div>
+        </section>
+
+    </main>
+    </div>
+
+    <footer class="bg-gray-800 text-white mt-20">
+        <div class="container mx-auto px-6 py-4 text-center">
+            <p>&copy; 2025 Guia Interativo sobre Neuropatia Diabética. Conteúdo destinado a fins acadêmicos.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const neuropathyChartCanvas = document.getElementById('neuropathyChart');
+            if (neuropathyChartCanvas) {
+                new Chart(neuropathyChartCanvas, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Polineuropatia Simétrica Distal', 'Neuropatia Autonômica', 'Outras Formas (Mono, Radiculo)'],
+                        datasets: [{
+                            label: 'Prevalência',
+                            data: [75, 20, 5],
+                            backgroundColor: [
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(239, 68, 68, 0.8)',
+                                'rgba(245, 158, 11, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(59, 130, 246, 1)',
+                                'rgba(239, 68, 68, 1)',
+                                'rgba(245, 158, 11, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed !== null) {
+                                            label += context.parsed + '%';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const tabId = button.getAttribute('data-tab');
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === tabId) {
+                            content.classList.add('active');
+                        }
+                    });
+                });
+            });
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (link.hash !== '') {
+                        const targetElement = document.querySelector(link.hash);
+                        if (targetElement) {
+                             if (mobileMenu.classList.contains('hidden') === false) {
+                                mobileMenu.classList.add('hidden');
+                            }
+                        }
+                    }
+                });
+            });
+
+            const sections = document.querySelectorAll('section');
+            const mainNavLinks = document.querySelectorAll('nav a.nav-link');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 120) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                mainNavLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.href.includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            const generateQuizButton = document.getElementById('generate-quiz-button');
+            const quizContainer = document.getElementById('quiz-container');
+            
+            generateQuizButton.addEventListener('click', async () => {
+                quizContainer.innerHTML = '<div class="text-center">Gerando quiz...</div>';
+                
+                const sectionsText = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+
+                const userPrompt = `Você é um professor universitário e precisa criar um quiz de múltipla escolha sobre Neuropatia Diabética para ajudar seus alunos a estudarem. Crie 5 perguntas com 4 opções de resposta para cada, sendo apenas uma correta. As perguntas e respostas devem ser baseadas EXCLUSIVAMENTE no conteúdo sobre Neuropatia Diabética fornecido a seguir. Formate a resposta como um array de objetos JSON. Cada objeto deve ter as chaves 'question', 'options' (array de strings) e 'correctAnswer' (string, que deve ser a resposta correta). Conteúdo sobre Neuropatia Diabética:\n\n${sectionsText}`;
+                
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        generationConfig: {
+                             responseMimeType: "application/json",
+                             responseSchema: {
+                                type: "ARRAY",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        "question": { "type": "STRING" },
+                                        "options": {
+                                            "type": "ARRAY",
+                                            "items": { "type": "STRING" }
+                                        },
+                                        "correctAnswer": { "type": "STRING" }
+                                    },
+                                    "propertyOrdering": ["question", "options", "correctAnswer"]
+                                }
+                            }
+                        },
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const json = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    const quizData = JSON.parse(json);
+                    renderQuiz(quizData);
+                } catch (error) {
+                    quizContainer.innerHTML = '<div class="text-center text-red-500">Ocorreu um erro ao gerar o quiz. Tente novamente.</div>';
+                }
+            });
+            
+            function renderQuiz(questions) {
+                quizContainer.innerHTML = '';
+                let userAnswers = {};
+
+                questions.forEach((q, index) => {
+                    const qDiv = document.createElement('div');
+                    qDiv.className = 'bg-white p-6 rounded-lg shadow-sm mb-6';
+                    qDiv.innerHTML = `<p class="font-semibold text-lg mb-4">Pergunta ${index + 1}: ${q.question}</p>`;
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'flex flex-col space-y-2';
+
+                    q.options.forEach(option => {
+                        const label = document.createElement('label');
+                        label.className = 'flex items-center p-3 border rounded-md cursor-pointer hover:bg-gray-50 transition-colors';
+                        const input = document.createElement('input');
+                        input.type = 'radio';
+                        input.name = `question-${index}`;
+                        input.value = option;
+                        input.className = 'mr-3';
+                        label.appendChild(input);
+                        label.appendChild(document.createTextNode(option));
+
+                        input.addEventListener('change', () => {
+                            userAnswers[index] = input.value;
+                        });
+
+                        optionsDiv.appendChild(label);
+                    });
+                    qDiv.appendChild(optionsDiv);
+                    quizContainer.appendChild(qDiv);
+                });
+
+                const submitButton = document.createElement('button');
+                submitButton.textContent = 'Ver Resultado';
+                submitButton.className = 'w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors mt-6';
+                submitButton.addEventListener('click', () => {
+                    let finalScore = 0;
+                    questions.forEach((q, index) => {
+                        if (userAnswers[index] === q.correctAnswer) {
+                            finalScore++;
+                        }
+                    });
+                    quizContainer.innerHTML = `<div class="text-center font-bold text-xl mb-4">Seu resultado: ${finalScore} de ${questions.length}</div>`;
+                    questions.forEach((q, index) => {
+                        const resultDiv = document.createElement('div');
+                        const isCorrect = userAnswers[index] === q.correctAnswer;
+                        resultDiv.className = `p-4 mb-4 rounded-lg shadow-sm ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`;
+                        resultDiv.innerHTML = `
+                            <p class="font-semibold mb-2">${index + 1}. ${q.question}</p>
+                            <p class="text-sm">Sua resposta: <span class="font-medium">${userAnswers[index] || 'Nenhuma'}</span></p>
+                            <p class="text-sm">Resposta correta: <span class="font-medium">${q.correctAnswer}</span></p>
+                        `;
+                        quizContainer.appendChild(resultDiv);
+                    });
+                    quizContainer.appendChild(createRestartButton());
+                });
+
+                quizContainer.appendChild(submitButton);
+            }
+
+            function createRestartButton() {
+                const restartButton = document.createElement('button');
+                restartButton.textContent = 'Gerar Novo Quiz';
+                restartButton.className = 'w-full bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors mt-6';
+                restartButton.addEventListener('click', () => {
+                    window.location.reload();
+                });
+                return restartButton;
+            }
+
+            const chatInput = document.getElementById('chat-input');
+            const sendButton = document.getElementById('send-button');
+            const messagesContainer = document.getElementById('messages');
+
+            let sectionsText = '';
+            
+            async function getSectionsText() {
+                return [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+            }
+            
+            async function sendMessage() {
+                const userMessage = chatInput.value.trim();
+                if (userMessage === '') return;
+
+                appendMessage(userMessage, 'sent');
+                chatInput.value = '';
+
+                const loadingMessage = appendMessage('...', 'received');
+
+                const sectionsContent = await getSectionsText();
+                const userPrompt = `Responda a esta pergunta sobre neuropatia diabética. Suas respostas devem ser baseadas EXCLUSIVAMENTE neste texto: "${sectionsContent}". Se a resposta não estiver no texto, diga que a informação não foi encontrada. Pergunta: ${userMessage}`;
+                
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                     const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um assistente de estudos universitário, respondendo de forma clara e concisa. Sempre baseie suas respostas no texto fornecido." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    loadingMessage.remove();
+                    appendMessage(text || 'Não foi possível encontrar uma resposta no documento.', 'received');
+                } catch (error) {
+                    loadingMessage.remove();
+                    appendMessage('Ocorreu um erro ao conectar com o assistente.', 'received');
+                }
+            }
+
+            function appendMessage(text, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message-${type}`;
+                messageDiv.textContent = text;
+                messagesContainer.appendChild(messageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                return messageDiv;
+            }
+
+            sendButton.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            const speakButtons = document.querySelectorAll('[id^="speak-"]');
+            
+            speakButtons.forEach(button => {
+                button.addEventListener('click', async () => {
+                    let sectionContent = '';
+                    if (button.id === 'speak-what-is-button') {
+                        sectionContent = document.getElementById('whatIsContent').innerText;
+                    } else if (button.id === 'speak-diagnostico-tratamento-button') {
+                        const diagnosticoText = document.getElementById('diagnosticoContent').innerText;
+                        const tratamentoText = document.getElementById('tratamentoContent').innerText;
+                        sectionContent = diagnosticoText + ' ' + tratamentoText;
+                    } else if (button.id === 'speak-prevencao-button') {
+                        sectionContent = document.getElementById('prevencaoContent').innerText;
+                    }
+
+                    button.textContent = 'Carregando Áudio...';
+                    button.disabled = true;
+
+                    const userPrompt = `Fale o seguinte texto em português: ${sectionContent}`;
+                    const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+                    
+                    try {
+                        const payload = {
+                            contents: [{
+                                parts: [{ text: userPrompt }]
+                            }],
+                            generationConfig: {
+                                responseModalities: ["AUDIO"],
+                                speechConfig: {
+                                    voiceConfig: {
+                                        prebuiltVoiceConfig: { voiceName: "Fenrir" }
+                                    }
+                                }
+                            },
+                        };
+
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        const result = await response.json();
+                        const part = result?.candidates?.[0]?.content?.parts?.[0];
+                        const audioData = part?.inlineData?.data;
+                        const mimeType = part?.inlineData?.mimeType;
+
+                        if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                            const sampleRate = parseInt(mimeType.match(/rate=(\d+)/)[1], 10);
+                            const pcmData = base64ToArrayBuffer(audioData);
+                            const pcm16 = new Int16Array(pcmData);
+                            const wavBlob = pcmToWav(pcm16, sampleRate);
+                            const audioUrl = URL.createObjectURL(wavBlob);
+                            const audio = new Audio(audioUrl);
+                            audio.play();
+                            audio.addEventListener('ended', () => {
+                                button.textContent = 'Falar Conteúdo ✨';
+                                button.disabled = false;
+                            });
+                        } else {
+                            throw new Error('Formato de áudio inválido.');
+                        }
+                    } catch (error) {
+                        button.textContent = 'Erro ao Falar';
+                        button.disabled = false;
+                        console.error('TTS Error:', error);
+                    }
+                });
+            });
+
+            function base64ToArrayBuffer(base64) {
+                const binaryString = window.atob(base64);
+                const len = binaryString.length;
+                const bytes = new Uint8Array(len);
+                for (let i = 0; i < len; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                return bytes.buffer;
+            }
+
+            function pcmToWav(pcmData, sampleRate) {
+                const numChannels = 1;
+                const bytesPerSample = 2;
+                const blockAlign = numChannels * bytesPerSample;
+                const byteRate = sampleRate * blockAlign;
+                
+                const buffer = new ArrayBuffer(44 + pcmData.byteLength);
+                const view = new DataView(buffer);
+
+                writeString(view, 0, 'RIFF');
+                view.setUint32(4, 36 + pcmData.byteLength, true);
+                writeString(view, 8, 'WAVE');
+                view.setUint32(12, 'fmt '.charCodeAt(0) | (' '.charCodeAt(0) << 8) | ('\x10'.charCodeAt(0) << 16) | ('\x00'.charCodeAt(0) << 24), true);
+                view.setUint32(16, 16, true);
+                view.setUint16(20, 1, true);
+                view.setUint16(22, numChannels, true);
+                view.setUint32(24, sampleRate, true);
+                view.setUint32(28, byteRate, true);
+                view.setUint16(32, blockAlign, true);
+                view.setUint16(34, 16, true);
+                writeString(view, 36, 'data');
+                view.setUint32(40, pcmData.byteLength, true);
+
+                let offset = 44;
+                for (let i = 0; i < pcmData.length; i++, offset += bytesPerSample) {
+                    view.setInt16(offset, pcmData[i], true);
+                }
+
+                return new Blob([buffer], { type: 'audio/wav' });
+            }
+
+            function writeString(view, offset, string) {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            }
+
+            const generateSummaryButton = document.getElementById('generate-summary-button');
+            const summaryOutput = document.getElementById('summary-output');
+            const summaryMessage = document.getElementById('summary-message');
+
+            generateSummaryButton.addEventListener('click', async () => {
+                summaryOutput.classList.add('hidden');
+                summaryMessage.textContent = 'Gerando resumo do documento completo...';
+                
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+
+                const userPrompt = `Resuma o seguinte texto de forma clara, objetiva e concisa para um estudante universitário. O resumo deve ser uma síntese completa, mas não exceder 200 palavras. Texto:\n\n${sectionsContent}`;
+                
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um assistente de IA focado em resumos acadêmicos concisos e precisos." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    summaryMessage.textContent = 'Resumo gerado:';
+                    summaryOutput.textContent = text || 'Não foi possível gerar o resumo. Tente novamente.';
+                    summaryOutput.classList.remove('hidden');
+                } catch (error) {
+                    summaryMessage.textContent = 'Ocorreu um erro ao gerar o resumo. Tente novamente.';
+                    summaryOutput.classList.add('hidden');
+                }
+            });
+
+            const generateImageButton = document.getElementById('generate-image-button');
+            const imagePromptInput = document.getElementById('image-prompt-input');
+            const imageOutput = document.getElementById('image-output');
+            const imageMessage = document.getElementById('image-message');
+
+            generateImageButton.addEventListener('click', async () => {
+                const prompt = imagePromptInput.value.trim();
+                if (!prompt) {
+                    imageMessage.textContent = 'Por favor, insira um prompt para gerar a imagem.';
+                    imageMessage.classList.remove('hidden');
+                    return;
+                }
+
+                imageOutput.innerHTML = '';
+                imageMessage.textContent = 'Gerando imagem, por favor aguarde...';
+                imageMessage.classList.remove('hidden');
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        instances: [{ prompt: prompt }],
+                        parameters: { "sampleCount": 1 }
+                    };
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const result = await response.json();
+                    const base64Data = result?.predictions?.[0]?.bytesBase64Encoded;
+
+                    if (base64Data) {
+                        const imageUrl = `data:image/png;base64,${base64Data}`;
+                        const imgElement = document.createElement('img');
+                        imgElement.src = imageUrl;
+                        imgElement.alt = prompt;
+                        imgElement.className = 'rounded-lg shadow-lg max-w-full h-auto';
+                        imageOutput.appendChild(imgElement);
+                        imageMessage.textContent = 'Imagem gerada com sucesso.';
+                    } else {
+                        imageMessage.textContent = 'Falha ao gerar a imagem.';
+                    }
+                } catch (error) {
+                    imageMessage.textContent = `Ocorreu um erro: ${error.message}`;
+                    console.error('Image Generation Error:', error);
+                }
+            });
+
+            const generateGlossaryButton = document.getElementById('generate-glossary-button');
+            const glossaryOutput = document.getElementById('glossary-output');
+            const glossaryMessage = document.getElementById('glossary-message');
+
+            generateGlossaryButton.addEventListener('click', async () => {
+                glossaryOutput.classList.add('hidden');
+                glossaryMessage.textContent = 'Gerando glossário...';
+                
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+                const userPrompt = `Com base neste texto, crie um glossário com os termos técnicos mais importantes e suas definições. O resultado deve ser uma lista de 5 a 8 termos. Formate a resposta como um array de objetos JSON. Cada objeto deve ter as chaves 'term' e 'definition'. O texto é: \n\n${sectionsContent}`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            responseSchema: {
+                                type: "ARRAY",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        "term": { "type": "STRING" },
+                                        "definition": { "type": "STRING" }
+                                    },
+                                    "propertyOrdering": ["term", "definition"]
+                                }
+                            }
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+                    const json = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    const glossaryData = JSON.parse(json);
+
+                    let glossaryHtml = '<ul class="list-disc list-inside space-y-2">';
+                    glossaryData.forEach(item => {
+                        glossaryHtml += `<li><strong>${item.term}:</strong> ${item.definition}</li>`;
+                    });
+                    glossaryHtml += '</ul>';
+
+                    glossaryMessage.textContent = 'Glossário gerado:';
+                    glossaryOutput.innerHTML = glossaryHtml;
+                    glossaryOutput.classList.remove('hidden');
+                } catch (error) {
+                    glossaryMessage.textContent = 'Ocorreu um erro ao gerar o glossário. Tente novamente.';
+                    glossaryOutput.classList.add('hidden');
+                }
+            });
+
+            const generateAnalogyButton = document.getElementById('generate-analogy-button');
+            const analogyPromptInput = document.getElementById('analogy-prompt-input');
+            const analogyOutput = document.getElementById('analogy-output');
+            const analogyMessage = document.getElementById('analogy-message');
+
+            generateAnalogyButton.addEventListener('click', async () => {
+                const prompt = analogyPromptInput.value.trim();
+                if (!prompt) {
+                    analogyMessage.textContent = 'Por favor, insira um termo para gerar a analogia.';
+                    analogyMessage.classList.remove('hidden');
+                    analogyOutput.classList.add('hidden');
+                    return;
+                }
+
+                analogyMessage.textContent = 'Gerando analogia...';
+                analogyMessage.classList.remove('hidden');
+                analogyOutput.classList.add('hidden');
+                
+                const userPrompt = `Crie uma analogia simples e clara em português para o seguinte conceito técnico sobre neuropatia diabética. A analogia deve ser curta e fácil de entender. Se o conceito não estiver relacionado à neuropatia diabética, diga que não pode gerar a analogia. Conceito: '${prompt}'`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um especialista que cria analogias educacionais." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    analogyMessage.textContent = '';
+                    analogyOutput.textContent = text || 'Não foi possível gerar a analogia. Tente novamente.';
+                    analogyOutput.classList.remove('hidden');
+                } catch (error) {
+                    analogyMessage.textContent = 'Ocorreu um erro ao gerar a analogia. Tente novamente.';
+                    analogyMessage.classList.remove('hidden');
+                    analogyOutput.classList.add('hidden');
+                }
+            });
+
+            const generateCitationButton = document.getElementById('generate-citation-button');
+            const citationInput = document.getElementById('citation-input');
+            const citationOutput = document.getElementById('citation-output');
+            const citationMessage = document.getElementById('citation-message');
+            
+            generateCitationButton.addEventListener('click', async () => {
+                const prompt = citationInput.value.trim();
+                if (!prompt) {
+                    citationMessage.textContent = 'Por favor, insira o texto para gerar a citação.';
+                    citationMessage.classList.remove('hidden');
+                    citationOutput.classList.add('hidden');
+                    return;
+                }
+
+                citationMessage.textContent = 'Gerando citação...';
+                citationMessage.classList.remove('hidden');
+                citationOutput.classList.add('hidden');
+
+                const userPrompt = `Formate a seguinte referência bibliográfica de acordo com as normas da ABNT. A resposta deve conter apenas a citação formatada, sem explicações ou textos adicionais. Texto: '${prompt}'`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um assistente de citação ABNT, formatando referências bibliográficas de forma estrita e sem adicionar nenhum outro texto." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    citationMessage.textContent = '';
+                    citationOutput.textContent = text || 'Não foi possível gerar a citação. Tente novamente.';
+                    citationOutput.classList.remove('hidden');
+                } catch (error) {
+                    citationMessage.textContent = 'Ocorreu um erro ao gerar a citação. Tente novamente.';
+                    citationMessage.classList.remove('hidden');
+                    citationOutput.classList.add('hidden');
+                }
+            });
+            
+            const generateReviewButton = document.getElementById('generate-review-button');
+            const reviewOutput = document.getElementById('review-output');
+            const reviewMessage = document.getElementById('review-message');
+
+            generateReviewButton.addEventListener('click', async () => {
+                reviewOutput.classList.add('hidden');
+                reviewMessage.textContent = 'Gerando perguntas de revisão...';
+
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+                const userPrompt = `Com base neste texto, crie 5 perguntas de revisão abertas sobre os principais conceitos de neuropatia diabética para um estudante universitário. O resultado deve ser uma lista de perguntas numerada. Não forneça as respostas. Texto:\n\n${sectionsContent}`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um tutor acadêmico, criando perguntas abertas para ajudar na revisão do conteúdo." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    reviewMessage.textContent = 'Perguntas geradas:';
+                    reviewOutput.textContent = text || 'Não foi possível gerar as perguntas. Tente novamente.';
+                    reviewOutput.classList.remove('hidden');
+                } catch (error) {
+                    reviewMessage.textContent = 'Ocorreu um erro ao gerar as perguntas. Tente novamente.';
+                    reviewOutput.classList.add('hidden');
+                }
+            });
+
+            const generateCriticalReviewButton = document.getElementById('generate-critical-review-button');
+            const criticalReviewInput = document.getElementById('critical-review-input');
+            const criticalReviewOutput = document.getElementById('critical-review-output');
+            const criticalReviewMessage = document.getElementById('critical-review-message');
+
+            generateCriticalReviewButton.addEventListener('click', async () => {
+                const prompt = criticalReviewInput.value.trim();
+                if (!prompt) {
+                    criticalReviewMessage.textContent = 'Por favor, insira o texto para gerar a resenha crítica.';
+                    criticalReviewMessage.classList.remove('hidden');
+                    criticalReviewOutput.classList.add('hidden');
+                    return;
+                }
+
+                criticalReviewMessage.textContent = 'Gerando resenha crítica...';
+                criticalReviewMessage.classList.remove('hidden');
+                criticalReviewOutput.classList.add('hidden');
+
+                const userPrompt = `Atue como um revisor acadêmico. Analise e escreva uma resenha crítica sobre o seguinte texto, destacando seus pontos fortes, fracos, relevância e originalidade. Texto: '${prompt}'`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um revisor acadêmico, fornecendo uma resenha crítica imparcial e bem estruturada." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    criticalReviewMessage.textContent = '';
+                    criticalReviewOutput.textContent = text || 'Não foi possível gerar a resenha crítica. Tente novamente.';
+                    criticalReviewOutput.classList.remove('hidden');
+                } catch (error) {
+                    criticalReviewMessage.textContent = 'Ocorreu um erro ao gerar a resenha crítica. Tente novamente.';
+                    criticalReviewMessage.classList.remove('hidden');
+                    criticalReviewOutput.classList.add('hidden');
+                }
+            });
+
+            const generateCaseStudyButton = document.getElementById('generate-case-study-button');
+            const caseStudyPromptInput = document.getElementById('case-study-prompt-input');
+            const caseStudyOutput = document.getElementById('case-study-output');
+            const caseStudyMessage = document.getElementById('case-study-message');
+            
+            generateCaseStudyButton.addEventListener('click', async () => {
+                const prompt = caseStudyPromptInput.value.trim();
+                if (!prompt) {
+                    caseStudyMessage.textContent = 'Por favor, insira um tema para o estudo de caso.';
+                    caseStudyMessage.classList.remove('hidden');
+                    caseStudyOutput.classList.add('hidden');
+                    return;
+                }
+                
+                caseStudyMessage.textContent = 'Gerando estudo de caso...';
+                caseStudyMessage.classList.remove('hidden');
+                caseStudyOutput.classList.add('hidden');
+
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+                const userPrompt = `Crie um estudo de caso fictício detalhado, com introdução, descrição do paciente, sintomas e um desafio a ser resolvido, com base nos conceitos de neuropatia diabética descritos no texto a seguir. Use o prompt do usuário para focar o estudo de caso. Prompt: '${prompt}'. Texto: \n\n${sectionsContent}`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um escritor de estudos de caso para fins educacionais. O estudo de caso deve ser fictício, mas clinicamente plausível, com base no texto fornecido." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    caseStudyMessage.textContent = '';
+                    caseStudyOutput.textContent = text || 'Não foi possível gerar o estudo de caso. Tente novamente.';
+                    caseStudyOutput.classList.remove('hidden');
+                } catch (error) {
+                    caseStudyMessage.textContent = 'Ocorreu um erro ao gerar o estudo de caso. Tente novamente.';
+                    caseStudyMessage.classList.remove('hidden');
+                    caseStudyOutput.classList.add('hidden');
+                }
+            });
+
+            const paraphraseButton = document.getElementById('paraphrase-button');
+            const paraphraseInput = document.getElementById('paraphrase-input');
+            const paraphraseOutput = document.getElementById('paraphrase-output');
+            const paraphraseMessage = document.getElementById('paraphrase-message');
+
+            paraphraseButton.addEventListener('click', async () => {
+                const prompt = paraphraseInput.value.trim();
+                if (!prompt) {
+                    paraphraseMessage.textContent = 'Por favor, insira o texto para parafrasear.';
+                    paraphraseMessage.classList.remove('hidden');
+                    paraphraseOutput.classList.add('hidden');
+                    return;
+                }
+
+                paraphraseMessage.textContent = 'Parafraseando...';
+                paraphraseMessage.classList.remove('hidden');
+                paraphraseOutput.classList.add('hidden');
+
+                const userPrompt = `Parafraseie o seguinte texto acadêmico em português, mantendo o significado original, mas usando diferentes palavras e estruturas de frase. O resultado deve conter apenas o texto parafraseado. Texto: '${prompt}'`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um assistente de escrita acadêmica focado em parafrasear textos de forma precisa e fluida." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    paraphraseMessage.textContent = '';
+                    paraphraseOutput.textContent = text || 'Não foi possível parafrasear o texto. Tente novamente.';
+                    paraphraseOutput.classList.remove('hidden');
+                } catch (error) {
+                    paraphraseMessage.textContent = 'Ocorreu um erro ao parafrasear. Tente novamente.';
+                    paraphraseMessage.classList.remove('hidden');
+                    paraphraseOutput.classList.add('hidden');
+                }
+            });
+
+            const conceptButton = document.getElementById('concept-button');
+            const conceptInput = document.getElementById('concept-input');
+            const conceptOutput = document.getElementById('concept-output');
+            const conceptMessage = document.getElementById('concept-message');
+
+            conceptButton.addEventListener('click', async () => {
+                const prompt = conceptInput.value.trim();
+                if (!prompt) {
+                    conceptMessage.textContent = 'Por favor, digite um conceito para explicar.';
+                    conceptMessage.classList.remove('hidden');
+                    conceptOutput.classList.add('hidden');
+                    return;
+                }
+
+                conceptMessage.textContent = 'Buscando explicação...';
+                conceptMessage.classList.remove('hidden');
+                conceptOutput.classList.add('hidden');
+
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+                const userPrompt = `Explique o seguinte conceito ou termo técnico sobre neuropatia diabética, baseando a sua resposta EXCLUSIVAMENTE no texto a seguir. Seja conciso e direto ao ponto. Se o conceito não estiver no texto, diga que não foi encontrado. Conceito: '${prompt}'. Texto: \n\n${sectionsContent}`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um especialista em termos técnicos, fornecendo explicações claras e concisas." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    conceptMessage.textContent = '';
+                    conceptOutput.textContent = text || 'Não foi possível encontrar uma explicação para este conceito no documento.';
+                    conceptOutput.classList.remove('hidden');
+                } catch (error) {
+                    conceptMessage.textContent = 'Ocorreu um erro ao buscar a explicação. Tente novamente.';
+                    conceptMessage.classList.remove('hidden');
+                    conceptOutput.classList.add('hidden');
+                }
+            });
+
+            const generateCounterArgumentButton = document.getElementById('generate-counter-argument-button');
+            const counterArgumentInput = document.getElementById('counter-argument-input');
+            const counterArgumentOutput = document.getElementById('counter-argument-output');
+            const counterArgumentMessage = document.getElementById('counter-argument-message');
+
+            generateCounterArgumentButton.addEventListener('click', async () => {
+                const prompt = counterArgumentInput.value.trim();
+                if (!prompt) {
+                    counterArgumentMessage.textContent = 'Por favor, insira uma afirmação para gerar o contra-argumento.';
+                    counterArgumentMessage.classList.remove('hidden');
+                    counterArgumentOutput.classList.add('hidden');
+                    return;
+                }
+
+                counterArgumentMessage.textContent = 'Gerando contra-argumento...';
+                counterArgumentMessage.classList.remove('hidden');
+                counterArgumentOutput.classList.add('hidden');
+
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+                const userPrompt = `Crie um contra-argumento acadêmico para a seguinte afirmação. Baseie sua resposta nos conceitos de neuropatia diabética presentes no texto fornecido. Se o texto não suportar um contra-argumento, forneça uma explicação neutra sobre o tema. Afirmação: '${prompt}'. Texto: \n\n${sectionsContent}`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um intelectual crítico e acadêmico." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    counterArgumentMessage.textContent = '';
+                    counterArgumentOutput.textContent = text || 'Não foi possível gerar um contra-argumento. Tente novamente.';
+                    counterArgumentOutput.classList.remove('hidden');
+                } catch (error) {
+                    counterArgumentMessage.textContent = 'Ocorreu um erro ao gerar o contra-argumento. Tente novamente.';
+                    counterArgumentMessage.classList.remove('hidden');
+                    counterArgumentOutput.classList.add('hidden');
+                }
+            });
+
+            const generateComparisonTableButton = document.getElementById('generate-comparison-table-button');
+            const comparisonConcept1Input = document.getElementById('comparison-concept-1-input');
+            const comparisonConcept2Input = document.getElementById('comparison-concept-2-input');
+            const comparisonTableOutput = document.getElementById('comparison-table-output');
+            const comparisonTableMessage = document.getElementById('comparison-table-message');
+
+            generateComparisonTableButton.addEventListener('click', async () => {
+                const concept1 = comparisonConcept1Input.value.trim();
+                const concept2 = comparisonConcept2Input.value.trim();
+                if (!concept1 || !concept2) {
+                    comparisonTableMessage.textContent = 'Por favor, insira dois conceitos para comparar.';
+                    comparisonTableMessage.classList.remove('hidden');
+                    comparisonTableOutput.classList.add('hidden');
+                    return;
+                }
+
+                comparisonTableMessage.textContent = 'Gerando tabela comparativa...';
+                comparisonTableMessage.classList.remove('hidden');
+                comparisonTableOutput.classList.add('hidden');
+
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+                const userPrompt = `Crie uma tabela de comparação em formato Markdown entre os seguintes dois conceitos sobre neuropatia diabética. A tabela deve ter colunas 'Característica', '${concept1}' e '${concept2}', e comparar os conceitos com base em sintomas, causa e tratamento. Baseie-se estritamente no texto fornecido. Conceitos: '${concept1}' e '${concept2}'. Texto: \n\n${sectionsContent}`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um analista de dados, gerando uma tabela de comparação em formato Markdown para auxiliar a análise." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    comparisonTableMessage.textContent = '';
+                    const formattedHtml = text.replace(/\|/g, '<span class="px-2">|</span>').replace(/---/g, '<hr class="my-2 border-gray-300">').replace(/\n/g, '<br>');
+                    comparisonTableOutput.innerHTML = `<pre class="whitespace-pre-wrap">${text || 'Não foi possível gerar a tabela. Tente novamente.'}</pre>`;
+                    comparisonTableOutput.classList.remove('hidden');
+                } catch (error) {
+                    comparisonTableMessage.textContent = 'Ocorreu um erro ao gerar a tabela. Tente novamente.';
+                    comparisonTableMessage.classList.remove('hidden');
+                    comparisonTableOutput.classList.add('hidden');
+                }
+            });
+
+            const generateFlashcardButton = document.getElementById('generate-flashcard-button');
+            const flashcardInput = document.getElementById('flashcard-input');
+            const flashcardOutput = document.getElementById('flashcard-output');
+            const flashcardMessage = document.getElementById('flashcard-message');
+
+            generateFlashcardButton.addEventListener('click', async () => {
+                const prompt = flashcardInput.value.trim();
+                if (!prompt) {
+                    flashcardMessage.textContent = 'Por favor, insira um termo para gerar o flashcard.';
+                    flashcardMessage.classList.remove('hidden');
+                    flashcardOutput.classList.add('hidden');
+                    return;
+                }
+
+                flashcardMessage.textContent = 'Gerando flashcard...';
+                flashcardMessage.classList.remove('hidden');
+                flashcardOutput.classList.add('hidden');
+
+                const userPrompt = `Crie um flashcard com o termo e sua definição. O termo deve ser o seguinte: '${prompt}'. A definição deve ser concisa e baseada no texto fornecido sobre neuropatia diabética. Formate a resposta como um objeto JSON com as chaves 'term' e 'definition'. Texto: ${await getSectionsText()}`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            responseSchema: {
+                                type: "OBJECT",
+                                properties: {
+                                    "term": { "type": "STRING" },
+                                    "definition": { "type": "STRING" }
+                                },
+                                "propertyOrdering": ["term", "definition"]
+                            }
+                        },
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const json = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    const flashcardData = JSON.parse(json);
+
+                    flashcardOutput.innerHTML = `
+                        <div class="p-6 bg-white rounded-lg shadow-md text-center">
+                            <h4 class="text-xl font-bold mb-2">${flashcardData.term}</h4>
+                            <p>${flashcardData.definition}</p>
+                        </div>
+                    `;
+                    flashcardMessage.textContent = 'Flashcard gerado!';
+                    flashcardOutput.classList.remove('hidden');
+                } catch (error) {
+                    flashcardMessage.textContent = 'Ocorreu um erro ao gerar o flashcard. Tente novamente.';
+                    flashcardOutput.classList.add('hidden');
+                }
+            });
+
+            const generateTimelineButton = document.getElementById('generate-timeline-button');
+            const timelineInput = document.getElementById('timeline-input');
+            const timelineOutput = document.getElementById('timeline-output');
+            const timelineMessage = document.getElementById('timeline-message');
+
+            generateTimelineButton.addEventListener('click', async () => {
+                const prompt = timelineInput.value.trim();
+                if (!prompt) {
+                    timelineMessage.textContent = 'Por favor, insira um tópico para a linha do tempo.';
+                    timelineMessage.classList.remove('hidden');
+                    timelineOutput.classList.add('hidden');
+                    return;
+                }
+
+                timelineMessage.textContent = 'Gerando linha do tempo...';
+                timelineMessage.classList.remove('hidden');
+                timelineOutput.classList.add('hidden');
+
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+
+                const userPrompt = `Crie uma linha do tempo clara e concisa em português sobre o tema '${prompt}', usando o texto fornecido. A linha do tempo deve ser um texto em formato de lista numerada com os principais marcos. Texto:\n\n${sectionsContent}`;
+                
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um historiador ou cientista, gerando uma linha do tempo precisa e organizada." }]
+                        },
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    
+                    timelineMessage.textContent = 'Linha do tempo gerada:';
+                    timelineOutput.textContent = text || 'Não foi possível gerar a linha do tempo. Tente novamente.';
+                    timelineOutput.classList.remove('hidden');
+                } catch (error) {
+                    timelineMessage.textContent = 'Ocorreu um erro ao gerar a linha do tempo. Tente novamente.';
+                    timelineOutput.classList.add('hidden');
+                }
+            });
+
+            const generateStudyPlanButton = document.getElementById('generate-study-plan-button');
+            const studyPlanInput = document.getElementById('study-plan-input');
+            const studyPlanOutput = document.getElementById('study-plan-output');
+            const studyPlanMessage = document.getElementById('study-plan-message');
+
+            generateStudyPlanButton.addEventListener('click', async () => {
+                const prompt = studyPlanInput.value.trim();
+                if (!prompt) {
+                    studyPlanMessage.textContent = 'Por favor, insira um tópico para o plano de estudo.';
+                    studyPlanMessage.classList.remove('hidden');
+                    studyPlanOutput.classList.add('hidden');
+                    return;
+                }
+
+                studyPlanMessage.textContent = 'Gerando plano de estudo...';
+                studyPlanMessage.classList.remove('hidden');
+                studyPlanOutput.classList.add('hidden');
+
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+
+                const userPrompt = `Crie um plano de estudo estruturado e detalhado sobre o tema '${prompt}' com base no texto fornecido sobre neuropatia diabética. O plano deve incluir objetivos, tópicos principais, e uma lista de atividades de estudo. Texto:\n\n${sectionsContent}`;
+                
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um tutor acadêmico, gerando planos de estudo úteis e organizados." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    studyPlanMessage.textContent = 'Plano de estudo gerado:';
+                    studyPlanOutput.textContent = text || 'Não foi possível gerar o plano de estudo. Tente novamente.';
+                    studyPlanOutput.classList.remove('hidden');
+                } catch (error) {
+                    studyPlanMessage.textContent = 'Ocorreu um erro ao gerar o plano de estudo. Tente novamente.';
+                    studyPlanOutput.classList.add('hidden');
+                }
+            });
+
+            const generateSynthesisButton = document.getElementById('generate-synthesis-button');
+            const synthesisInput = document.getElementById('concept-synthesis-input');
+            const synthesisOutput = document.getElementById('concept-synthesis-output');
+            const synthesisMessage = document.getElementById('concept-synthesis-message');
+
+            generateSynthesisButton.addEventListener('click', async () => {
+                const prompt = synthesisInput.value.trim();
+                if (!prompt) {
+                    synthesisMessage.textContent = 'Por favor, insira os conceitos para sintetizar.';
+                    synthesisMessage.classList.remove('hidden');
+                    synthesisOutput.classList.add('hidden');
+                    return;
+                }
+
+                synthesisMessage.textContent = 'Gerando síntese de conceitos...';
+                synthesisMessage.classList.remove('hidden');
+                synthesisOutput.classList.add('hidden');
+                
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+
+                const userPrompt = `Analise os seguintes conceitos sobre neuropatia diabética e explique como eles se relacionam, com base no texto fornecido. O resultado deve ser uma síntese concisa. Conceitos: '${prompt}'. Texto: \n\n${sectionsContent}`;
+                
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um especialista acadêmico em síntese de conceitos." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    synthesisMessage.textContent = 'Síntese gerada:';
+                    synthesisOutput.textContent = text || 'Não foi possível gerar a síntese. Tente novamente.';
+                    synthesisOutput.classList.remove('hidden');
+                } catch (error) {
+                    synthesisMessage.textContent = 'Ocorreu um erro ao gerar a síntese. Tente novamente.';
+                    synthesisOutput.classList.add('hidden');
+                }
+            });
+
+            const generateHypothesisButton = document.getElementById('generate-hypothesis-button');
+            const hypothesisInput = document.getElementById('hypothesis-input');
+            const hypothesisOutput = document.getElementById('hypothesis-output');
+            const hypothesisMessage = document.getElementById('hypothesis-message');
+
+            generateHypothesisButton.addEventListener('click', async () => {
+                const prompt = hypothesisInput.value.trim();
+                if (!prompt) {
+                    hypothesisMessage.textContent = 'Por favor, insira um tópico para a hipótese.';
+                    hypothesisMessage.classList.remove('hidden');
+                    hypothesisOutput.classList.add('hidden');
+                    return;
+                }
+                
+                hypothesisMessage.textContent = 'Gerando hipótese...';
+                hypothesisMessage.classList.remove('hidden');
+                hypothesisOutput.classList.add('hidden');
+                
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+
+                const userPrompt = `Atue como um cientista. Com base nos conceitos do documento, formule uma hipótese testável sobre o tópico: '${prompt}'. A resposta deve ser uma única frase concisa e clara. Texto:\n\n${sectionsContent}`;
+                
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um cientista, formulando hipóteses científicas e testáveis." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    hypothesisMessage.textContent = 'Hipótese gerada:';
+                    hypothesisOutput.textContent = text || 'Não foi possível gerar a hipótese. Tente novamente.';
+                    hypothesisOutput.classList.remove('hidden');
+                } catch (error) {
+                    hypothesisMessage.textContent = 'Ocorreu um erro ao gerar a hipótese. Tente novamente.';
+                    hypothesisOutput.classList.add('hidden');
+                }
+            });
+
+            const generatePresentationButton = document.getElementById('generate-presentation-button');
+            const presentationInput = document.getElementById('presentation-input');
+            const presentationOutput = document.getElementById('presentation-output');
+            const presentationMessage = document.getElementById('presentation-message');
+
+            generatePresentationButton.addEventListener('click', async () => {
+                const prompt = presentationInput.value.trim();
+                if (!prompt) {
+                    presentationMessage.textContent = 'Por favor, insira um tema para o roteiro de apresentação.';
+                    presentationMessage.classList.remove('hidden');
+                    presentationOutput.classList.add('hidden');
+                    return;
+                }
+
+                presentationMessage.textContent = 'Gerando roteiro de apresentação...';
+                presentationMessage.classList.remove('hidden');
+                presentationOutput.classList.add('hidden');
+
+                const sectionsContent = [
+                    document.getElementById('o-que-e').innerText,
+                    document.getElementById('tipos-sintomas').innerText,
+                    document.getElementById('diagnostico-tratamento').innerText,
+                    document.getElementById('prevencao').innerText,
+                ].join('\n\n');
+
+                const userPrompt = `Crie um roteiro detalhado para uma apresentação acadêmica sobre o tema '${prompt}', usando o conteúdo do documento sobre neuropatia diabética. Estruture em 5-7 slides, cada um com um título e 3-4 pontos-chave. Formate a resposta com títulos de slides e listas de pontos. Não inclua texto introdutório ou conclusivo fora do roteiro. Texto:\n\n${sectionsContent}`;
+
+                const apiKey = "AIzaSyDAwQNVmF3VRXRTNqj9WKzl6AvDMjmSC7w";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const payload = {
+                        contents: [{ parts: [{ text: userPrompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Atue como um designer de apresentações, criando roteiros claros e eficazes." }]
+                        },
+                    };
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    presentationMessage.textContent = 'Roteiro gerado:';
+                    presentationOutput.textContent = text || 'Não foi possível gerar o roteiro. Tente novamente.';
+                    presentationOutput.classList.remove('hidden');
+                } catch (error) {
+                    presentationMessage.textContent = 'Ocorreu um erro ao gerar o roteiro. Tente novamente.';
+                    presentationMessage.classList.remove('hidden');
+                    presentationOutput.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

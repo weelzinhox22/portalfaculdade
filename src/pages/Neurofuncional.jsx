@@ -59,6 +59,36 @@ const Neurofuncional = () => {
       ],
       duration: '12 semanas',
       level: 'Avançado'
+    },
+    {
+      id: 5,
+      title: 'Neuropatia Diabética',
+      icon: <Zap className="w-6 h-6" />,
+      color: 'from-red-500 to-red-600',
+      topics: [
+        'Fisiopatologia e Etiologia',
+        'Classificação e Manifestações Clínicas',
+        'Diagnóstico e Rastreamento',
+        'Manejo e Abordagens Terapêuticas'
+      ],
+      duration: '4 semanas',
+      level: 'Intermediário',
+      link: '/neuropatia'
+    },
+    {
+      id: 6,
+      title: 'Neuropatia Diabética - Versão Completa',
+      icon: <Zap className="w-6 h-6" />,
+      color: 'from-amber-500 to-amber-600',
+      topics: [
+        'Guia Interativo Completo',
+        'Ferramentas de IA Avançadas',
+        'Versão HTML Original',
+        'Recursos Educacionais Extras'
+      ],
+      duration: '6 semanas',
+      level: 'Avançado',
+      link: '/src/pages/neuropatia2.html'
     }
   ];
 
@@ -107,6 +137,21 @@ const Neurofuncional = () => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
   }, []);
+
+  const getButtonStyle = (color) => ({
+    width: '100%',
+    padding: '0.75rem',
+    background: `linear-gradient(135deg, ${color.split(' ')[1]} 0%, ${color.split(' ')[3]} 100%)`,
+    color: 'white',
+    border: 'none',
+    borderRadius: '0.75rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    textDecoration: 'none',
+    display: 'inline-block',
+    textAlign: 'center',
+  });
 
   return (
     <div className="specialty-page" style={{ paddingTop: '6rem' }}>
@@ -333,23 +378,19 @@ const Neurofuncional = () => {
                   ))}
                 </ul>
                 
-                <button 
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    background: `linear-gradient(135deg, ${module.color.split(' ')[1]} 0%, ${module.color.split(' ')[3]} 100%)`,
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '0.75rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => e.target.style.opacity = '0.9'}
-                  onMouseLeave={(e) => e.target.style.opacity = '1'}
-                >
-                  Acessar Módulo
-                </button>
+                {module.link ? (
+                  <Link to={module.link} style={getButtonStyle(module.color)}>
+                    Acessar Módulo
+                  </Link>
+                ) : (
+                  <button 
+                    style={getButtonStyle(module.color)}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.9'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                  >
+                    Acessar Módulo
+                  </button>
+                )}
               </div>
             ))}
           </div>
