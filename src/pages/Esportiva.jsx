@@ -18,7 +18,9 @@ const Esportiva = () => {
       ],
       duration: '8 semanas',
       level: 'Básico',
-      sports: ['Futebol', 'Basquete', 'Vôlei', 'Tênis']
+      sports: ['Futebol', 'Basquete', 'Vôlei', 'Tênis'],
+      hasDetailedContent: true,
+      link: '/fisiologia-respiratoria'
     },
     {
       id: 2,
@@ -216,11 +218,17 @@ const Esportiva = () => {
                   <div className="mt-6 pt-6 border-t border-gray-100">
                     <div className="flex justify-between items-center">
                       <div className="text-sm text-gray-500">
-                        ✅ Conteúdo disponível • 🎯 Em desenvolvimento
+                        {module.hasDetailedContent ? '✅ Conteúdo disponível' : '🎯 Em desenvolvimento'}
                       </div>
-                      <button className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:from-green-600 hover:to-blue-700 transition-all duration-300">
-                        Estudar Agora
-                      </button>
+                      {module.hasDetailedContent && module.link ? (
+                        <Link to={module.link} className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:from-green-600 hover:to-blue-700 transition-all duration-300 text-decoration-none">
+                          Acessar Conteúdo
+                        </Link>
+                      ) : (
+                        <button className="bg-gradient-to-r from-green-500 to-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:from-green-600 hover:to-blue-700 transition-all duration-300">
+                          Estudar Agora
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -96,8 +96,26 @@ const UnidadeHospitalar = () => {
       hasDetailedContent: true,
       link: '/gasometria-arterial'
     },
+            {
+          id: 2.6,
+          title: 'Fisiologia Respiratória Interativa',
+          icon: <Stethoscope className="w-6 h-6" />,
+          color: 'from-purple-500 to-purple-600',
+          topics: [
+            'Volumes e capacidades pulmonares',
+            'Simulador de ventilação pulmonar',
+            'Casos clínicos respiratórios',
+            'Espirometria interativa'
+          ],
+          duration: '6 semanas',
+          level: 'Intermediário',
+          departments: ['Pneumologia', 'UTI', 'Emergência', 'Laboratório'],
+          hasDetailedContent: true,
+          link: '/fisiologia-respiratoria'
+        },
+
     {
-      id: 3,
+      id: 5,
       title: 'Fisioterapia em UTI',
       icon: <Heart className="w-6 h-6" />,
       color: 'from-teal-500 to-teal-600',
@@ -112,7 +130,7 @@ const UnidadeHospitalar = () => {
       departments: ['UTI Geral', 'UTI Cardiológica', 'UTI Neurológica', 'UTI Pediátrica']
     },
     {
-      id: 5,
+      id: 6,
       title: 'Cardiologia Hospitalar',
       icon: <Activity className="w-6 h-6" />,
       color: 'from-cyan-500 to-cyan-600',
@@ -127,7 +145,7 @@ const UnidadeHospitalar = () => {
       departments: ['Cardiologia', 'Cirurgia Cardíaca', 'Hemodinâmica', 'Marcapasso']
     },
     {
-      id: 6,
+      id: 7,
       title: 'Pneumologia e Respiratória',
       icon: <Stethoscope className="w-6 h-6" />,
       color: 'from-blue-500 to-blue-600',
@@ -142,7 +160,7 @@ const UnidadeHospitalar = () => {
       departments: ['Pneumologia', 'Cirurgia Torácica', 'Emergência', 'Oncologia']
     },
     {
-      id: 7,
+      id: 8,
       title: 'Ortopedia Hospitalar',
       icon: <Building2 className="w-6 h-6" />,
       color: 'from-indigo-500 to-indigo-600',

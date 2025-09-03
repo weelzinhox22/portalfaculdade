@@ -1,0 +1,780 @@
+/* Fisiologia Respiratória - Estilos Principais */
+.respiratory-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Header e Navegação */
+.respiratory-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.respiratory-nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.respiratory-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.respiratory-nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.respiratory-nav-link {
+  background: none;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+.respiratory-nav-link:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
+.respiratory-nav-link.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Main Content */
+.respiratory-main {
+  padding: 2rem 0;
+}
+
+.respiratory-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.respiratory-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.respiratory-section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+}
+
+.respiratory-section-subtitle {
+  font-size: 1.2rem;
+  color: #718096;
+  text-align: center;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+/* Volumes Pulmonares */
+.respiratory-volumes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.respiratory-chart-container {
+  height: 400px;
+  background: white;
+  border-radius: 15px;
+  padding: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.respiratory-volumes-info {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.respiratory-volumes-info h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+}
+
+.respiratory-volume-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f7fafc;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.respiratory-volume-item:hover {
+  background: #edf2f7;
+  transform: translateX(5px);
+}
+
+.respiratory-volume-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  margin-top: 0.25rem;
+  flex-shrink: 0;
+}
+
+.respiratory-volume-details strong {
+  color: #2d3748;
+  font-size: 1.1rem;
+}
+
+.respiratory-volume-description {
+  color: #718096;
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+.respiratory-capacity-calculations {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.respiratory-capacity-calculations h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.respiratory-capacity-item {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+/* Simulador de Ventilação */
+.respiratory-ventilation-simulator {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.respiratory-simulator-controls {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.respiratory-simulator-controls h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #2d3748;
+}
+
+.respiratory-control-group {
+  margin-bottom: 2rem;
+}
+
+.respiratory-control-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+}
+
+.respiratory-value {
+  font-weight: 600;
+  color: #667eea;
+  font-size: 1.1rem;
+}
+
+.respiratory-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: #e2e8f0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.respiratory-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.respiratory-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Resultados da Ventilação */
+.respiratory-ventilation-results {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.respiratory-ventilation-results h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #2d3748;
+}
+
+.respiratory-results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.respiratory-result-card {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.respiratory-result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.respiratory-result-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.respiratory-result-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.respiratory-result-card p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.respiratory-ventilation-chart {
+  background: #f7fafc;
+  border-radius: 15px;
+  padding: 1.5rem;
+}
+
+.respiratory-ventilation-chart h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2d3748;
+  text-align: center;
+}
+
+/* Casos Clínicos */
+.respiratory-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.respiratory-case-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.respiratory-case-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.respiratory-case-card.selected {
+  border-color: #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+}
+
+.respiratory-case-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.respiratory-case-card p {
+  color: #718096;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.respiratory-case-symptoms strong {
+  color: #2d3748;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.respiratory-case-symptoms ul {
+  list-style: none;
+  padding: 0;
+}
+
+.respiratory-case-symptoms li {
+  color: #718096;
+  padding: 0.25rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.respiratory-case-symptoms li::before {
+  content: "•";
+  color: #667eea;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* Diagnóstico */
+.respiratory-case-diagnosis {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.respiratory-case-diagnosis h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+}
+
+.respiratory-diagnosis-options h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #4a5568;
+}
+
+.respiratory-diagnosis-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.respiratory-diagnosis-option {
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.respiratory-diagnosis-option:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+.respiratory-diagnosis-option.selected {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-color: #667eea;
+}
+
+.respiratory-check-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.respiratory-check-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Feedback */
+.respiratory-feedback {
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: 15px;
+  border-left: 5px solid;
+}
+
+.respiratory-feedback.correct {
+  background: linear-gradient(135deg, rgba(72, 187, 120, 0.1), rgba(56, 178, 172, 0.1));
+  border-left-color: #48bb78;
+}
+
+.respiratory-feedback.incorrect {
+  background: linear-gradient(135deg, rgba(245, 101, 101, 0.1), rgba(237, 137, 54, 0.1));
+  border-left-color: #f56565;
+}
+
+.respiratory-feedback h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.respiratory-feedback p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.respiratory-treatment strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+}
+
+.respiratory-treatment ul {
+  list-style: none;
+  padding: 0;
+}
+
+.respiratory-treatment li {
+  color: #718096;
+  padding: 0.25rem 0;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.respiratory-treatment li::before {
+  content: "→";
+  color: #667eea;
+  position: absolute;
+  left: 0;
+}
+
+/* Espirometria */
+.respiratory-spirometry-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.respiratory-spirometry-chart {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  height: 400px;
+}
+
+.respiratory-spirometry-controls {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.respiratory-spirometry-controls h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #2d3748;
+}
+
+.respiratory-spirometry-info h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+}
+
+.respiratory-spirometry-values {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.respiratory-spirometry-value {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.respiratory-spirometry-interpretation {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.respiratory-spirometry-interpretation h5 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+}
+
+.respiratory-spirometry-interpretation p {
+  color: #718096;
+  line-height: 1.6;
+}
+
+/* Conteúdo Educacional */
+.respiratory-educational-content {
+  margin-top: 3rem;
+}
+
+.respiratory-educational-content h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #2d3748;
+  text-align: center;
+}
+
+.respiratory-concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.respiratory-concept-card {
+  background: white;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-top: 4px solid #667eea;
+}
+
+.respiratory-concept-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.respiratory-concept-card h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #2d3748;
+}
+
+.respiratory-concept-card p {
+  color: #718096;
+  line-height: 1.6;
+}
+
+/* Accordion */
+.respiratory-accordion {
+  margin-top: 3rem;
+}
+
+.respiratory-accordion-item {
+  background: white;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.respiratory-accordion-button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.5rem 2rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  transition: all 0.3s ease;
+}
+
+.respiratory-accordion-button:hover {
+  background: #f7fafc;
+}
+
+.respiratory-accordion-arrow {
+  transition: transform 0.3s ease;
+  font-size: 1.2rem;
+  color: #667eea;
+}
+
+.respiratory-accordion-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.respiratory-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.respiratory-accordion-content.expanded {
+  max-height: 200px;
+}
+
+.respiratory-accordion-content.collapsed {
+  max-height: 0;
+}
+
+.respiratory-accordion-text {
+  padding: 0 2rem 1.5rem;
+  color: #718096;
+  line-height: 1.6;
+}
+
+/* Footer */
+.respiratory-footer {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+.respiratory-footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+  color: #718096;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .respiratory-nav-content {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .respiratory-nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .respiratory-container {
+    padding: 0 1rem;
+  }
+
+  .respiratory-section {
+    padding: 1.5rem;
+  }
+
+  .respiratory-section-title {
+    font-size: 2rem;
+  }
+
+  .respiratory-volumes-grid,
+  .respiratory-ventilation-simulator,
+  .respiratory-spirometry-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .respiratory-results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .respiratory-cases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .respiratory-diagnosis-options {
+    grid-template-columns: 1fr;
+  }
+
+  .respiratory-concept-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .respiratory-nav-link {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .respiratory-section {
+    padding: 1rem;
+  }
+
+  .respiratory-section-title {
+    font-size: 1.8rem;
+  }
+
+  .respiratory-accordion-button {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+}

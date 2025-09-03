@@ -61,6 +61,9 @@ import NormasBiosseguranca1 from './pages/NormasBiosseguranca1';
 import AvaliacaoUTI from './pages/AvaliacaoUTI';
 import ExamesComplementares from './pages/ExamesComplementares';
 import GasometriaArterial from './pages/GasometriaArterial';
+import FisiologiaRespiratoria from './pages/FisiologiaRespiratoria';
+import FisioGuia from './pages/FisioGuia';
+import AssuntosEmAlta from './pages/AssuntosEmAlta';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -202,8 +205,11 @@ function App() {
           {/* Páginas de conteúdo educacional */}
           <Route path="/normas-biosseguranca-1" element={<Layout><NormasBiosseguranca1 /></Layout>} />
           <Route path="/avaliacao-uti" element={<Layout><AvaliacaoUTI /></Layout>} />
-          <Route path="/exames-complementares" element={<Layout><ExamesComplementares /></Layout>} />
-          <Route path="/gasometria-arterial" element={<Layout><GasometriaArterial /></Layout>} />
+                      <Route path="/exames-complementares" element={<Layout><ExamesComplementares /></Layout>} />
+            <Route path="/gasometria-arterial" element={<Layout><GasometriaArterial /></Layout>} />
+            <Route path="/fisiologia-respiratoria" element={<Layout><FisiologiaRespiratoria /></Layout>} />
+            <Route path="/fisioguia" element={<Layout><FisioGuia /></Layout>} />
+        <Route path="/assuntos-em-alta" element={<Layout><AssuntosEmAlta /></Layout>} />
           <Route path="/ferramentas-calculo" element={
             <Layout>
               <Suspense fallback={<div className="flex items-center justify-center h-screen">

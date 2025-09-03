@@ -1,0 +1,966 @@
+/* FisioGuia Page Styles */
+.fisioguia-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F8F7F4;
+  color: #3D3D3D;
+  line-height: 1.6;
+}
+
+/* Header */
+.fisioguia-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.fisioguia-nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fisioguia-nav-brand a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #3B82F6;
+  text-decoration: none;
+}
+
+.fisioguia-nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.fisioguia-nav-links a {
+  color: #6B7280;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 0.25rem;
+}
+
+.fisioguia-nav-links a:hover {
+  color: #3B82F6;
+  border-bottom-color: #3B82F6;
+}
+
+.fisioguia-nav-cta {
+  background: #3B82F6;
+  color: white !important;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.fisioguia-nav-cta:hover {
+  background: #2563EB;
+  border-bottom-color: transparent !important;
+}
+
+/* Container */
+.fisioguia-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Hero Section */
+.fisioguia-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.fisioguia-hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.fisioguia-hero-content p {
+  font-size: 1.25rem;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.9;
+}
+
+.fisioguia-hero-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Buttons - CORRIGIDO para melhor visibilidade */
+.fisioguia-button-primary {
+  background: #3B82F6;
+  color: white !important;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.fisioguia-button-primary:hover {
+  background: #2563EB !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+}
+
+.fisioguia-button-secondary {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #3B82F6 !important;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  display: inline-block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.fisioguia-button-secondary:hover {
+  background: white !important;
+  border-color: #3B82F6;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Sections */
+.fisioguia-section {
+  padding: 5rem 0;
+}
+
+.fisioguia-section-alt {
+  background: white;
+}
+
+.fisioguia-section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.fisioguia-section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 1rem;
+}
+
+.fisioguia-section-header p {
+  font-size: 1.125rem;
+  color: #6B7280;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Chart */
+.fisioguia-chart-container {
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  height: 400px;
+}
+
+/* Tabs */
+.fisioguia-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.fisioguia-tab {
+  background: white;
+  color: #6B7280;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  border: 2px solid #E5E7EB;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.fisioguia-tab:hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.fisioguia-tab.active {
+  background: #3B82F6;
+  color: white;
+  border-color: #3B82F6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Tab Content */
+.fisioguia-tab-content {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E5E7EB;
+}
+
+.fisioguia-tab-panel h3 {
+  color: #1F2937;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.fisioguia-tab-panel p {
+  color: #6B7280;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* Info Grid */
+.fisioguia-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.fisioguia-info-card {
+  background: #F9FAFB;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #E5E7EB;
+}
+
+.fisioguia-info-card h4 {
+  color: #1F2937;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.fisioguia-info-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.fisioguia-info-card li {
+  color: #6B7280;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #F3F4F6;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.fisioguia-info-card li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #10B981;
+  font-weight: bold;
+}
+
+.fisioguia-info-card li:last-child {
+  border-bottom: none;
+}
+
+/* CTA Box */
+.fisioguia-cta-box {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border: 1px solid #F59E0B;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.fisioguia-cta-box p {
+  color: #92400E;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* FAQ Section */
+.fisioguia-faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.fisioguia-faq-item {
+  background: white;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E5E7EB;
+  overflow: hidden;
+}
+
+.fisioguia-faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.5rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1F2937;
+  transition: background-color 0.3s ease;
+}
+
+.fisioguia-faq-question:hover {
+  background: #F9FAFB;
+}
+
+.fisioguia-faq-icon {
+  color: #3B82F6;
+  font-size: 0.875rem;
+  transition: transform 0.3s ease;
+}
+
+.fisioguia-faq-answer {
+  padding: 0 1.5rem 1.5rem;
+  color: #6B7280;
+  line-height: 1.6;
+  border-top: 1px solid #F3F4F6;
+}
+
+/* Filters */
+.fisioguia-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.fisioguia-filter {
+  background: white;
+  color: #6B7280;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2rem;
+  border: 2px solid #E5E7EB;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.fisioguia-filter:hover {
+  border-color: #3B82F6;
+  color: #3B82F6;
+  transform: translateY(-2px);
+}
+
+.fisioguia-filter.active {
+  background: #3B82F6;
+  color: white;
+  border-color: #3B82F6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Exercise Grid */
+.fisioguia-exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.fisioguia-exercise-card {
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E5E7EB;
+  transition: all 0.3s ease;
+}
+
+.fisioguia-exercise-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.fisioguia-exercise-video {
+  height: 200px;
+  background: linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fisioguia-exercise-video:hover {
+  background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+}
+
+.fisioguia-play-icon {
+  font-size: 3rem;
+  color: #3B82F6;
+  z-index: 2;
+  position: relative;
+}
+
+.fisioguia-video-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.fisioguia-exercise-video:hover .fisioguia-video-overlay {
+  transform: translateY(0);
+}
+
+.fisioguia-exercise-content {
+  padding: 1.5rem;
+}
+
+.fisioguia-exercise-content h4 {
+  color: #1F2937;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.fisioguia-exercise-content p {
+  color: #6B7280;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.fisioguia-exercise-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fisioguia-exercise-difficulty,
+.fisioguia-exercise-duration {
+  background: #F3F4F6;
+  color: #6B7280;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.fisioguia-exercise-benefits {
+  margin-bottom: 1rem;
+}
+
+.fisioguia-exercise-benefits h5 {
+  color: #1F2937;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.fisioguia-exercise-benefits ul {
+  list-style: none;
+  padding: 0;
+}
+
+.fisioguia-exercise-benefits li {
+  color: #6B7280;
+  font-size: 0.875rem;
+  padding: 0.25rem 0;
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.fisioguia-exercise-benefits li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #3B82F6;
+  font-weight: bold;
+}
+
+.fisioguia-video-button {
+  background: #3B82F6;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  font-size: 0.875rem;
+}
+
+.fisioguia-video-button:hover {
+  background: #2563EB;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Ebook Section */
+.fisioguia-ebook-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.fisioguia-ebook-content h2 {
+  color: #1F2937;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.fisioguia-ebook-subtitle {
+  color: #6B7280;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.fisioguia-ebook-features h3 {
+  color: #1F2937;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.fisioguia-features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.fisioguia-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.fisioguia-feature-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.fisioguia-feature-item strong {
+  color: #1F2937;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.fisioguia-feature-item p {
+  color: #6B7280;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.fisioguia-ebook-cta {
+  text-align: center;
+}
+
+.fisioguia-ebook-button {
+  background: #10B981;
+  color: white;
+  padding: 1.25rem 2.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+}
+
+.fisioguia-ebook-button:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.fisioguia-ebook-guarantee,
+.fisioguia-ebook-bonus {
+  color: #6B7280;
+  font-size: 0.875rem;
+  margin: 0.5rem 0;
+}
+
+/* Ebook Visual */
+.fisioguia-ebook-cover {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  border-radius: 1rem;
+  padding: 3rem;
+  text-align: center;
+  color: white;
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.fisioguia-ebook-cover::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.fisioguia-ebook-cover-content {
+  position: relative;
+  z-index: 2;
+}
+
+.fisioguia-ebook-cover-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.fisioguia-ebook-cover h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.fisioguia-ebook-cover p {
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.fisioguia-ebook-cover strong {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+.fisioguia-ebook-cover-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+/* Footer */
+.fisioguia-footer {
+  background: #1F2937;
+  color: white;
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.fisioguia-footer-content p {
+  margin: 0.5rem 0;
+}
+
+.fisioguia-footer-disclaimer {
+  color: #9CA3AF;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+/* Modal */
+.fisioguia-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.fisioguia-modal {
+  background: white;
+  border-radius: 1rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.fisioguia-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #6B7280;
+  z-index: 10;
+}
+
+.fisioguia-modal-close:hover {
+  color: #1F2937;
+}
+
+.fisioguia-modal-content {
+  padding: 2rem;
+}
+
+.fisioguia-modal-title {
+  color: #1F2937;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.fisioguia-modal-ebook-preview {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.fisioguia-modal-ebook-cover {
+  background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  color: white;
+  display: inline-block;
+}
+
+.fisioguia-modal-ebook-cover span {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.fisioguia-modal-ebook-cover h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.fisioguia-modal-ebook-cover p {
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.fisioguia-modal-ebook-cover strong {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.fisioguia-modal-features h3 {
+  color: #1F2937;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.fisioguia-modal-features ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.fisioguia-modal-features li {
+  color: #6B7280;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #F3F4F6;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.fisioguia-modal-features li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #10B981;
+  font-weight: bold;
+}
+
+.fisioguia-modal-features li:last-child {
+  border-bottom: none;
+}
+
+.fisioguia-modal-pricing {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.fisioguia-modal-price {
+  margin-bottom: 1rem;
+}
+
+.fisioguia-modal-old-price {
+  display: block;
+  color: #9CA3AF;
+  text-decoration: line-through;
+  font-size: 1rem;
+}
+
+.fisioguia-modal-current-price {
+  display: block;
+  color: #1F2937;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+
+.fisioguia-modal-discount {
+  display: inline-block;
+  background: #EF4444;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.fisioguia-modal-urgency {
+  color: #DC2626;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.fisioguia-modal-cta {
+  text-align: center;
+}
+
+.fisioguia-modal-button {
+  background: #10B981;
+  color: white;
+  padding: 1.25rem 2.5rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+}
+
+.fisioguia-modal-button:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.fisioguia-modal-guarantee,
+.fisioguia-modal-bonus {
+  color: #6B7280;
+  font-size: 0.875rem;
+  margin: 0.5rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fisioguia-hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .fisioguia-section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .fisioguia-tabs {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .fisioguia-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fisioguia-exercise-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fisioguia-ebook-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .fisioguia-features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .fisioguia-hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .fisioguia-nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .fisioguia-container {
+    padding: 0 1rem;
+  }
+  
+  .fisioguia-hero {
+    padding: 4rem 0;
+  }
+  
+  .fisioguia-section {
+    padding: 3rem 0;
+  }
+  
+  .fisioguia-tab-content {
+    padding: 1.5rem;
+  }
+  
+  .fisioguia-modal-content {
+    padding: 1.5rem;
+  }
+}

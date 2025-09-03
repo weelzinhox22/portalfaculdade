@@ -10,6 +10,7 @@ import ScrollReveal from '../components/animations/ScrollReveal';
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
   const isMobile = useMobile();
   const { isAuthenticated } = useAuth();
@@ -100,11 +101,21 @@ const Home = () => {
       color: 'purple',
       image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
       modules: ['Neuroanatomia', 'Patologias Neurológicas', 'Avaliação', 'Neurorreabilitação']
+    },
+    {
+      id: 'assuntos-alta',
+      icon: '🔥',
+      title: 'Assuntos em Alta',
+      description: 'Tópicos atuais e tendências emergentes em fisioterapia, guias interativos e conteúdos em destaque.',
+      href: '/assuntos-em-alta',
+      color: 'orange',
+      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+      modules: ['Guia Interativo', 'Tendências 2025', 'Conceitos Atuais', 'Inovações']
     }
   ];
 
   const stats = [
-    { number: '4', label: 'Especialidades', icon: '📚' },
+    { number: '5', label: 'Especialidades', icon: '📚' },
     { number: '100+', label: 'Materiais Didáticos', icon: '📖' },
     { number: '50+', label: 'Casos Clínicos', icon: '🎯' },
     { number: '24/7', label: 'Acesso Disponível', icon: '⏰' }
@@ -720,10 +731,10 @@ const Home = () => {
         `}</style>
       </section>
 
-      {/* Funcionalidades Principais */}
+      {/* Funcionalidades Principais - Carrossel */}
       <section style={{
         padding: '6rem 2rem',
-        background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
+        background: 'white',
         position: 'relative'
       }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -732,197 +743,288 @@ const Home = () => {
               <h2 style={{
                 fontSize: isMobile ? '2.5rem' : '3.5rem',
                 fontWeight: '700',
-                color: '#92400e',
+                color: '#1f2937',
                 marginBottom: '1rem'
               }}>
                 🎯 Tudo que Você Precisa em Um Só Lugar
               </h2>
               <p style={{
                 fontSize: '1.25rem',
-                color: '#92400e',
+                color: '#6b7280',
                 maxWidth: '800px',
                 margin: '0 auto',
-                opacity: 0.8
+                opacity: 0.9
               }}>
                 Descubra todas as ferramentas e recursos que preparamos para acelerar seu aprendizado
               </p>
             </div>
           </ScrollReveal>
 
+          {/* Carrossel Container */}
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem'
+            position: 'relative',
+            overflow: 'hidden',
+            padding: '0 1rem'
           }}>
-            {[
-              ...(isAuthenticated ? [{
-                icon: '📊',
-                title: 'Meu Dashboard',
-                description: 'Acompanhe seu progresso, conquistas e estatísticas de estudo',
-                link: '/dashboard',
-                color: '#0ea5e9',
-                badge: 'SEU PAINEL',
-                stats: 'Progresso • Conquistas • Metas'
-              }] : []),
-              {
-                icon: '🧠',
-                title: 'Quiz Interativo',
-                description: 'Teste seus conhecimentos com 10 questões práticas de fisioterapia',
-                link: '/quiz',
-                color: '#8b5cf6',
-                badge: 'NOVO',
-                stats: '10 Questões • 5 min'
-              },
-              {
-                icon: '📚',
-                title: 'Biblioteca Digital',
-                description: '24 livros digitais com desconto de até 93% - todas as especialidades',
-                link: '/livros',
-                color: '#f59e0b',
-                badge: 'R$ 15',
-                stats: '24 Livros • Todas Especialidades'
-              },
-              {
-                icon: '🎓',
-                title: 'Cursos Online',
-                description: 'Cursos completos com certificado para aprimorar seus conhecimentos',
-                link: '/cursos',
-                color: '#8b5cf6',
-                badge: 'EM BREVE',
-                stats: '8 Cursos • Certificados'
-              },
-              {
-                icon: '📝',
-                title: 'Blog Educativo',
-                description: 'Artigos atualizados sobre técnicas, patologias e novidades da área',
-                link: '/blog',
-                color: '#0ea5e9',
-                badge: 'NOVO',
-                stats: '12 Artigos • Busca Avançada'
-              },
-              {
-                icon: '📧',
-                title: 'Newsletter Exclusiva',
-                description: 'Conteúdo exclusivo, dicas práticas e novidades direto no seu email',
-                link: '/newsletter',
-                color: '#10b981',
-                badge: 'GRÁTIS',
-                stats: '2.500+ Inscritos • Semanal'
-              },
-              {
-                icon: '📱',
-                title: 'Downloads Gratuitos',
-                description: 'Materiais, planilhas e recursos exclusivos para download',
-                link: '/downloads',
-                color: '#10b981',
-                badge: 'GRÁTIS',
-                stats: 'Materiais Exclusivos'
-              }
-            ].map((feature, index) => (
-              <ScrollReveal
-                key={index}
-                delay={index}
-                direction={index % 2 === 0 ? 'left' : 'right'}
-                distance={60}
-              >
+            {/* Carrossel Track */}
+            <motion.div
+              style={{
+                display: 'flex',
+                gap: '2rem',
+                transition: 'transform 0.5s ease'
+              }}
+              animate={{
+                x: isMobile ? 0 : `calc(-${Math.floor(currentSlide * 3) * (100 / 3)}% + ${currentSlide * 2}rem)`
+              }}
+            >
+              {[
+                ...(isAuthenticated ? [{
+                  icon: '📊',
+                  title: 'Meu Dashboard',
+                  description: 'Acompanhe seu progresso, conquistas e estatísticas de estudo',
+                  link: '/dashboard',
+                  color: '#0ea5e9',
+                  badge: 'SEU PAINEL',
+                  stats: 'Progresso • Conquistas • Metas'
+                }] : []),
+                {
+                  icon: '🧠',
+                  title: 'Quiz Interativo',
+                  description: 'Teste seus conhecimentos com 10 questões práticas de fisioterapia',
+                  link: '/quiz',
+                  color: '#8b5cf6',
+                  badge: 'NOVO',
+                  stats: '10 Questões • 5 min'
+                },
+                {
+                  icon: '📚',
+                  title: 'Biblioteca Digital',
+                  description: '24 livros digitais com desconto de até 93% - todas as especialidades',
+                  link: '/livros',
+                  color: '#f59e0b',
+                  badge: 'R$ 15',
+                  stats: '24 Livros • Todas Especialidades'
+                },
+                {
+                  icon: '🎓',
+                  title: 'Cursos Online',
+                  description: 'Cursos completos com certificado para aprimorar seus conhecimentos',
+                  link: '/cursos',
+                  color: '#8b5cf6',
+                  badge: 'EM BREVE',
+                  stats: '8 Cursos • Certificados'
+                },
+                {
+                  icon: '📝',
+                  title: 'Blog Educativo',
+                  description: 'Artigos atualizados sobre técnicas, patologias e novidades da área',
+                  link: '/blog',
+                  color: '#0ea5e9',
+                  badge: 'NOVO',
+                  stats: '12 Artigos • Busca Avançada'
+                },
+                {
+                  icon: '📧',
+                  title: 'Newsletter Exclusiva',
+                  description: 'Conteúdo exclusivo, dicas práticas e novidades direto no seu email',
+                  link: '/newsletter',
+                  color: '#10b981',
+                  badge: 'GRÁTIS',
+                  stats: '2.500+ Inscritos • Semanal'
+                },
+                {
+                  icon: '📱',
+                  title: 'Downloads Gratuitos',
+                  description: 'Materiais, planilhas e recursos exclusivos para download',
+                  link: '/downloads',
+                  color: '#10b981',
+                  badge: 'GRÁTIS',
+                  stats: 'Materiais Exclusivos'
+                }
+              ].map((feature, index) => (
                 <motion.div
-                  whileHover={{
-                    transform: 'translateY(-10px)',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-                  }}
+                  key={index}
                   style={{
+                    minWidth: isMobile ? '100%' : 'calc(33.333% - 1.33rem)',
                     background: 'white',
-                    borderRadius: '2rem',
-                    padding: '2.5rem',
-                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                    transition: 'all 0.3s ease',
+                    borderRadius: '1.5rem',
+                    padding: '2rem',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                    border: '1px solid #f3f4f6',
                     cursor: 'pointer',
                     position: 'relative',
                     overflow: 'hidden',
-                    border: '1px solid rgba(0,0,0,0.05)',
-                    height: '100%'
+                    transition: 'all 0.3s ease'
+                  }}
+                  whileHover={{
+                    transform: 'translateY(-8px)',
+                    boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
                   }}
                   onClick={() => navigate(feature.link)}
                 >
-                <div style={{
-                  position: 'absolute',
-                  top: '1.5rem',
-                  right: '1.5rem',
-                  background: feature.color,
-                  color: 'white',
-                  padding: '0.5rem 1rem',
-                  borderRadius: '1.5rem',
-                  fontSize: '0.75rem',
-                  fontWeight: '700',
-                  letterSpacing: '0.05em'
-                }}>
-                  {feature.badge}
-                </div>
-
-                <div style={{
-                  width: '80px',
-                  height: '80px',
-                  background: `linear-gradient(135deg, ${feature.color}20 0%, ${feature.color}10 100%)`,
-                  borderRadius: '1.5rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '2.5rem',
-                  marginBottom: '1.5rem'
-                }}>
-                  {feature.icon}
-                </div>
-
-                <h3 style={{
-                  fontSize: '1.5rem',
-                  fontWeight: '700',
-                  color: '#1f2937',
-                  marginBottom: '1rem'
-                }}>
-                  {feature.title}
-                </h3>
-
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '1rem',
-                  lineHeight: '1.6',
-                  marginBottom: '1.5rem'
-                }}>
-                  {feature.description}
-                </p>
-
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: '1.5rem'
-                }}>
-                  <span style={{
-                    color: feature.color,
-                    fontSize: '0.875rem',
-                    fontWeight: '600'
+                  {/* Badge */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '1rem',
+                    right: '1rem',
+                    background: feature.color,
+                    color: 'white',
+                    padding: '0.4rem 0.8rem',
+                    borderRadius: '1rem',
+                    fontSize: '0.7rem',
+                    fontWeight: '700',
+                    letterSpacing: '0.05em'
                   }}>
-                    {feature.stats}
-                  </span>
-                </div>
+                    {feature.badge}
+                  </div>
 
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: feature.color,
-                  fontWeight: '600',
-                  fontSize: '1rem',
-                  padding: '1rem',
-                  background: `${feature.color}10`,
-                  borderRadius: '1rem',
-                  transition: 'all 0.3s ease'
-                }}>
-                  Explorar Agora →
-                </div>
+                  {/* Icon */}
+                  <div style={{
+                    width: '60px',
+                    height: '60px',
+                    background: `linear-gradient(135deg, ${feature.color}15 0%, ${feature.color}08 100%)`,
+                    borderRadius: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '2rem',
+                    marginBottom: '1.5rem'
+                  }}>
+                    {feature.icon}
+                  </div>
+
+                  {/* Title */}
+                  <h3 style={{
+                    fontSize: '1.25rem',
+                    fontWeight: '700',
+                    color: '#1f2937',
+                    marginBottom: '0.75rem',
+                    lineHeight: '1.3'
+                  }}>
+                    {feature.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p style={{
+                    color: '#6b7280',
+                    fontSize: '0.9rem',
+                    lineHeight: '1.5',
+                    marginBottom: '1rem'
+                  }}>
+                    {feature.description}
+                  </p>
+
+                  {/* Stats */}
+                  <div style={{
+                    marginBottom: '1.5rem'
+                  }}>
+                    <span style={{
+                      color: feature.color,
+                      fontSize: '0.8rem',
+                      fontWeight: '600'
+                    }}>
+                      {feature.stats}
+                    </span>
+                  </div>
+
+                  {/* CTA Button */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: feature.color,
+                    fontWeight: '600',
+                    fontSize: '0.9rem',
+                    padding: '0.75rem',
+                    background: `${feature.color}08`,
+                    borderRadius: '0.75rem',
+                    transition: 'all 0.3s ease',
+                    border: `1px solid ${feature.color}20`
+                  }}>
+                    Explorar Agora →
+                  </div>
                 </motion.div>
-              </ScrollReveal>
-            ))}
+              ))}
+            </motion.div>
+
+            {/* Navigation Arrows - Desktop Only */}
+            {!isMobile && (
+              <>
+                <button
+                  onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
+                  disabled={currentSlide === 0}
+                  style={{
+                    position: 'absolute',
+                    left: '0',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'white',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '50%',
+                    width: '48px',
+                    height: '48px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    transition: 'all 0.3s ease',
+                    opacity: currentSlide === 0 ? 0.5 : 1
+                  }}
+                >
+                  <span style={{ fontSize: '1.2rem', color: '#6b7280' }}>‹</span>
+                </button>
+
+                <button
+                  onClick={() => setCurrentSlide(Math.min(Math.ceil(7 / 3) - 1, currentSlide + 1))}
+                  disabled={currentSlide >= Math.ceil(7 / 3) - 1}
+                  style={{
+                    position: 'absolute',
+                    right: '0',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'white',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '50%',
+                    width: '48px',
+                    height: '48px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    transition: 'all 0.3s ease',
+                    opacity: currentSlide >= Math.ceil(7 / 3) - 1 ? 0.5 : 1
+                  }}
+                >
+                  <span style={{ fontSize: '1.2rem', color: '#6b7280' }}>›</span>
+                </button>
+              </>
+            )}
+
+            {/* Dots Indicator */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              marginTop: '2rem'
+            }}>
+              {Array.from({ length: Math.ceil(7 / 3) }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: currentSlide === i ? '#3b82f6' : '#d1d5db',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease'
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1254,6 +1356,14 @@ const Home = () => {
                   border: 'rgba(168, 85, 247, 0.2)',
                   glow: 'rgba(168, 85, 247, 0.3)',
                   iconBg: 'rgba(168, 85, 247, 0.1)'
+                },
+                orange: {
+                  bg: 'linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(234, 88, 12, 0.02) 100%)',
+                  accent: '#ea580c',
+                  light: 'rgba(249, 115, 22, 0.1)',
+                  border: 'rgba(249, 115, 22, 0.2)',
+                  glow: 'rgba(249, 115, 22, 0.3)',
+                  iconBg: 'rgba(249, 115, 22, 0.1)'
                 }
               };
               
@@ -1545,514 +1655,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Modern Features Section */}
-      <section id="features" style={{
-        padding: '8rem 0',
-        background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        {/* Background Elements */}
-        <div style={{
-          position: 'absolute',
-          top: '10%',
-          left: '5%',
-          width: '40%',
-          height: '40%',
-          background: 'radial-gradient(circle at center, rgba(99, 102, 241, 0.03) 0%, transparent 70%)',
-          zIndex: 0,
-          borderRadius: '50%'
-        }}></div>
-        <div style={{
-          position: 'absolute',
-          bottom: '5%',
-          right: '5%',
-          width: '30%',
-          height: '30%',
-          background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.02) 0%, transparent 70%)',
-          zIndex: 0,
-          borderRadius: '50%'
-        }}></div>
-        
-        <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          padding: '0 2rem',
-          position: 'relative',
-          zIndex: 1
-        }}>
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '4rem',
-            animation: 'fadeIn 0.8s ease-out'
-          }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              background: 'rgba(234, 88, 12, 0.1)',
-              color: '#ea580c',
-              padding: '0.5rem 1rem',
-              borderRadius: '2rem',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              marginBottom: '1.5rem'
-            }}>
-              <Award style={{ width: '16px', height: '16px' }} />
-              <span>DIFERENCIAIS</span>
-            </div>
-            
-            <h2 style={{
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              fontWeight: 800,
-              color: '#1e293b',
-              marginBottom: '1rem',
-              lineHeight: 1.2
-            }}>
-              Por que <span style={{ color: '#ea580c' }}>Escolher</span> Nosso Portal?
-            </h2>
-            
-            <p style={{
-              fontSize: '1.125rem',
-              color: '#64748b',
-              lineHeight: 1.6,
-              maxWidth: '700px',
-              margin: '0 auto'
-            }}>
-              A plataforma mais completa e eficiente para sua formação em fisioterapia, 
-              com metodologia comprovada e resultados garantidos
-            </p>
-          </div>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-            gap: '2.5rem',
-            position: 'relative'
-          }}>
-            {features.map((feature, index) => {
-              // Define different colors for each feature
-              const colors = [
-                {
-                  bg: 'linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(37, 99, 235, 0.02) 100%)',
-                  accent: '#2563eb',
-                  light: 'rgba(59, 130, 246, 0.1)',
-                  border: 'rgba(59, 130, 246, 0.15)',
-                  iconBg: 'rgba(59, 130, 246, 0.1)'
-                },
-                {
-                  bg: 'linear-gradient(135deg, rgba(234, 88, 12, 0.05) 0%, rgba(194, 65, 12, 0.02) 100%)',
-                  accent: '#ea580c',
-                  light: 'rgba(234, 88, 12, 0.1)',
-                  border: 'rgba(234, 88, 12, 0.15)',
-                  iconBg: 'rgba(234, 88, 12, 0.1)'
-                },
-                {
-                  bg: 'linear-gradient(135deg, rgba(22, 163, 74, 0.05) 0%, rgba(21, 128, 61, 0.02) 100%)',
-                  accent: '#16a34a',
-                  light: 'rgba(22, 163, 74, 0.1)',
-                  border: 'rgba(22, 163, 74, 0.15)',
-                  iconBg: 'rgba(22, 163, 74, 0.1)'
-                },
-                {
-                  bg: 'linear-gradient(135deg, rgba(126, 34, 206, 0.05) 0%, rgba(107, 33, 168, 0.02) 100%)',
-                  accent: '#7e22ce',
-                  light: 'rgba(126, 34, 206, 0.1)',
-                  border: 'rgba(126, 34, 206, 0.15)',
-                  iconBg: 'rgba(126, 34, 206, 0.1)'
-                }
-              ];
-              
-              const color = colors[index % colors.length];
-              
-              const FeatureCard = (
-              <div
-                key={index}
-                style={{
-                    position: 'relative',
-                  background: 'white',
-                  borderRadius: '1.5rem',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-                    border: `1px solid ${color.border}`,
-                    padding: '2.5rem',
-                    transition: 'all 0.4s ease',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    cursor: feature.link ? 'pointer' : 'default'
-                  }}
-                onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-10px)';
-                    e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
-                    e.currentTarget.style.background = color.bg;
-                    
-                    // Animate icon
-                    const iconWrapper = e.currentTarget.querySelector('.icon-wrapper');
-                    if (iconWrapper) {
-                      iconWrapper.style.transform = 'scale(1.1) rotate(5deg)';
-                    }
-                    
-                    // Show arrow
-                    const arrow = e.currentTarget.querySelector('.feature-arrow');
-                    if (arrow) {
-                      arrow.style.opacity = '1';
-                      arrow.style.transform = 'translateX(0)';
-                    }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
-                    e.currentTarget.style.background = 'white';
-                    
-                    // Reset icon
-                    const iconWrapper = e.currentTarget.querySelector('.icon-wrapper');
-                    if (iconWrapper) {
-                      iconWrapper.style.transform = 'scale(1) rotate(0deg)';
-                    }
-                    
-                    // Hide arrow
-                    const arrow = e.currentTarget.querySelector('.feature-arrow');
-                    if (arrow) {
-                      arrow.style.opacity = '0';
-                      arrow.style.transform = 'translateX(-10px)';
-                    }
-                  }}
-                >
-                  {/* Feature Icon */}
-                  <div 
-                    className="icon-wrapper"
-                  style={{
-                      width: '4rem',
-                      height: '4rem',
-                      background: color.iconBg,
-                    borderRadius: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                      marginBottom: '2rem',
-                      transition: 'all 0.3s ease',
-                      position: 'relative',
-                      zIndex: 2
-                    }}
-                  >
-                    <div style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: color.accent
-                    }}>
-                  {feature.icon}
-                </div>
-                  </div>
-                  
-                  {/* Feature Content */}
-                  <div style={{ flex: 1 }}>
-                    <div style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      background: color.light,
-                      color: color.accent,
-                      padding: '0.25rem 0.75rem',
-                      borderRadius: '2rem',
-                      fontSize: '0.75rem',
-                      fontWeight: 600,
-                      marginBottom: '1rem'
-                    }}>
-                      {feature.highlight}
-                    </div>
-                    
-                    <h3 style={{
-                      fontSize: '1.5rem',
-                      fontWeight: 700,
-                      color: '#1e293b',
-                      marginBottom: '1rem',
-                      lineHeight: 1.3
-                    }}>
-                  {feature.title}
-                </h3>
-                    
-                    <p style={{
-                      color: '#64748b',
-                      lineHeight: 1.6,
-                      fontSize: '1rem'
-                    }}>
-                  {feature.description}
-                </p>
-              </div>
-                  
-                  {/* Feature Arrow */}
-                  <div 
-                    className="feature-arrow"
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '2.5rem',
-                      height: '2.5rem',
-                      background: color.light,
-                      borderRadius: '0.75rem',
-                      color: color.accent,
-                      marginTop: '2rem',
-                      opacity: 0,
-                      transform: 'translateX(-10px)',
-                      transition: 'all 0.3s ease'
-                    }}
-                  >
-                    <ArrowRight style={{ width: '20px', height: '20px' }} />
-                  </div>
-                  
-                  {/* Feature Number */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '1.5rem',
-                    right: '1.5rem',
-                    fontSize: '1rem',
-                    fontWeight: 700,
-                    color: color.accent,
-                    opacity: 0.5,
-                    zIndex: 1
-                  }}>
-                    0{index + 1}
-                  </div>
-                </div>
-              );
-
-              // Se o feature tem link, envolve com Link, senão retorna o card normal
-              return feature.link ? (
-                <Link key={index} to={feature.link} style={{ textDecoration: 'none' }}>
-                  {FeatureCard}
-                </Link>
-              ) : FeatureCard;
-            })}
-          </div>
-          
-          {/* Additional Benefits */}
-          <div style={{
-            marginTop: '5rem',
-            background: 'white',
-            borderRadius: '1.5rem',
-            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05)',
-            border: '1px solid rgba(226, 232, 240, 0.8)',
-            padding: '3rem',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '2rem'
-          }}>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center'
-            }}>
-              <h3 style={{
-                fontSize: '1.75rem',
-                fontWeight: 700,
-                color: '#1e293b',
-                marginBottom: '1.5rem',
-                lineHeight: 1.3
-              }}>
-                Benefícios <span style={{ color: '#2563eb' }}>Exclusivos</span> para Estudantes
-              </h3>
-              
-              <p style={{
-                color: '#64748b',
-                lineHeight: 1.6,
-                marginBottom: '2rem'
-              }}>
-                Além de todo o conteúdo de qualidade, oferecemos benefícios exclusivos para impulsionar sua carreira na fisioterapia.
-              </p>
-              
-              <Link to="/sobre" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                color: '#2563eb',
-                fontWeight: 600,
-                textDecoration: 'none',
-                width: 'fit-content',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.gap = '0.75rem';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.gap = '0.5rem';
-              }}
-              >
-                <span>Saiba mais sobre os benefícios</span>
-                <ArrowRight style={{ width: '18px', height: '18px' }} />
-              </Link>
-            </div>
-            
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1.5rem'
-            }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '1rem'
-              }}>
-                <div style={{
-                  width: '2.5rem',
-                  height: '2.5rem',
-                  background: 'rgba(59, 130, 246, 0.1)',
-                  borderRadius: '0.75rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#2563eb',
-                  flexShrink: 0
-                }}>
-                  <Download style={{ width: '20px', height: '20px' }} />
-                </div>
-                
-                <div>
-                  <h4 style={{
-                    fontSize: '1.125rem',
-                    fontWeight: 600,
-                    color: '#1e293b',
-                    marginBottom: '0.5rem'
-                  }}>
-                    Material para Download
-                  </h4>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.9rem',
-                    lineHeight: 1.6
-                  }}>
-                    Acesso a PDFs, apresentações e materiais de estudo para download.
-                  </p>
-                </div>
-              </div>
-              
-              <div style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '1rem'
-              }}>
-                <div style={{
-                  width: '2.5rem',
-                  height: '2.5rem',
-                  background: 'rgba(234, 88, 12, 0.1)',
-                  borderRadius: '0.75rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#ea580c',
-                  flexShrink: 0
-                }}>
-                  <Users2 style={{ width: '20px', height: '20px' }} />
-                </div>
-                
-                <div>
-                  <h4 style={{
-                    fontSize: '1.125rem',
-                    fontWeight: 600,
-                    color: '#1e293b',
-                    marginBottom: '0.5rem'
-                  }}>
-                    Comunidade Exclusiva
-                  </h4>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.9rem',
-                    lineHeight: 1.6
-                  }}>
-                    Participe de grupos de discussão com outros estudantes e profissionais.
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1.5rem'
-            }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '1rem'
-              }}>
-                <div style={{
-                  width: '2.5rem',
-                  height: '2.5rem',
-                  background: 'rgba(22, 163, 74, 0.1)',
-                  borderRadius: '0.75rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#16a34a',
-                  flexShrink: 0
-                }}>
-                  <Award style={{ width: '20px', height: '20px' }} />
-                </div>
-                
-                <div>
-                  <h4 style={{
-                    fontSize: '1.125rem',
-                    fontWeight: 600,
-                    color: '#1e293b',
-                    marginBottom: '0.5rem'
-                  }}>
-                    Certificados Reconhecidos
-                  </h4>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.9rem',
-                    lineHeight: 1.6
-                  }}>
-                    Obtenha certificados válidos ao concluir os módulos de estudo.
-                  </p>
-                </div>
-              </div>
-              
-              <div style={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                gap: '1rem'
-              }}>
-                <div style={{
-                  width: '2.5rem',
-                  height: '2.5rem',
-                  background: 'rgba(126, 34, 206, 0.1)',
-                  borderRadius: '0.75rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#7e22ce',
-                  flexShrink: 0
-                }}>
-                  <Play style={{ width: '20px', height: '20px' }} />
-                </div>
-                
-                <div>
-                  <h4 style={{
-                    fontSize: '1.125rem',
-                    fontWeight: 600,
-                    color: '#1e293b',
-                    marginBottom: '0.5rem'
-                  }}>
-                    Vídeo-aulas Exclusivas
-                  </h4>
-                  <p style={{
-                    color: '#64748b',
-                    fontSize: '0.9rem',
-                    lineHeight: 1.6
-                  }}>
-                    Acesso a conteúdo em vídeo com demonstrações práticas e explicações.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Newsletter Section */}
       <section style={{
         padding: '6rem 0',
@@ -2073,227 +1675,75 @@ const Home = () => {
 
 
 
-      {/* Testimonials Section */}
+      {/* Testimonials Section - Simplified */}
       <section style={{
-        padding: '8rem 0',
+        padding: '4rem 0',
         background: 'white',
-        position: 'relative',
-        overflow: 'hidden'
+        position: 'relative'
       }}>
-        {/* Background Elements */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(to bottom, rgba(59, 130, 246, 0.02) 0%, white 100%)',
-          zIndex: 0
-        }}></div>
-        
-        <div style={{
-          position: 'absolute',
-          top: '10%',
-          left: '5%',
-          width: '20%',
-          height: '20%',
-          background: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.03) 0%, transparent 70%)',
-          zIndex: 0,
-          borderRadius: '50%'
-        }}></div>
-        
-        <div style={{
-          position: 'absolute',
-          bottom: '10%',
-          right: '5%',
-          width: '25%',
-          height: '25%',
-          background: 'radial-gradient(circle at center, rgba(99, 102, 241, 0.02) 0%, transparent 70%)',
-          zIndex: 0,
-          borderRadius: '50%'
-        }}></div>
-        
         <div style={{
           maxWidth: '1400px',
           margin: '0 auto',
           padding: '0 2rem',
-          position: 'relative',
-          zIndex: 1
+          textAlign: 'center'
         }}>
-          <div style={{
-            textAlign: 'center',
-            marginBottom: '4rem',
-            animation: 'fadeIn 0.8s ease-out'
+          <h2 style={{
+            fontFamily: "'Plus Jakarta Sans', sans-serif",
+            fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+            fontWeight: 700,
+            color: '#1e293b',
+            marginBottom: '1rem'
           }}>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              background: 'rgba(79, 70, 229, 0.1)',
-              color: '#4f46e5',
-              padding: '0.5rem 1rem',
-              borderRadius: '2rem',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              marginBottom: '1.5rem'
-            }}>
-              <Quote style={{ width: '16px', height: '16px' }} />
-              <span>DEPOIMENTOS</span>
-            </div>
-            
-            <h2 style={{
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              fontWeight: 800,
-              color: '#1e293b',
-              marginBottom: '1rem',
-              lineHeight: 1.2
-            }}>
-              O que Nossos <span style={{ color: '#4f46e5' }}>Estudantes</span> Dizem
-            </h2>
-            
-            <p style={{
-              fontSize: '1.125rem',
-              color: '#64748b',
-              lineHeight: 1.6,
-              maxWidth: '700px',
-              margin: '0 auto'
-            }}>
-              Depoimentos reais de quem transformou sua carreira e aprendizado com nosso portal
-            </p>
-          </div>
+            O que Nossos <span style={{ color: '#4f46e5' }}>Estudantes</span> Dizem
+          </h2>
+          
+          <p style={{
+            fontSize: '1.125rem',
+            color: '#64748b',
+            lineHeight: 1.6,
+            maxWidth: '600px',
+            margin: '0 auto 2rem'
+          }}>
+            Depoimentos reais de quem transformou sua carreira e aprendizado com nosso portal
+          </p>
           
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
-            gap: '2.5rem',
-            position: 'relative'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem',
+            maxWidth: '900px',
+            margin: '0 auto'
           }}>
-            {testimonials.map((testimonial, index) => (
+            {testimonials.slice(0, 2).map((testimonial, index) => (
               <div 
                 key={index} 
                 style={{
-                  position: 'relative',
                   background: 'white',
-                  borderRadius: '1.5rem',
-                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                  borderRadius: '1rem',
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                   border: '1px solid rgba(226, 232, 240, 0.8)',
-                  padding: '2.5rem',
-                  transition: 'all 0.4s ease',
-                  height: '100%',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px)';
-                  e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
-                  
-                  // Animate quote icon
-                  const quoteIcon = e.currentTarget.querySelector('.quote-icon');
-                  if (quoteIcon) {
-                    quoteIcon.style.transform = 'scale(1.1) rotate(5deg)';
-                    quoteIcon.style.background = 'rgba(79, 70, 229, 0.2)';
-                  }
-                  
-                  // Animate stars
-                  const stars = e.currentTarget.querySelectorAll('.star');
-                  if (stars) {
-                    stars.forEach((star, i) => {
-                      setTimeout(() => {
-                        star.style.transform = 'scale(1.2)';
-                        setTimeout(() => {
-                          star.style.transform = 'scale(1)';
-                        }, 200);
-                      }, i * 100);
-                    });
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
-                  
-                  // Reset quote icon
-                  const quoteIcon = e.currentTarget.querySelector('.quote-icon');
-                  if (quoteIcon) {
-                    quoteIcon.style.transform = 'scale(1) rotate(0deg)';
-                    quoteIcon.style.background = 'rgba(79, 70, 229, 0.1)';
-                  }
+                  padding: '2rem',
+                  textAlign: 'left'
                 }}
               >
-                {/* Top Border */}
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: '10%',
-                  right: '10%',
-                  height: '4px',
-                  background: 'linear-gradient(90deg, transparent, #4f46e5, transparent)',
-                  borderRadius: '4px 4px 0 0'
-                }}></div>
+                <p style={{
+                  fontSize: '1rem',
+                  color: '#1e293b',
+                  lineHeight: 1.6,
+                  marginBottom: '1.5rem',
+                  fontStyle: 'italic'
+                }}>
+                  "{testimonial.content}"
+                </p>
                 
-                {/* Quote Icon */}
-                <div 
-                  className="quote-icon"
-                  style={{
-                    width: '3rem',
-                    height: '3rem',
-                    background: 'rgba(79, 70, 229, 0.1)',
-                    borderRadius: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: '#4f46e5',
-                    marginBottom: '1.5rem',
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  <Quote style={{ width: '24px', height: '24px' }} />
-                </div>
-                
-                {/* Testimonial Content */}
-                <div style={{ flex: 1 }}>
-                  <p style={{
-                    fontSize: '1.125rem',
-                    color: '#1e293b',
-                    lineHeight: 1.7,
-                    marginBottom: '2rem',
-                    fontStyle: 'italic'
-                  }}>
-                    "{testimonial.content}"
-                  </p>
-                  
-                  {/* Rating */}
-                  <div style={{
-                    display: 'flex',
-                    gap: '0.25rem',
-                    marginBottom: '2rem'
-                  }}>
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className="star"
-                        style={{ 
-                          width: '20px', 
-                          height: '20px', 
-                          color: '#fbbf24',
-                          transition: 'transform 0.2s ease'
-                        }} 
-                      />
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Author */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '1rem',
-                  paddingTop: '1.5rem',
-                  borderTop: '1px solid #e2e8f0'
+                  gap: '1rem'
                 }}>
                   <div style={{
-                    width: '3.5rem',
-                    height: '3.5rem',
+                    width: '3rem',
+                    height: '3rem',
                     borderRadius: '50%',
                     overflow: 'hidden',
                     border: '2px solid rgba(79, 70, 229, 0.2)',
@@ -2312,8 +1762,8 @@ const Home = () => {
                   
                   <div>
                     <h4 style={{
-                      fontSize: '1.125rem',
-                      fontWeight: 700,
+                      fontSize: '1rem',
+                      fontWeight: 600,
                       color: '#1e293b',
                       marginBottom: '0.25rem'
                     }}>
@@ -2322,7 +1772,7 @@ const Home = () => {
                     
                     <p style={{
                       color: '#64748b',
-                      fontSize: '0.9rem'
+                      fontSize: '0.875rem'
                     }}>
                       {testimonial.role}
                     </p>
@@ -2331,94 +1781,45 @@ const Home = () => {
               </div>
             ))}
           </div>
-          
-          {/* Call to Action */}
-          <div style={{
-            marginTop: '4rem',
-            textAlign: 'center'
-          }}>
-            <Link to="/sobre" style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-              background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
-              color: 'white',
-              padding: '1rem 2rem',
-              borderRadius: '1rem',
-              fontWeight: 600,
-              textDecoration: 'none',
-              boxShadow: '0 10px 15px -3px rgba(79, 70, 229, 0.2), 0 4px 6px -2px rgba(79, 70, 229, 0.1)',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(79, 70, 229, 0.2), 0 10px 10px -5px rgba(79, 70, 229, 0.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 10px 15px -3px rgba(79, 70, 229, 0.2), 0 4px 6px -2px rgba(79, 70, 229, 0.1)';
-            }}
-            >
-              <span>Ver Todos os Depoimentos</span>
-              <ArrowRight style={{ width: '20px', height: '20px' }} />
-            </Link>
-          </div>
         </div>
       </section>
 
 
 
-      {/* Stats Section */}
+      {/* Stats Section - Simplified */}
       <section style={{
-        padding: '6rem 0',
+        padding: '4rem 0',
         background: 'linear-gradient(135deg, #4f46e5 0%, #2563eb 100%)',
-        position: 'relative',
-        overflow: 'hidden'
+        position: 'relative'
       }}>
-        {/* Background Elements */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' viewBox=\'0 0 100 100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\' fill=\'%23ffffff\' fill-opacity=\'0.05\' fill-rule=\'evenodd\'/%3E%3C/svg%3E")',
-          opacity: 0.5
-        }}></div>
+
         
         <div style={{
-          maxWidth: '1400px',
+          maxWidth: '1200px',
           margin: '0 auto',
           padding: '0 2rem',
-          position: 'relative',
-          zIndex: 1,
           textAlign: 'center'
         }}>
-          <div style={{
-            marginBottom: '4rem',
-            animation: 'fadeIn 0.8s ease-out'
-          }}>
+
             <h2 style={{ 
               fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
-              fontWeight: 800,
+              fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+              fontWeight: 700,
               color: 'white',
-              marginBottom: '1rem',
-              lineHeight: 1.2
+              marginBottom: '1rem'
             }}>
-            Portal em Números
-          </h2>
+              Portal em Números
+            </h2>
             
             <p style={{
               fontSize: '1.125rem',
               color: 'rgba(255, 255, 255, 0.9)',
               lineHeight: 1.6,
-              maxWidth: '700px',
-              margin: '0 auto'
+              maxWidth: '600px',
+              margin: '0 auto 3rem'
             }}>
-            Dados que demonstram nosso compromisso com a educação de qualidade
-          </p>
-          </div>
+              Dados que demonstram nosso compromisso com a educação de qualidade
+            </p>
           
           <div style={{
             display: 'grid',
@@ -2429,32 +1830,22 @@ const Home = () => {
               <div 
                 key={index} 
                 style={{
-                  padding: '2rem',
+                  padding: '1.5rem',
                   background: 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '1.5rem',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'transform 0.3s ease',
-                  cursor: 'pointer'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
+                  borderRadius: '1rem',
+                  border: '1px solid rgba(255, 255, 255, 0.2)'
                 }}
               >
                 <div style={{ 
-                  fontSize: '2.5rem', 
-                  marginBottom: '1rem',
-                  animation: 'float 3s ease-in-out infinite'
+                  fontSize: '2rem', 
+                  marginBottom: '0.75rem'
                 }}>
                   {stat.icon}
                 </div>
                 
                 <div style={{
-                  fontSize: '3rem',
-                  fontWeight: 800,
+                  fontSize: '2.5rem',
+                  fontWeight: 700,
                   color: 'white',
                   marginBottom: '0.5rem'
                 }}>
@@ -2463,7 +1854,7 @@ const Home = () => {
                 
                 <div style={{
                   color: 'rgba(255, 255, 255, 0.8)',
-                  fontSize: '1rem',
+                  fontSize: '0.9rem',
                   fontWeight: 500
                 }}>
                   {stat.label}

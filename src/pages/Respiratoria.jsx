@@ -18,7 +18,9 @@ const Respiratoria = () => {
       ],
       duration: '6 semanas',
       level: 'Básico',
-      conditions: ['Asma', 'DPOC', 'Pneumonia', 'COVID-19']
+      conditions: ['Asma', 'DPOC', 'Pneumonia', 'COVID-19'],
+      hasDetailedContent: true,
+      link: '/fisiologia-respiratoria'
     },
     {
       id: 2,
@@ -438,29 +440,55 @@ const Respiratoria = () => {
                       fontSize: '0.875rem',
                       color: '#6b7280'
                     }}>
-                      ✅ Conteúdo disponível • 🎯 Em desenvolvimento
+                      {module.hasDetailedContent ? '✅ Conteúdo disponível' : '🎯 Em desenvolvimento'}
                     </div>
-                    <button style={{
-                      background: 'linear-gradient(135deg, #0891b2 0%, #0e7490 100%)',
-                      color: 'white',
-                      border: 'none',
-                      padding: '0.75rem 1.5rem',
-                      borderRadius: '8px',
-                      fontSize: '0.875rem',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 4px 12px rgba(8, 145, 178, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = 'none';
-                    }}>
-                      Estudar Agora
-                    </button>
+                    {module.hasDetailedContent && module.link ? (
+                      <Link to={module.link} style={{
+                        background: 'linear-gradient(135deg, #0891b2 0%, #0e7490 100%)',
+                        color: 'white',
+                        border: 'none',
+                        padding: '0.75rem 1.5rem',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        textDecoration: 'none',
+                        display: 'inline-block'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.transform = 'translateY(-2px)';
+                        e.target.style.boxShadow = '0 4px 12px rgba(8, 145, 178, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = 'translateY(0)';
+                        e.target.style.boxShadow = 'none';
+                      }}>
+                        Acessar Conteúdo
+                      </Link>
+                    ) : (
+                      <button style={{
+                        background: 'linear-gradient(135deg, #0891b2 0%, #0e7490 100%)',
+                        color: 'white',
+                        border: 'none',
+                        padding: '0.75rem 1.5rem',
+                        borderRadius: '8px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.transform = 'translateY(-2px)';
+                        e.target.style.boxShadow = '0 4px 12px rgba(8, 145, 178, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = 'translateY(0)';
+                        e.target.style.boxShadow = 'none';
+                      }}>
+                        Estudar Agora
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
