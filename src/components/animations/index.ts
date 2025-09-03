@@ -1,7 +1,6 @@
 // Enhanced Animation Library for Microinteractions
 // Reusable animation components and utilities
 
-export { default as AnimatedCard } from './AnimatedCard';
 export { default as RippleButton } from './RippleButton';
 export { default as AnimatedInput } from './AnimatedInput';
 export { default as ScrollReveal } from './ScrollReveal';

@@ -85,7 +85,6 @@ const DesktopNavigation: React.FC = () => {
                     ring-1 ring-black ring-opacity-5 focus:outline-none z-50
                     animate-in fade-in-0 zoom-in-95 duration-200
                   "
-                  role="menu"
                   aria-orientation="vertical"
                   aria-labelledby={`${group.id}-menu-button`}
                 >
