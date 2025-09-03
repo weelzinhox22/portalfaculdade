@@ -1,0 +1,594 @@
+/* ========================================
+   TEMPLATE CSS PARA PÁGINAS NOVAS
+   ========================================
+   
+   Este arquivo contém estilos base que podem ser usados
+   em qualquer página nova do portal. Para usar:
+   
+   1. Copie este arquivo para sua página
+   2. Renomeie as classes para sua página específica
+   3. Personalize as cores e estilos conforme necessário
+   
+   Exemplo: .page-name-header, .page-name-section, etc.
+*/
+
+/* ========================================
+   RESET E BASE
+   ======================================== */
+.page-template {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #1e293b;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* ========================================
+   HEADER E NAVEGAÇÃO
+   ======================================== */
+.page-template-header {
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.page-template-nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.page-template-nav-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+}
+
+.page-template-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0891b2;
+}
+
+.page-template-nav-links {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .page-template-nav-links {
+    display: flex;
+    align-items: baseline;
+    margin-left: 2.5rem;
+    gap: 1rem;
+  }
+}
+
+.page-template-nav-link {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+.page-template-nav-link:hover {
+  color: #0891b2;
+}
+
+.page-template-nav-link.active {
+  color: #0891b2;
+  border-bottom-color: #0891b2;
+}
+
+/* ========================================
+   CONTAINER PRINCIPAL
+   ======================================== */
+.page-template-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.page-template-main {
+  padding: 2rem 0;
+}
+
+/* ========================================
+   SEÇÕES
+   ======================================== */
+.page-template-section {
+  margin-bottom: 4rem;
+}
+
+.page-template-section:last-child {
+  margin-bottom: 0;
+}
+
+.page-template-section-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #0891b2;
+}
+
+.page-template-section-subtitle {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto 2.5rem auto;
+  color: #64748b;
+  font-size: 1.125rem;
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+.page-template-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-template-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-template-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.page-template-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.page-template-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.page-template-card.border-primary {
+  border-top-color: #0891b2;
+}
+
+.page-template-card.border-secondary {
+  border-top-color: #14b8a6;
+}
+
+.page-template-card.border-accent {
+  border-top-color: #10b981;
+}
+
+.page-template-card.border-warning {
+  border-top-color: #f59e0b;
+}
+
+.page-template-card.border-danger {
+  border-top-color: #ef4444;
+}
+
+.page-template-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+}
+
+.page-template-card-description {
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+/* ========================================
+   BOTÕES
+   ======================================== */
+.page-template-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.page-template-btn-primary {
+  background-color: #0891b2;
+  color: white;
+}
+
+.page-template-btn-primary:hover {
+  background-color: #0e7490;
+  transform: translateY(-1px);
+}
+
+.page-template-btn-secondary {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.page-template-btn-secondary:hover {
+  background-color: #e2e8f0;
+}
+
+.page-template-btn-outline {
+  background-color: transparent;
+  color: #0891b2;
+  border: 2px solid #0891b2;
+}
+
+.page-template-btn-outline:hover {
+  background-color: #0891b2;
+  color: white;
+}
+
+/* ========================================
+   FORMULÁRIOS
+   ======================================== */
+.page-template-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.page-template-label {
+  display: block;
+  font-weight: 500;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.page-template-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.page-template-input:focus {
+  outline: none;
+  border-color: #0891b2;
+}
+
+.page-template-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* ========================================
+   SLIDERS
+   ======================================== */
+.page-template-slider {
+  width: 100%;
+  height: 0.5rem;
+  background-color: #e2e8f0;
+  border-radius: 0.5rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.page-template-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: #0891b2;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.page-template-slider::-moz-range-thumb {
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: #0891b2;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* ========================================
+   ALERTAS E NOTIFICAÇÕES
+   ======================================== */
+.page-template-alert {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid;
+}
+
+.page-template-alert.info {
+  background-color: #eff6ff;
+  border-left-color: #3b82f6;
+  color: #1e40af;
+}
+
+.page-template-alert.success {
+  background-color: #f0fdf4;
+  border-left-color: #22c55e;
+  color: #15803d;
+}
+
+.page-template-alert.warning {
+  background-color: #fffbeb;
+  border-left-color: #f59e0b;
+  color: #a16207;
+}
+
+.page-template-alert.error {
+  background-color: #fef2f2;
+  border-left-color: #ef4444;
+  color: #b91c1c;
+}
+
+/* ========================================
+   TABELAS
+   ======================================== */
+.page-template-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.page-template-table th,
+.page-template-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-template-table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.page-template-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* ========================================
+   ACCORDION
+   ======================================== */
+.page-template-accordion {
+  max-width: 48rem;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.page-template-accordion-item {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.page-template-accordion-item:last-child {
+  border-bottom: none;
+}
+
+.page-template-accordion-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.page-template-accordion-button:hover {
+  background-color: #f8fafc;
+}
+
+.page-template-accordion-content {
+  overflow: hidden;
+  transition: all 0.5s;
+}
+
+.page-template-accordion-content.expanded {
+  max-height: 24rem;
+}
+
+.page-template-accordion-content.collapsed {
+  max-height: 0;
+}
+
+.page-template-accordion-text {
+  padding: 1rem;
+  color: #64748b;
+}
+
+/* ========================================
+   MODAIS
+   ======================================== */
+.page-template-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.page-template-modal {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.page-template-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.page-template-modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.page-template-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #64748b;
+  padding: 0.25rem;
+}
+
+.page-template-modal-close:hover {
+  color: #1e293b;
+}
+
+/* ========================================
+   LOADING
+   ======================================== */
+.page-template-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.page-template-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid #e2e8f0;
+  border-top: 3px solid #0891b2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ========================================
+   UTILITÁRIOS
+   ======================================== */
+.page-template-text-center {
+  text-align: center;
+}
+
+.page-template-text-left {
+  text-align: left;
+}
+
+.page-template-text-right {
+  text-align: right;
+}
+
+.page-template-hidden {
+  display: none;
+}
+
+.page-template-visible {
+  display: block;
+}
+
+.page-template-mb-1 { margin-bottom: 0.25rem; }
+.page-template-mb-2 { margin-bottom: 0.5rem; }
+.page-template-mb-3 { margin-bottom: 0.75rem; }
+.page-template-mb-4 { margin-bottom: 1rem; }
+.page-template-mb-6 { margin-bottom: 1.5rem; }
+.page-template-mb-8 { margin-bottom: 2rem; }
+
+.page-template-mt-1 { margin-top: 0.25rem; }
+.page-template-mt-2 { margin-top: 0.5rem; }
+.page-template-mt-3 { margin-top: 0.75rem; }
+.page-template-mt-4 { margin-top: 1rem; }
+.page-template-mt-6 { margin-top: 1.5rem; }
+.page-template-mt-8 { margin-top: 2rem; }
+
+.page-template-p-1 { padding: 0.25rem; }
+.page-template-p-2 { padding: 0.5rem; }
+.page-template-p-3 { padding: 0.75rem; }
+.page-template-p-4 { padding: 1rem; }
+.page-template-p-6 { padding: 1.5rem; }
+.page-template-p-8 { padding: 2rem; }
+
+/* ========================================
+   RESPONSIVIDADE
+   ======================================== */
+@media (max-width: 640px) {
+  .page-template-section-title {
+    font-size: 1.875rem;
+  }
+  
+  .page-template-card {
+    padding: 1rem;
+  }
+  
+  .page-template-modal {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-template-nav-links {
+    display: none;
+  }
+  
+  .page-template-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   SCROLL MARGIN PARA NAVEGAÇÃO
+   ======================================== */
+.page-template-section {
+  scroll-margin-top: 5rem;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.page-template-footer {
+  background-color: white;
+  margin-top: 4rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.page-template-footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  color: #64748b;
+}

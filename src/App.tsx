@@ -12,6 +12,7 @@ const SaudeIdoso = lazy(() => import('./pages/SaudeIdoso'));
 const Neurofuncional = lazy(() => import('./pages/Neurofuncional'));
 const Neuropatia = lazy(() => import('./pages/Neuropatia'));
 const NeuropatiaGuide = lazy(() => import('./pages/NeuropatiaGuide'));
+const FerramentasIA = lazy(() => import('./pages/FerramentasIA'));
 // Novas especialidades
 const Respiratoria = lazy(() => import('./pages/Respiratoria'));
 const Ortopedica = lazy(() => import('./pages/Ortopedica'));
@@ -59,6 +60,7 @@ import ArticleViewer from './pages/ArticleViewer';
 import NormasBiosseguranca1 from './pages/NormasBiosseguranca1';
 import AvaliacaoUTI from './pages/AvaliacaoUTI';
 import ExamesComplementares from './pages/ExamesComplementares';
+import GasometriaArterial from './pages/GasometriaArterial';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -175,6 +177,7 @@ function App() {
           <Route path="/neurofuncional" element={<Layout><Neurofuncional /></Layout>} />
           <Route path="/neuropatia" element={<Layout><Neuropatia /></Layout>} />
           <Route path="/neuropatia-guide" element={<Layout><NeuropatiaGuide /></Layout>} />
+          <Route path="/ferramentas-ia" element={<Layout><FerramentasIA /></Layout>} />
 
           {/* Novas especialidades */}
           <Route path="/respiratoria" element={<Layout><Respiratoria /></Layout>} />
@@ -200,6 +203,7 @@ function App() {
           <Route path="/normas-biosseguranca-1" element={<Layout><NormasBiosseguranca1 /></Layout>} />
           <Route path="/avaliacao-uti" element={<Layout><AvaliacaoUTI /></Layout>} />
           <Route path="/exames-complementares" element={<Layout><ExamesComplementares /></Layout>} />
+          <Route path="/gasometria-arterial" element={<Layout><GasometriaArterial /></Layout>} />
           <Route path="/ferramentas-calculo" element={
             <Layout>
               <Suspense fallback={<div className="flex items-center justify-center h-screen">

@@ -143,6 +143,13 @@ const Home = () => {
       link: '/ferramentas-calculo'
     },
     {
+      icon: <Lightbulb className="w-8 h-8" />,
+      title: 'Ferramentas de IA',
+      description: 'Suíte completa de ferramentas alimentadas por IA para acelerar seu aprendizado em saúde.',
+      highlight: 'Quiz, Resumos, Chat e mais',
+      link: '/ferramentas-ia'
+    },
+    {
       icon: <HelpCircle className="w-8 h-8" />,
       title: 'Questões da Comunidade',
       description: 'Questões criadas e aprovadas pela comunidade de fisioterapia. Contribua com seu conhecimento!',

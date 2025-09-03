@@ -95,6 +95,32 @@
   --transition-slow: 0.5s ease-out;
 }
 
+/* Estilos para Gasometria Arterial */
+.nav-link {
+  transition: color 0.3s, border-bottom-color 0.3s;
+}
+
+.nav-link.active {
+  color: #0891b2;
+  border-bottom-color: #0891b2;
+}
+
+.card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.value-box {
+  background-color: #e0f2fe;
+  border-left: 4px solid #0ea5e9;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+}
+
 /* Estilos para Anúncios e Newsletter */
 .adsense-container {
   transition: all 0.3s ease;
