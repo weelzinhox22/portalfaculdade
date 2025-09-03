@@ -203,3 +203,75 @@ export const markTopicAsViewed = async (topicId) => {
     console.error('Erro ao marcar como visualizado:', error);
   }
 };
+
+// Curtir/descurtir resposta
+export const likeForumReply = async (replyId, userId) => {
+  try {
+    // Verificar se já curtiu
+    const { data: existingLike, error: checkError } = await supabase
+      .from('forum_reply_likes')
+      .select('*')
+      .eq('reply_id', replyId)
+      .eq('user_id', userId)
+      .single();
+
+    if (checkError && checkError.code !== 'PGRST116') {
+      console.error('Erro ao verificar like:', checkError);
+      throw checkError;
+    }
+
+    if (existingLike) {
+      // Remover like
+      const { error: deleteError } = await supabase
+        .from('forum_reply_likes')
+        .delete()
+        .eq('reply_id', replyId)
+        .eq('user_id', userId);
+
+      if (deleteError) {
+        console.error('Erro ao remover like:', deleteError);
+        throw deleteError;
+      }
+
+      return false; // Like removido
+    } else {
+      // Adicionar like
+      const { error: insertError } = await supabase
+        .from('forum_reply_likes')
+        .insert([{
+          reply_id: replyId,
+          user_id: userId
+        }]);
+
+      if (insertError) {
+        console.error('Erro ao adicionar like:', insertError);
+        throw insertError;
+      }
+
+      return true; // Like adicionado
+    }
+  } catch (error) {
+    console.error('Erro ao gerenciar like:', error);
+    throw error;
+  }
+};
+
+// Buscar likes de uma resposta
+export const getReplyLikes = async (replyId) => {
+  try {
+    const { data, error } = await supabase
+      .from('forum_reply_likes')
+      .select('user_id')
+      .eq('reply_id', replyId);
+
+    if (error) {
+      console.error('Erro ao buscar likes:', error);
+      return [];
+    }
+
+    return data || [];
+  } catch (error) {
+    console.error('Erro ao buscar likes:', error);
+    return [];
+  }
+};
