@@ -80,6 +80,23 @@ const UnidadeHospitalar = () => {
       link: '/exames-complementares'
     },
     {
+      id: 2.5,
+      title: 'Guia Interativo de Gasometria Arterial',
+      icon: <Activity className="w-6 h-6" />,
+      color: 'from-orange-500 to-orange-600',
+      topics: [
+        'Interpretação de pH, pCO2 e HCO3',
+        'Distúrbios ácido-base respiratórios e metabólicos',
+        'Sistema de compensação e equilíbrio',
+        'Simulador interativo para prática clínica'
+      ],
+      duration: '4 semanas',
+      level: 'Intermediário',
+      departments: ['UTI', 'Laboratório', 'Emergência', 'Pneumologia'],
+      hasDetailedContent: true,
+      link: '/gasometria-arterial'
+    },
+    {
       id: 3,
       title: 'Fisioterapia em UTI',
       icon: <Heart className="w-6 h-6" />,
@@ -95,7 +112,7 @@ const UnidadeHospitalar = () => {
       departments: ['UTI Geral', 'UTI Cardiológica', 'UTI Neurológica', 'UTI Pediátrica']
     },
     {
-      id: 4,
+      id: 5,
       title: 'Cardiologia Hospitalar',
       icon: <Activity className="w-6 h-6" />,
       color: 'from-cyan-500 to-cyan-600',
@@ -110,7 +127,7 @@ const UnidadeHospitalar = () => {
       departments: ['Cardiologia', 'Cirurgia Cardíaca', 'Hemodinâmica', 'Marcapasso']
     },
     {
-      id: 5,
+      id: 6,
       title: 'Pneumologia e Respiratória',
       icon: <Stethoscope className="w-6 h-6" />,
       color: 'from-blue-500 to-blue-600',
@@ -125,7 +142,7 @@ const UnidadeHospitalar = () => {
       departments: ['Pneumologia', 'Cirurgia Torácica', 'Emergência', 'Oncologia']
     },
     {
-      id: 6,
+      id: 7,
       title: 'Ortopedia Hospitalar',
       icon: <Building2 className="w-6 h-6" />,
       color: 'from-indigo-500 to-indigo-600',
