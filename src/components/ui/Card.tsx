@@ -47,7 +47,7 @@ const CardRoot = React.forwardRef<HTMLDivElement, CardProps>(
           exit: { opacity: 0, y: -20 },
           transition: { duration: 0.3 },
         })}
-        {...(animated ? {} : props)}
+        {...(animated ? {} : (props as any))}
       />
     )
   }

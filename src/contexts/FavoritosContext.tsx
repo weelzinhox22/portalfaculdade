@@ -11,11 +11,11 @@ interface FavoritoItem {
 
 interface FavoritosContextType {
   favoritos: FavoritoItem[];
-  adicionarFavorito: (item: Omit<FavoritoItem, 'id' | 'dataAdicionado'>) => boolean;
+  adicionarFavorito: (item: { titulo: string; tipo: string; [key: string]: any }) => boolean;
   removerFavorito: (id: number) => void;
   removerFavoritoPorItem: (titulo: string, tipo: string) => void;
   isFavorito: (titulo: string, tipo: string) => boolean;
-  toggleFavorito: (item: Omit<FavoritoItem, 'id' | 'dataAdicionado'>) => boolean;
+  toggleFavorito: (item: { titulo: string; tipo: string; [key: string]: any }) => boolean;
   getFavoritosPorTipo: (tipo: string) => FavoritoItem[];
   limparFavoritos: () => void;
 }

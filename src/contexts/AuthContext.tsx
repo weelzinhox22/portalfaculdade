@@ -3,7 +3,7 @@ import { supabase, auth, userProfile } from '../config/supabase'
 
 interface User {
   id: string;
-  email: string | undefined;
+  email?: string;
 }
 
 interface Profile {
