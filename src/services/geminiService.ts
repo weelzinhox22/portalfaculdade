@@ -83,33 +83,41 @@ export class GeminiService {
     correctAnswer: string;
     explanation: string;
   }> {
-    const prompt = `Você é um especialista em gasometria arterial. Gere um caso clínico realista para estudantes de fisioterapia.
+    const prompt = `Você é um especialista em gasometria arterial. Gere um caso clínico realista e VARIADO para estudantes de fisioterapia.
 
 IMPORTANTE: Responda APENAS com um JSON válido, SEM formatação markdown, SEM código markdown, SEM texto adicional.
 
 Estrutura obrigatória:
 {
-  "title": "Caso X: Paciente com [condição clínica]",
-  "description": "Descrição clínica do paciente e situação atual",
-  "ph": [número entre 6.8 e 7.8],
-  "pco2": [número entre 20 e 80],
-  "hco3": [número entre 10 e 40],
-  "be": [número entre -15 e +15],
-  "correctAnswer": "Diagnóstico correto baseado nos valores",
-  "explanation": "Explicação do diagnóstico e interpretação dos valores"
+  "title": "Caso X: Paciente com [condição clínica específica e variada]",
+  "description": "Descrição clínica detalhada e realista do paciente e situação atual",
+  "ph": [número entre 6.8 e 7.8 - use valores variados, não apenas os mesmos],
+  "pco2": [número entre 20 e 80 - use valores variados, não apenas os mesmos],
+  "hco3": [número entre 10 e 40 - use valores variados, não apenas os mesmos],
+  "be": [número entre -15 e +15 - use valores variados, não apenas os mesmos],
+  "correctAnswer": "Diagnóstico correto baseado nos valores (DEVE ser exatamente uma das opções: Acidose Respiratória, Alcalose Respiratória, Acidose Metabólica, Alcalose Metabólica, Acidose Respiratória Compensada, Alcalose Respiratória Compensada, Acidose Metabólica Compensada, Alcalose Metabólica Compensada)",
+  "explanation": "Explicação detalhada do diagnóstico e interpretação dos valores"
 }
 
-Exemplo de resposta válida:
-{
-  "title": "Caso 1: Paciente com DPOC exacerbado",
-  "description": "Paciente de 68 anos com DPOC há 15 anos, apresenta dispneia e tosse produtiva há 3 dias",
-  "ph": 7.28,
-  "pco2": 58,
-  "hco3": 26,
-  "be": 1,
-  "correctAnswer": "Acidose Respiratória Parcialmente Compensada",
-  "explanation": "pH baixo (7.28) indica acidemia. PCO2 alto (58) indica componente respiratório. HCO3 normal (26) sugere compensação renal inicial. BE positivo (1) confirma compensação."
-}
+INSTRUÇÕES PARA VARIEDADE:
+1. Use diferentes faixas de pH: 6.8-7.0 (severa), 7.0-7.2 (moderada), 7.2-7.35 (leve)
+2. Use diferentes faixas de PCO2: 20-30 (baixa), 30-40 (normal), 40-50 (elevada), 50-80 (muito elevada)
+3. Use diferentes faixas de HCO3: 10-18 (baixa), 18-22 (baixa-normal), 22-26 (normal), 26-35 (elevada)
+4. Use diferentes faixas de BE: -15 a -8 (negativo severo), -8 a -2 (negativo moderado), -2 a +2 (normal), +2 a +8 (positivo moderado), +8 a +15 (positivo severo)
+5. Varie os diagnósticos: não gere sempre o mesmo tipo de distúrbio
+6. Use cenários clínicos diversos: UTI, emergência, ambulatório, diferentes especialidades
+
+Exemplos de cenários variados:
+- Paciente com embolia pulmonar
+- Paciente com insuficiência hepática
+- Paciente com intoxicação por salicilatos
+- Paciente com ventilação mecânica
+- Paciente com insuficiência cardíaca
+- Paciente com trauma craniano
+- Paciente com queimaduras extensas
+- Paciente com pancreatite aguda
+
+IMPORTANTE: A resposta correctAnswer DEVE ser EXATAMENTE uma das opções listadas acima, sem variações ou sinônimos.
 
 NÃO use formatação markdown ou qualquer texto adicional. Apenas o JSON puro.`;
 
@@ -150,6 +158,18 @@ Seja específico e use linguagem técnica apropriada para estudantes de fisioter
   }
 
   private static validateClinicalCase(data: any): boolean {
+    // Opções válidas de resposta
+    const validAnswers = [
+      "Acidose Respiratória",
+      "Alcalose Respiratória", 
+      "Acidose Metabólica",
+      "Alcalose Metabólica",
+      "Acidose Respiratória Compensada",
+      "Alcalose Respiratória Compensada",
+      "Acidose Metabólica Compensada",
+      "Alcalose Metabólica Compensada"
+    ];
+
     return (
       data.title &&
       data.description &&
@@ -158,6 +178,7 @@ Seja específico e use linguagem técnica apropriada para estudantes de fisioter
       typeof data.hco3 === 'number' && data.hco3 >= 10 && data.hco3 <= 40 &&
       typeof data.be === 'number' && data.be >= -15 && data.be <= 15 &&
       data.correctAnswer &&
+      validAnswers.includes(data.correctAnswer) &&
       data.explanation
     );
   }

@@ -44,12 +44,13 @@ const GasometriaArterial: React.FC = () => {
   const [modalContent, setModalContent] = useState<{title: string, content: string} | null>(null);
   const chartRef = useRef<ChartJS<'bar'> | null>(null);
 
-  // Casos clínicos pré-definidos
+  // Casos clínicos pré-definidos expandidos com mais variedade
   const clinicalCases: ClinicalCase[] = [
+    // CASOS RESPIRATÓRIOS
     {
       id: 1,
-      title: "Caso 1: Paciente com DPOC",
-      description: "Paciente de 65 anos com história de DPOC há 10 anos, apresenta dispneia e tosse produtiva. Gasometria arterial revela:",
+      title: "Caso 1: Paciente com DPOC Exacerbado",
+      description: "Paciente de 65 anos com DPOC há 10 anos, apresenta dispneia e tosse produtiva há 3 dias. Gasometria arterial revela:",
       ph: 7.32,
       pco2: 55,
       hco3: 28,
@@ -59,7 +60,42 @@ const GasometriaArterial: React.FC = () => {
     },
     {
       id: 2,
-      title: "Caso 2: Paciente com vômitos persistentes",
+      title: "Caso 2: Paciente com DPOC Agudo",
+      description: "Paciente de 58 anos com DPOC, internado por agudização. Apresenta dispneia severa e cianose. Gasometria arterial revela:",
+      ph: 7.25,
+      pco2: 68,
+      hco3: 24,
+      be: -1,
+      correctAnswer: "Acidose Respiratória",
+      explanation: "pH muito baixo (7.25) indica acidemia severa. PCO2 muito alto (68) indica componente respiratório agudo. HCO3 normal (24) indica ausência de compensação renal."
+    },
+    {
+      id: 3,
+      title: "Caso 3: Paciente com Ansiedade e Hiperventilação",
+      description: "Paciente de 32 anos com crise de ansiedade, apresenta hiperventilação e parestesias. Gasometria arterial revela:",
+      ph: 7.48,
+      pco2: 28,
+      hco3: 22,
+      be: -2,
+      correctAnswer: "Alcalose Respiratória",
+      explanation: "pH alto (7.48) indica alcalemia. PCO2 baixo (28) indica componente respiratório. HCO3 normal (22) e BE ligeiramente negativo (-2) indicam compensação renal inicial."
+    },
+    {
+      id: 4,
+      title: "Caso 4: Paciente com Sepse e Hiperventilação",
+      description: "Paciente de 45 anos com sepse, apresenta taquipneia e febre. Gasometria arterial revela:",
+      ph: 7.52,
+      pco2: 25,
+      hco3: 20,
+      be: -4,
+      correctAnswer: "Alcalose Respiratória Compensada",
+      explanation: "pH alto (7.52) indica alcalemia. PCO2 baixo (25) indica componente respiratório. HCO3 baixo (20) e BE negativo (-4) indicam compensação renal."
+    },
+
+    // CASOS METABÓLICOS
+    {
+      id: 5,
+      title: "Caso 5: Paciente com Vômitos Persistentes",
       description: "Paciente de 28 anos com vômitos persistentes há 3 dias, apresenta fraqueza e cãibras. Gasometria arterial revela:",
       ph: 7.52,
       pco2: 38,
@@ -69,26 +105,85 @@ const GasometriaArterial: React.FC = () => {
       explanation: "pH alto (7.52) indica alcalemia. PCO2 normal (38) indica que não há compensação respiratória. HCO3 alto (32) e BE positivo (8) indicam componente metabólico."
     },
     {
-      id: 3,
-      title: "Caso 3: Paciente com insuficiência renal",
+      id: 6,
+      title: "Caso 6: Paciente com Insuficiência Renal Crônica",
       description: "Paciente de 45 anos com insuficiência renal crônica, apresenta fadiga e confusão mental. Gasometria arterial revela:",
       ph: 7.28,
       pco2: 35,
       hco3: 18,
       be: -8,
-      correctAnswer: "Acidose Metabólica",
+      correctAnswer: "Acidose Metabólica Compensada",
       explanation: "pH baixo (7.28) indica acidemia. PCO2 baixo (35) indica compensação respiratória. HCO3 baixo (18) e BE negativo (-8) indicam componente metabólico."
     },
     {
-      id: 4,
-      title: "Caso 4: Paciente com hiperventilação",
-      description: "Paciente de 32 anos com crise de ansiedade, apresenta hiperventilação e parestesias. Gasometria arterial revela:",
-      ph: 7.48,
-      pco2: 28,
-      hco3: 22,
-      be: -2,
-      correctAnswer: "Alcalose Respiratória",
-      explanation: "pH alto (7.48) indica alcalemia. PCO2 baixo (28) indica componente respiratório. HCO3 normal (22) e BE ligeiramente negativo (-2) indicam compensação renal inicial."
+      id: 7,
+      title: "Caso 7: Paciente com Cetoacidose Diabética",
+      description: "Paciente de 35 anos com diabetes tipo 1, apresenta náuseas e confusão. Gasometria arterial revela:",
+      ph: 7.22,
+      pco2: 30,
+      hco3: 12,
+      be: -16,
+      correctAnswer: "Acidose Metabólica Compensada",
+      explanation: "pH muito baixo (7.22) indica acidemia severa. PCO2 baixo (30) indica compensação respiratória. HCO3 muito baixo (12) e BE muito negativo (-16) indicam acidose metabólica severa."
+    },
+    {
+      id: 8,
+      title: "Caso 8: Paciente com Diarreia Severa",
+      description: "Paciente de 42 anos com diarreia há 5 dias, apresenta desidratação e fraqueza. Gasometria arterial revela:",
+      ph: 7.30,
+      pco2: 32,
+      hco3: 16,
+      be: -10,
+      correctAnswer: "Acidose Metabólica Compensada",
+      explanation: "pH baixo (7.30) indica acidemia. PCO2 baixo (32) indica compensação respiratória. HCO3 baixo (16) e BE negativo (-10) indicam componente metabólico."
+    },
+
+    // CASOS MISTOS E COMPLEXOS
+    {
+      id: 9,
+      title: "Caso 9: Paciente com Parada Cardíaca",
+      description: "Paciente de 60 anos pós-parada cardíaca, apresenta choque cardiogênico. Gasometria arterial revela:",
+      ph: 7.18,
+      pco2: 55,
+      hco3: 15,
+      be: -12,
+      correctAnswer: "Acidose Mista",
+      explanation: "pH muito baixo (7.18) indica acidemia severa. PCO2 alto (55) indica componente respiratório. HCO3 baixo (15) e BE negativo (-12) indicam componente metabólico. Distúrbio misto."
+    },
+    {
+      id: 10,
+      title: "Caso 10: Paciente com Trauma Múltiplo",
+      description: "Paciente de 25 anos com trauma múltiplo, apresenta choque hemorrágico. Gasometria arterial revela:",
+      ph: 7.15,
+      pco2: 60,
+      hco3: 18,
+      be: -8,
+      correctAnswer: "Acidose Mista",
+      explanation: "pH muito baixo (7.15) indica acidemia severa. PCO2 alto (60) indica componente respiratório. HCO3 baixo (18) e BE negativo (-8) indicam componente metabólico. Distúrbio misto."
+    },
+
+    // CASOS COMPENSADOS COMPLEXOS
+    {
+      id: 11,
+      title: "Caso 11: Paciente com DPOC Crônico Bem Compensado",
+      description: "Paciente de 70 anos com DPOC há 20 anos, estável clinicamente. Gasometria arterial revela:",
+      ph: 7.38,
+      pco2: 52,
+      hco3: 30,
+      be: 6,
+      correctAnswer: "Acidose Respiratória Compensada",
+      explanation: "pH normal (7.38) indica compensação adequada. PCO2 alto (52) indica componente respiratório crônico. HCO3 alto (30) e BE positivo (6) indicam compensação renal completa."
+    },
+    {
+      id: 12,
+      title: "Caso 12: Paciente com Insuficiência Renal Bem Compensada",
+      description: "Paciente de 50 anos com insuficiência renal estável, em diálise. Gasometria arterial revela:",
+      ph: 7.42,
+      pco2: 32,
+      hco3: 20,
+      be: -4,
+      correctAnswer: "Acidose Metabólica Compensada",
+      explanation: "pH normal (7.42) indica compensação adequada. PCO2 baixo (32) indica compensação respiratória. HCO3 baixo (20) e BE negativo (-4) indicam componente metabólico compensado."
     }
   ];
 
@@ -102,6 +197,25 @@ const GasometriaArterial: React.FC = () => {
     
     try {
       const newCase = await GeminiService.generateClinicalCase();
+      
+      // Validar se a resposta está nas opções disponíveis
+      const validAnswers = [
+        "Acidose Respiratória",
+        "Alcalose Respiratória", 
+        "Acidose Metabólica",
+        "Alcalose Metabólica",
+        "Acidose Respiratória Compensada",
+        "Alcalose Respiratória Compensada",
+        "Acidose Metabólica Compensada",
+        "Alcalose Metabólica Compensada"
+      ];
+      
+      if (!validAnswers.includes(newCase.correctAnswer)) {
+        console.warn('Resposta da API não está nas opções válidas:', newCase.correctAnswer);
+        setApiError('Resposta da API inválida. Usando caso pré-definido.');
+        throw new Error('Resposta inválida da API');
+      }
+      
       const caseWithId = { ...newCase, id: Date.now() }; // Adiciona ID único
       setCurrentCase(caseWithId);
       setSelectedAnswer('');
@@ -112,9 +226,23 @@ const GasometriaArterial: React.FC = () => {
       const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
       setApiError(`Erro na API: ${errorMessage}. Usando caso pré-definido.`);
       
-      // Fallback para caso pré-definido
-      const randomIndex = Math.floor(Math.random() * clinicalCases.length);
-      setCurrentCase(clinicalCases[randomIndex]);
+      // Fallback inteligente para caso pré-definido
+      // Selecionar caso baseado em critérios para evitar repetição
+      let selectedCase;
+      
+      if (currentCase) {
+        // Se já temos um caso, escolher um diferente
+        const currentIndex = clinicalCases.findIndex(c => c.correctAnswer === currentCase.correctAnswer);
+        const availableCases = clinicalCases.filter((_, index) => index !== currentIndex);
+        const randomIndex = Math.floor(Math.random() * availableCases.length);
+        selectedCase = availableCases[randomIndex];
+      } else {
+        // Primeiro caso: escolher aleatoriamente
+        const randomIndex = Math.floor(Math.random() * clinicalCases.length);
+        selectedCase = clinicalCases[randomIndex];
+      }
+      
+      setCurrentCase(selectedCase);
       setSelectedAnswer('');
       setShowFeedback(false);
       setIsCorrect(false);
@@ -178,6 +306,11 @@ const GasometriaArterial: React.FC = () => {
   const checkAnswer = () => {
     if (!currentCase) return;
     
+    // Log para debug
+    console.log('Resposta selecionada:', selectedAnswer);
+    console.log('Resposta correta:', currentCase.correctAnswer);
+    console.log('Comparação exata:', selectedAnswer === currentCase.correctAnswer);
+    
     const correct = selectedAnswer === currentCase.correctAnswer;
     setIsCorrect(correct);
     setShowFeedback(true);
@@ -189,53 +322,87 @@ const GasometriaArterial: React.FC = () => {
   }, [ph, pco2, hco3]);
 
   const calculateDisorder = () => {
-    // Lógica para determinar o distúrbio primário
+    // Lógica melhorada para determinar o distúrbio primário
     let disorder = '';
     let compensation = '';
 
-    if (ph < 7.35) {
+    // Definir limites mais realistas
+    const pH_acidemia = 7.35;
+    const pH_alcalemia = 7.45;
+    const PCO2_normal_min = 35;
+    const PCO2_normal_max = 45;
+    const HCO3_normal_min = 22;
+    const HCO3_normal_max = 26;
+
+    if (ph < pH_acidemia) {
       // Acidemia
-      if (pco2 > 45) {
+      const pco2_abnormal = pco2 > PCO2_normal_max;
+      const hco3_abnormal = hco3 < HCO3_normal_min;
+      
+      if (pco2_abnormal && !hco3_abnormal) {
+        // Distúrbio respiratório primário
         disorder = 'Acidose Respiratória';
-        if (hco3 > 24) {
+        if (hco3 > HCO3_normal_max) {
           compensation = 'Compensada (HCO3 elevado)';
         } else {
           compensation = 'Não compensada';
         }
-      } else if (hco3 < 22) {
+      } else if (hco3_abnormal && !pco2_abnormal) {
+        // Distúrbio metabólico primário
         disorder = 'Acidose Metabólica';
-        if (pco2 < 40) {
+        if (pco2 < PCO2_normal_min) {
           compensation = 'Compensada (PCO2 baixo)';
         } else {
           compensation = 'Não compensada';
         }
-      } else {
+      } else if (pco2_abnormal && hco3_abnormal) {
+        // Distúrbio misto
         disorder = 'Acidose Mista';
         compensation = 'Distúrbio complexo';
+      } else {
+        // Acidemia leve sem distúrbio claro
+        disorder = 'Acidemia Leve';
+        compensation = 'Sem compensação clara';
       }
-    } else if (ph > 7.45) {
+    } else if (ph > pH_alcalemia) {
       // Alcalemia
-      if (pco2 < 35) {
+      const pco2_abnormal = pco2 < PCO2_normal_min;
+      const hco3_abnormal = hco3 > HCO3_normal_max;
+      
+      if (pco2_abnormal && !hco3_abnormal) {
+        // Distúrbio respiratório primário
         disorder = 'Alcalose Respiratória';
-        if (hco3 < 24) {
+        if (hco3 < HCO3_normal_min) {
           compensation = 'Compensada (HCO3 baixo)';
         } else {
           compensation = 'Não compensada';
         }
-      } else if (hco3 > 26) {
+      } else if (hco3_abnormal && !pco2_abnormal) {
+        // Distúrbio metabólico primário
         disorder = 'Alcalose Metabólica';
-        if (pco2 > 40) {
+        if (pco2 > PCO2_normal_max) {
           compensation = 'Compensada (PCO2 alto)';
         } else {
           compensation = 'Não compensada';
         }
-      } else {
+      } else if (pco2_abnormal && hco3_abnormal) {
+        // Distúrbio misto
         disorder = 'Alcalose Mista';
         compensation = 'Distúrbio complexo';
+      } else {
+        // Alcalemia leve sem distúrbio claro
+        disorder = 'Alcalemia Leve';
+        compensation = 'Sem compensação clara';
       }
     } else {
-      disorder = 'Equilíbrio Ácido-Base Normal';
-      compensation = 'Sem distúrbio primário';
+      // pH normal
+      if (Math.abs(pco2 - 40) <= 2 && Math.abs(hco3 - 24) <= 2) {
+        disorder = 'Equilíbrio Ácido-Base Normal';
+        compensation = 'Sem distúrbio primário';
+      } else {
+        disorder = 'Equilíbrio Compensado';
+        compensation = 'Compensação adequada';
+      }
     }
 
     setPrimaryDisorder(disorder);
@@ -806,13 +973,31 @@ const GasometriaArterial: React.FC = () => {
             </p>
 
             <div className="gasometria-educational-section">
-                             <button 
-                 className="gasometria-case-button"
-                 onClick={generateRandomCase}
-                 disabled={isLoading}
-               >
-                 {isLoading ? 'Gerando Caso...' : 'Gerar Novo Caso Clínico'}
-               </button>
+                                               <div className="gasometria-case-buttons">
+                    <button 
+                      className="gasometria-case-button"
+                      onClick={generateRandomCase}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? 'Gerando Caso...' : 'Gerar Novo Caso Clínico (API)'}
+                    </button>
+                    
+                    <button 
+                      className="gasometria-case-button-secondary"
+                      onClick={() => {
+                        // Selecionar caso pré-definido aleatório
+                        const randomIndex = Math.floor(Math.random() * clinicalCases.length);
+                        setCurrentCase(clinicalCases[randomIndex]);
+                        setSelectedAnswer('');
+                        setShowFeedback(false);
+                        setIsCorrect(false);
+                        setApiError(null);
+                      }}
+                      style={{ marginLeft: '10px' }}
+                    >
+                      Usar Caso Pré-definido
+                    </button>
+                  </div>
 
                {apiError && (
                  <div className="gasometria-error-message">
@@ -820,9 +1005,15 @@ const GasometriaArterial: React.FC = () => {
                  </div>
                )}
 
-              {currentCase && (
-                <div className="gasometria-clinical-case">
-                  <h3 className="gasometria-clinical-case-title">{currentCase.title}</h3>
+                             {currentCase && (
+                 <div className="gasometria-clinical-case">
+                   <div className="gasometria-case-header">
+                     <h3 className="gasometria-clinical-case-title">{currentCase.title}</h3>
+                     <div className="gasometria-case-type-indicator">
+                       {clinicalCases.some(c => c.id === currentCase.id) ? 
+                         '📚 Caso Pré-definido' : '🤖 Caso da API'}
+                     </div>
+                   </div>
                   <p className="gasometria-clinical-case-description">{currentCase.description}</p>
                   
                   <div className="gasometria-clinical-case-values">
@@ -862,6 +1053,33 @@ const GasometriaArterial: React.FC = () => {
                       onClick={checkAnswer}
                     >
                       Verificar Resposta
+                    </button>
+                  )}
+
+                  {/* Botão de debug temporário */}
+                  {process.env.NODE_ENV === 'development' && currentCase && (
+                    <button 
+                      className="gasometria-btn-secondary"
+                      onClick={() => {
+                        console.log('=== DEBUG INFO ===');
+                        console.log('Caso atual:', currentCase);
+                        console.log('Resposta correta:', currentCase.correctAnswer);
+                        console.log('Opções válidas:', [
+                          "Acidose Respiratória",
+                          "Alcalose Respiratória", 
+                          "Acidose Metabólica",
+                          "Alcalose Metabólica",
+                          "Acidose Respiratória Compensada",
+                          "Alcalose Respiratória Compensada",
+                          "Acidose Metabólica Compensada",
+                          "Alcalose Metabólica Compensada"
+                        ]);
+                        console.log('Resposta selecionada:', selectedAnswer);
+                        console.log('Comparação:', selectedAnswer === currentCase.correctAnswer);
+                      }}
+                      style={{ marginTop: '10px', fontSize: '12px', padding: '5px 10px' }}
+                    >
+                      Debug Info
                     </button>
                   )}
 
