@@ -1,12 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, TrendingUp, BookOpen, Target, Users, Lightbulb } from 'lucide-react';
+import { ArrowRight, TrendingUp, BookOpen, Target } from 'lucide-react';
 import './AssuntosEmAlta.css';
 
-const AssuntosEmAlta = () => {
-  const [activeTab, setActiveTab] = useState('tendencias');
+// Types
+type ColorScheme = 'orange' | 'blue' | 'purple' | 'green';
 
-  const modules = [
+interface Module {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  href: string;
+  color: ColorScheme;
+  features: string[];
+  articles: string;
+  cases: string;
+}
+
+interface ColorSchemeConfig {
+  accent: string;
+  light: string;
+  border: string;
+  iconBg: string;
+}
+
+const AssuntosEmAlta = () => {
+
+  const modules: Module[] = [
     {
       id: 'fisioguia',
       icon: '🔥',
@@ -53,7 +74,7 @@ const AssuntosEmAlta = () => {
     }
   ];
 
-  const colorSchemes = {
+  const colorSchemes: Record<ColorScheme, ColorSchemeConfig> = {
     orange: {
       accent: '#ea580c',
       light: 'rgba(249, 115, 22, 0.1)',
