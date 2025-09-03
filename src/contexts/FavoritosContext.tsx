@@ -63,7 +63,7 @@ export const FavoritosProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   }, [favoritos, isAuthenticated, user]);
 
-  const adicionarFavorito = (item: Omit<FavoritoItem, 'id' | 'dataAdicionado'>): boolean => {
+  const adicionarFavorito = (item: { titulo: string; tipo: string; [key: string]: any }): boolean => {
     if (!isAuthenticated) {
       alert('Você precisa estar logado para adicionar favoritos');
       return false;
@@ -107,7 +107,7 @@ export const FavoritosProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     );
   };
 
-  const toggleFavorito = (item: Omit<FavoritoItem, 'id' | 'dataAdicionado'>): boolean => {
+  const toggleFavorito = (item: { titulo: string; tipo: string; [key: string]: any }): boolean => {
     if (isFavorito(item.titulo, item.tipo)) {
       removerFavoritoPorItem(item.titulo, item.tipo);
       return false; // Removido

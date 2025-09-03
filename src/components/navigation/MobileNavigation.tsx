@@ -131,7 +131,6 @@ const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onClose }) 
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2, ease: [0.4, 0.0, 0.2, 1] }}
                   className="overflow-hidden bg-gray-25"
                 >
                   <div className="pb-2">
