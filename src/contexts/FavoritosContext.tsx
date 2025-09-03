@@ -1,7 +1,26 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 
-const FavoritosContext = createContext();
+interface FavoritoItem {
+  id: number;
+  titulo: string;
+  tipo: string;
+  dataAdicionado: string;
+  [key: string]: any; // Para outras propriedades específicas
+}
+
+interface FavoritosContextType {
+  favoritos: FavoritoItem[];
+  adicionarFavorito: (item: Omit<FavoritoItem, 'id' | 'dataAdicionado'>) => boolean;
+  removerFavorito: (id: number) => void;
+  removerFavoritoPorItem: (titulo: string, tipo: string) => void;
+  isFavorito: (titulo: string, tipo: string) => boolean;
+  toggleFavorito: (item: Omit<FavoritoItem, 'id' | 'dataAdicionado'>) => boolean;
+  getFavoritosPorTipo: (tipo: string) => FavoritoItem[];
+  limparFavoritos: () => void;
+}
+
+const FavoritosContext = createContext<FavoritosContextType | undefined>(undefined);
 
 export const useFavoritos = () => {
   const context = useContext(FavoritosContext);
@@ -11,9 +30,9 @@ export const useFavoritos = () => {
   return context;
 };
 
-export const FavoritosProvider = ({ children }) => {
+export const FavoritosProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isAuthenticated } = useAuth();
-  const [favoritos, setFavoritos] = useState([]);
+  const [favoritos, setFavoritos] = useState<FavoritoItem[]>([]);
 
   // Carregar favoritos do localStorage quando o usuário faz login
   useEffect(() => {
@@ -44,13 +63,13 @@ export const FavoritosProvider = ({ children }) => {
     }
   }, [favoritos, isAuthenticated, user]);
 
-  const adicionarFavorito = (item) => {
+  const adicionarFavorito = (item: Omit<FavoritoItem, 'id' | 'dataAdicionado'>): boolean => {
     if (!isAuthenticated) {
       alert('Você precisa estar logado para adicionar favoritos');
       return false;
     }
 
-    const novoFavorito = {
+    const novoFavorito: FavoritoItem = {
       id: Date.now(), // ID único baseado no timestamp
       ...item,
       dataAdicionado: new Date().toISOString()
@@ -72,23 +91,23 @@ export const FavoritosProvider = ({ children }) => {
     return true;
   };
 
-  const removerFavorito = (id) => {
+  const removerFavorito = (id: number): void => {
     setFavoritos(prev => prev.filter(item => item.id !== id));
   };
 
-  const removerFavoritoPorItem = (titulo, tipo) => {
+  const removerFavoritoPorItem = (titulo: string, tipo: string): void => {
     setFavoritos(prev => prev.filter(item => 
       !(item.titulo === titulo && item.tipo === tipo)
     ));
   };
 
-  const isFavorito = (titulo, tipo) => {
+  const isFavorito = (titulo: string, tipo: string): boolean => {
     return favoritos.some(item => 
       item.titulo === titulo && item.tipo === tipo
     );
   };
 
-  const toggleFavorito = (item) => {
+  const toggleFavorito = (item: Omit<FavoritoItem, 'id' | 'dataAdicionado'>): boolean => {
     if (isFavorito(item.titulo, item.tipo)) {
       removerFavoritoPorItem(item.titulo, item.tipo);
       return false; // Removido
@@ -97,15 +116,15 @@ export const FavoritosProvider = ({ children }) => {
     }
   };
 
-  const getFavoritosPorTipo = (tipo) => {
+  const getFavoritosPorTipo = (tipo: string): FavoritoItem[] => {
     return favoritos.filter(item => item.tipo === tipo);
   };
 
-  const limparFavoritos = () => {
+  const limparFavoritos = (): void => {
     setFavoritos([]);
   };
 
-  const value = {
+  const value: FavoritosContextType = {
     favoritos,
     adicionarFavorito,
     removerFavorito,
@@ -113,8 +132,7 @@ export const FavoritosProvider = ({ children }) => {
     isFavorito,
     toggleFavorito,
     getFavoritosPorTipo,
-    limparFavoritos,
-    totalFavoritos: favoritos.length
+    limparFavoritos
   };
 
   return (
@@ -124,4 +142,4 @@ export const FavoritosProvider = ({ children }) => {
   );
 };
 
-export default FavoritosProvider;
+export default FavoritosContext;
