@@ -14,8 +14,11 @@ import {
   ArrowUp
 } from 'lucide-react';
 import Newsletter from './Newsletter';
+import useMobile from '../hooks/useMobile';
 
 const Footer = () => {
+  const isMobile = useMobile();
+  
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -78,9 +81,9 @@ const Footer = () => {
         {/* Main Footer Content */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '3rem',
-          padding: '3rem 0',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: isMobile ? '2rem' : '3rem',
+          padding: isMobile ? '2rem 0' : '3rem 0',
           borderBottom: '1px solid rgba(148, 163, 184, 0.2)'
         }}>
           {/* Brand Section */}
@@ -182,23 +185,23 @@ const Footer = () => {
           <div>
             <h4 style={{
               color: 'white',
-              fontSize: '1.125rem',
+              fontSize: isMobile ? '1rem' : '1.125rem',
               fontWeight: '600',
-              marginBottom: '1.5rem',
+              marginBottom: isMobile ? '1rem' : '1.5rem',
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              <BookOpen size={20} />
+              <BookOpen size={isMobile ? 18 : 20} />
               Navegação
             </h4>
             <ul style={{
               listStyle: 'none',
               padding: 0,
               margin: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.75rem'
+              display: 'grid',
+              gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : '1fr',
+              gap: isMobile ? '0.5rem' : '0.75rem'
             }}>
               {[
                 { name: 'Home', href: '/' },
@@ -214,9 +217,10 @@ const Footer = () => {
                     style={{
                       color: '#cbd5e1',
                       textDecoration: 'none',
-                      fontSize: '0.95rem',
+                      fontSize: isMobile ? '0.875rem' : '0.95rem',
                       transition: 'all 0.3s ease',
-                      display: 'inline-block'
+                      display: 'inline-block',
+                      padding: isMobile ? '0.25rem 0' : '0'
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.color = '#0d9488';
@@ -238,23 +242,23 @@ const Footer = () => {
           <div>
             <h4 style={{
               color: 'white',
-              fontSize: '1.125rem',
+              fontSize: isMobile ? '1rem' : '1.125rem',
               fontWeight: '600',
-              marginBottom: '1.5rem',
+              marginBottom: isMobile ? '1rem' : '1.5rem',
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              <Award size={20} />
+              <Award size={isMobile ? 18 : 20} />
               Especialidades
             </h4>
             <ul style={{
               listStyle: 'none',
               padding: 0,
               margin: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.75rem'
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr',
+              gap: isMobile ? '0.5rem' : '0.75rem'
             }}>
               {[
                 { name: 'Saúde do Atleta', href: '/saude-atleta' },
@@ -269,9 +273,10 @@ const Footer = () => {
                     style={{
                       color: '#cbd5e1',
                       textDecoration: 'none',
-                      fontSize: '0.95rem',
+                      fontSize: isMobile ? '0.875rem' : '0.95rem',
                       transition: 'all 0.3s ease',
-                      display: 'inline-block'
+                      display: 'inline-block',
+                      padding: isMobile ? '0.25rem 0' : '0'
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.color = '#0d9488';
@@ -293,20 +298,20 @@ const Footer = () => {
           <div>
             <h4 style={{
               color: 'white',
-              fontSize: '1.125rem',
+              fontSize: isMobile ? '1rem' : '1.125rem',
               fontWeight: '600',
-              marginBottom: '1.5rem',
+              marginBottom: isMobile ? '1rem' : '1.5rem',
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem'
             }}>
-              <Users size={20} />
+              <Users size={isMobile ? 18 : 20} />
               Suporte & Legal
             </h4>
 
             {/* Contact Info */}
             <div style={{
-              marginBottom: '2rem'
+              marginBottom: isMobile ? '1.5rem' : '2rem'
             }}>
               <div style={{
                 display: 'flex',
@@ -314,15 +319,16 @@ const Footer = () => {
                 gap: '0.75rem',
                 marginBottom: '1rem',
                 color: '#cbd5e1',
-                fontSize: '0.95rem'
+                fontSize: isMobile ? '0.875rem' : '0.95rem'
               }}>
-                <Mail size={16} />
+                <Mail size={isMobile ? 14 : 16} />
                 <a
                   href="mailto:fisiowel@gmail.com"
                   style={{
                     color: '#cbd5e1',
                     textDecoration: 'none',
-                    transition: 'color 0.3s ease'
+                    transition: 'color 0.3s ease',
+                    wordBreak: 'break-all'
                   }}
                   onMouseEnter={(e) => e.target.style.color = '#0d9488'}
                   onMouseLeave={(e) => e.target.style.color = '#cbd5e1'}
@@ -336,9 +342,9 @@ const Footer = () => {
                 alignItems: 'center',
                 gap: '0.75rem',
                 color: '#cbd5e1',
-                fontSize: '0.95rem'
+                fontSize: isMobile ? '0.875rem' : '0.95rem'
               }}>
-                <MapPin size={16} />
+                <MapPin size={isMobile ? 14 : 16} />
                 <span>Brasil</span>
               </div>
             </div>
@@ -348,9 +354,9 @@ const Footer = () => {
               listStyle: 'none',
               padding: 0,
               margin: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.75rem'
+              display: 'grid',
+              gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : '1fr',
+              gap: isMobile ? '0.5rem' : '0.75rem'
             }}>
               {[
                 { name: 'Política de Privacidade', href: '/politica-privacidade' },
@@ -364,9 +370,10 @@ const Footer = () => {
                     style={{
                       color: '#cbd5e1',
                       textDecoration: 'none',
-                      fontSize: '0.95rem',
+                      fontSize: isMobile ? '0.875rem' : '0.95rem',
                       transition: 'all 0.3s ease',
-                      display: 'inline-block'
+                      display: 'inline-block',
+                      padding: isMobile ? '0.25rem 0' : '0'
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.color = '#0d9488';
@@ -388,27 +395,30 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: isMobile ? 'center' : 'space-between',
           alignItems: 'center',
-          padding: '2rem 0',
+          padding: isMobile ? '1.5rem 0' : '2rem 0',
           flexWrap: 'wrap',
-          gap: '1rem'
+          gap: isMobile ? '1.5rem' : '1rem',
+          flexDirection: isMobile ? 'column' : 'row'
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem',
             color: '#94a3b8',
-            fontSize: '0.9rem'
+            fontSize: isMobile ? '0.875rem' : '0.9rem',
+            textAlign: isMobile ? 'center' : 'left',
+            flexDirection: isMobile ? 'column' : 'row'
           }}>
             <span>© 2025 FisioNeo</span>
-            <span>•</span>
+            {!isMobile && <span>•</span>}
             <span style={{
               display: 'flex',
               alignItems: 'center',
               gap: '0.25rem'
             }}>
-              Feito com <Heart size={14} color="#ef4444" /> para fisioterapeutas
+              Feito com <Heart size={isMobile ? 12 : 14} color="#ef4444" /> para fisioterapeutas
             </span>
           </div>
 
@@ -419,14 +429,14 @@ const Footer = () => {
               background: 'rgba(13, 148, 136, 0.2)',
               border: '1px solid rgba(13, 148, 136, 0.3)',
               borderRadius: '12px',
-              padding: '0.75rem',
+              padding: isMobile ? '0.5rem 1rem' : '0.75rem',
               color: '#0d9488',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
               display: 'flex',
               alignItems: 'center',
               gap: '0.5rem',
-              fontSize: '0.875rem',
+              fontSize: isMobile ? '0.8rem' : '0.875rem',
               fontWeight: '500'
             }}
             onMouseEnter={(e) => {
@@ -438,8 +448,8 @@ const Footer = () => {
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            <ArrowUp size={16} />
-            Voltar ao topo
+            <ArrowUp size={isMobile ? 14 : 16} />
+            {isMobile ? 'Topo' : 'Voltar ao topo'}
           </button>
         </div>
       </div>
